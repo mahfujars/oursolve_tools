@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Muslim Baby Names with Meanings - Oursolve.com</title>
   <meta name="description" content="Browse 200+ Muslim baby names for boys and girls with meanings and origins. Search by name or meaning. Free Islamic name finder.">
-  <meta name="keywords" content="muslim baby names, islamic names, muslim boy names, muslim girl names, arabic names with meaning">
+  <meta name="keywords" content="muslim baby names, islamic names, muslim boy names, muslim girl names, arabic names with meaning, bangladeshi muslim names">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://oursolve.com/tools/muslim-names/">
   <meta property="og:type" content="website">
@@ -35,33 +35,36 @@
     .search-wrap svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);pointer-events:none}
     input[type=search]{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:10px 14px 10px 38px;font-size:.9rem;font-family:inherit;background:#f8fafc;outline:none;transition:border-color .15s}
     input[type=search]:focus{border-color:var(--primary)}
-    .filter-group{display:flex;gap:6px}
+    .filter-group{display:flex;gap:6px;flex-wrap:wrap}
     .filter-btn{padding:9px 18px;border:1.5px solid var(--border);border-radius:8px;font-size:.85rem;font-weight:600;font-family:inherit;cursor:pointer;background:#fff;color:var(--text-muted);transition:all .15s}
     .filter-btn:hover{border-color:var(--primary);color:var(--primary)}
     .filter-btn.all.active{background:var(--primary);border-color:var(--primary);color:#fff}
     .filter-btn.boy.active{background:var(--boy);border-color:var(--boy);color:#fff}
     .filter-btn.girl.active{background:var(--girl);border-color:var(--girl);color:#fff}
+    .filter-btn.bd.active{background:#006a4e;border-color:#006a4e;color:#fff}
+    .filter-btn.bd:hover{border-color:#006a4e;color:#006a4e}
     .stats{font-size:.82rem;color:var(--text-muted);margin-top:12px}
     .stats span{font-weight:700;color:var(--text)}
+    .section-label{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin:20px 0 10px;padding-left:2px}
     .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
-    .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px;box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s;cursor:default;position:relative;overflow:hidden}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px 40px;box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s;cursor:default;position:relative;overflow:hidden}
     .card:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.1)}
     .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
     .card.boy::before{background:var(--boy)}
     .card.girl::before{background:var(--girl)}
+    .card.bd-card{border-color:#c3e6db}
+    .card.bd-card::after{content:'★';position:absolute;top:10px;right:10px;font-size:.65rem;color:#006a4e;background:#e6f4f0;border-radius:20px;padding:1px 6px;font-weight:700;letter-spacing:.3px}
     .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px}
-    .name-en{font-size:1.25rem;font-weight:800;color:var(--text);letter-spacing:-.3px}
-    .name-ar{font-size:1.3rem;color:var(--text-muted);font-weight:400;direction:rtl;line-height:1.4}
+    .name-en{font-size:1.2rem;font-weight:800;color:var(--text);letter-spacing:-.3px}
     .gender-badge{padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;flex-shrink:0}
     .boy .gender-badge{background:var(--boy-light);color:var(--boy)}
     .girl .gender-badge{background:var(--girl-light);color:var(--girl)}
     .meaning{font-size:.88rem;color:var(--text);margin-bottom:6px;line-height:1.5}
     .origin{font-size:.78rem;color:var(--text-muted);font-weight:600}
-    .copy-btn{position:absolute;bottom:14px;right:14px;background:none;border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:.72rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all .15s}
+    .copy-btn{position:absolute;bottom:12px;right:12px;background:none;border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:.72rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all .15s}
     .copy-btn:hover{border-color:var(--primary);color:var(--primary)}
     .no-results{text-align:center;padding:60px 24px;color:var(--text-muted)}
-    .no-results svg{margin-bottom:12px;opacity:.3}
-    .no-results p{font-size:1rem}
+    .loading{text-align:center;padding:60px 24px;color:var(--text-muted)}
     footer{text-align:center;padding:32px 24px;color:var(--text-muted);font-size:.875rem;border-top:1px solid var(--border)}
     footer a{color:var(--primary);text-decoration:none}
     @media(max-width:500px){.controls-row{flex-direction:column;align-items:stretch}.filter-group{justify-content:center}}
@@ -95,16 +98,13 @@
         <button class="filter-btn all active" onclick="setFilter('all',this)">All</button>
         <button class="filter-btn boy" onclick="setFilter('boy',this)">Boys</button>
         <button class="filter-btn girl" onclick="setFilter('girl',this)">Girls</button>
+        <button class="filter-btn bd" onclick="setFilter('bd',this)">Bangladeshi</button>
       </div>
     </div>
     <div class="stats" id="stats"></div>
   </div>
 
-  <div class="grid" id="grid"></div>
-  <div class="no-results" id="no-results" style="display:none">
-    <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-    <p>No names match your search.</p>
-  </div>
+  <div id="output"><div class="loading">Loading names…</div></div>
 </main>
 
 <footer>
@@ -112,172 +112,15 @@
 </footer>
 
 <script>
-const NAMES = [
-  // BOYS
-  {n:'Muhammad',ar:'مُحَمَّد',g:'boy',m:'Praised, commendable',o:'Arabic'},
-  {n:'Ahmed',ar:'أَحْمَد',g:'boy',m:'Most praiseworthy',o:'Arabic'},
-  {n:'Ali',ar:'عَلِيّ',g:'boy',m:'Exalted, noble, high',o:'Arabic'},
-  {n:'Omar',ar:'عُمَر',g:'boy',m:'Long-lived, flourishing',o:'Arabic'},
-  {n:'Ibrahim',ar:'إِبْرَاهِيم',g:'boy',m:'Father of nations',o:'Arabic/Hebrew'},
-  {n:'Yusuf',ar:'يُوسُف',g:'boy',m:'God increases in power',o:'Arabic/Hebrew'},
-  {n:'Hassan',ar:'حَسَن',g:'boy',m:'Good, handsome, beautiful',o:'Arabic'},
-  {n:'Hussain',ar:'حُسَيْن',g:'boy',m:'Good, handsome (diminutive)',o:'Arabic'},
-  {n:'Khalid',ar:'خَالِد',g:'boy',m:'Eternal, immortal',o:'Arabic'},
-  {n:'Bilal',ar:'بِلَال',g:'boy',m:'Moisture, freshness of water',o:'Arabic'},
-  {n:'Hamza',ar:'حَمْزَة',g:'boy',m:'Strong, steadfast, lion',o:'Arabic'},
-  {n:'Zaid',ar:'زَيْد',g:'boy',m:'Growth, abundance',o:'Arabic'},
-  {n:'Tariq',ar:'طَارِق',g:'boy',m:'Morning star, one who knocks',o:'Arabic'},
-  {n:'Idris',ar:'إِدْرِيس',g:'boy',m:'Studious, learned',o:'Arabic'},
-  {n:'Musa',ar:'مُوسَى',g:'boy',m:'Drawn from water',o:'Arabic/Hebrew'},
-  {n:'Isa',ar:'عِيسَى',g:'boy',m:'God is salvation',o:'Arabic'},
-  {n:'Dawud',ar:'دَاوُد',g:'boy',m:'Beloved',o:'Arabic/Hebrew'},
-  {n:'Sulayman',ar:'سُلَيْمَان',g:'boy',m:'Man of peace',o:'Arabic/Hebrew'},
-  {n:'Yahya',ar:'يَحْيَى',g:'boy',m:'God is gracious, to live',o:'Arabic'},
-  {n:'Zakariya',ar:'زَكَرِيَّا',g:'boy',m:'God remembers',o:'Arabic/Hebrew'},
-  {n:'Nuh',ar:'نُوح',g:'boy',m:'Rest, comfort',o:'Arabic'},
-  {n:'Saleh',ar:'صَالِح',g:'boy',m:'Righteous, virtuous',o:'Arabic'},
-  {n:'Umar',ar:'عُمَر',g:'boy',m:'Life, long-lived',o:'Arabic'},
-  {n:'Uthman',ar:'عُثْمَان',g:'boy',m:'Baby bustard (noble bird)',o:'Arabic'},
-  {n:'Abdallah',ar:'عَبْدُ الله',g:'boy',m:'Servant of God',o:'Arabic'},
-  {n:'Abdul Rahman',ar:'عَبْدُ الرَّحْمَن',g:'boy',m:'Servant of the Most Merciful',o:'Arabic'},
-  {n:'Rayyan',ar:'رَيَّان',g:'boy',m:'Lush, full of life',o:'Arabic'},
-  {n:'Mikail',ar:'مِيكَائِيل',g:'boy',m:'Who is like God',o:'Arabic/Hebrew'},
-  {n:'Jibreel',ar:'جِبْرِيل',g:'boy',m:'Strong man of God',o:'Arabic/Hebrew'},
-  {n:'Ismail',ar:'إِسْمَاعِيل',g:'boy',m:'God will hear',o:'Arabic/Hebrew'},
-  {n:'Ishaq',ar:'إِسْحَاق',g:'boy',m:'He laughs, laughter',o:'Arabic/Hebrew'},
-  {n:'Yaqub',ar:'يَعْقُوب',g:'boy',m:'Supplanter, holder of heel',o:'Arabic/Hebrew'},
-  {n:'Haroon',ar:'هَارُون',g:'boy',m:'Lofty, exalted, mountain of strength',o:'Arabic'},
-  {n:'Luqman',ar:'لُقْمَان',g:'boy',m:'Wise, gifted with wisdom',o:'Arabic'},
-  {n:'Talha',ar:'طَلْحَة',g:'boy',m:'A kind of tree, generous',o:'Arabic'},
-  {n:'Zubair',ar:'زُبَيْر',g:'boy',m:'Strong, brave',o:'Arabic'},
-  {n:'Saad',ar:'سَعْد',g:'boy',m:'Happiness, good luck',o:'Arabic'},
-  {n:'Faisal',ar:'فَيْصَل',g:'boy',m:'Decisive, judge',o:'Arabic'},
-  {n:'Imran',ar:'عِمْرَان',g:'boy',m:'Prosperity, long life',o:'Arabic'},
-  {n:'Adnan',ar:'عَدْنَان',g:'boy',m:'Settler, one who stays',o:'Arabic'},
-  {n:'Hasan',ar:'حَسَن',g:'boy',m:'Handsome, good',o:'Arabic'},
-  {n:'Kamil',ar:'كَامِل',g:'boy',m:'Perfect, complete',o:'Arabic'},
-  {n:'Nabil',ar:'نَبِيل',g:'boy',m:'Noble, honourable',o:'Arabic'},
-  {n:'Rayan',ar:'رَيَّان',g:'boy',m:'Gate of heaven, luxuriant',o:'Arabic'},
-  {n:'Sami',ar:'سَامِي',g:'boy',m:'Elevated, sublime',o:'Arabic'},
-  {n:'Tamir',ar:'تَامِر',g:'boy',m:'Rich in dates, wealthy',o:'Arabic'},
-  {n:'Walid',ar:'وَلِيد',g:'boy',m:'Newborn, newly born',o:'Arabic'},
-  {n:'Yasir',ar:'يَاسِر',g:'boy',m:'Easy, wealthy',o:'Arabic'},
-  {n:'Zafar',ar:'ظَفَر',g:'boy',m:'Victory, triumph',o:'Arabic'},
-  {n:'Amir',ar:'أَمِير',g:'boy',m:'Prince, commander',o:'Arabic'},
-  {n:'Badr',ar:'بَدْر',g:'boy',m:'Full moon',o:'Arabic'},
-  {n:'Farhan',ar:'فَرْحَان',g:'boy',m:'Happy, joyful',o:'Arabic'},
-  {n:'Ghazi',ar:'غَازِي',g:'boy',m:'Warrior, conqueror',o:'Arabic'},
-  {n:'Hadi',ar:'هَادِي',g:'boy',m:'Guide to righteousness',o:'Arabic'},
-  {n:'Ilyas',ar:'إِلْيَاس',g:'boy',m:'My God is Yahweh',o:'Arabic/Hebrew'},
-  {n:'Jawad',ar:'جَوَاد',g:'boy',m:'Generous, liberal',o:'Arabic'},
-  {n:'Kareem',ar:'كَرِيم',g:'boy',m:'Generous, noble',o:'Arabic'},
-  {n:'Layth',ar:'لَيْث',g:'boy',m:'Lion',o:'Arabic'},
-  {n:'Malik',ar:'مَالِك',g:'boy',m:'King, master',o:'Arabic'},
-  {n:'Nasir',ar:'نَاصِر',g:'boy',m:'Helper, supporter',o:'Arabic'},
-  {n:'Qasim',ar:'قَاسِم',g:'boy',m:'One who distributes',o:'Arabic'},
-  {n:'Rafiq',ar:'رَفِيق',g:'boy',m:'Kind, gentle friend',o:'Arabic'},
-  {n:'Shafiq',ar:'شَفِيق',g:'boy',m:'Compassionate, tender',o:'Arabic'},
-  {n:'Taha',ar:'طه',g:'boy',m:'Pure, name from Quran',o:'Arabic'},
-  {n:'Usman',ar:'عُثْمَان',g:'boy',m:'Baby bustard, noble',o:'Arabic'},
-  {n:'Waqar',ar:'وَقَار',g:'boy',m:'Dignity, prestige',o:'Arabic'},
-  {n:'Ziyad',ar:'زِيَاد',g:'boy',m:'Growth, addition',o:'Arabic'},
-  {n:'Anas',ar:'أَنَس',g:'boy',m:'Affection, intimacy',o:'Arabic'},
-  {n:'Burhan',ar:'بُرْهَان',g:'boy',m:'Proof, evidence',o:'Arabic'},
-  {n:'Daud',ar:'دَاوُد',g:'boy',m:'Beloved',o:'Arabic'},
-  {n:'Ehsan',ar:'إِحْسَان',g:'boy',m:'Excellence, goodness',o:'Arabic'},
-  {n:'Fahad',ar:'فَهَد',g:'boy',m:'Leopard, lynx',o:'Arabic'},
-  {n:'Ghalib',ar:'غَالِب',g:'boy',m:'Victor, dominant',o:'Arabic'},
-  {n:'Haider',ar:'حَيْدَر',g:'boy',m:'Lion, brave',o:'Arabic'},
-  {n:'Ibraheem',ar:'إِبْرَاهِيم',g:'boy',m:'Father of many nations',o:'Arabic'},
-  {n:'Junaid',ar:'جُنَيْد',g:'boy',m:'Soldier, young warrior',o:'Arabic'},
-  {n:'Khaled',ar:'خَالِد',g:'boy',m:'Immortal, eternal',o:'Arabic'},
-  {n:'Luay',ar:'لُؤَيّ',g:'boy',m:'Shield, protector',o:'Arabic'},
-  {n:'Mazin',ar:'مَازِن',g:'boy',m:'Rain cloud',o:'Arabic'},
-  {n:'Nasser',ar:'نَاصِر',g:'boy',m:'Victorious helper',o:'Arabic'},
-  {n:'Osama',ar:'أُسَامَة',g:'boy',m:'Lion cub',o:'Arabic'},
-  {n:'Rafi',ar:'رَافِع',g:'boy',m:'Exalting, elevating',o:'Arabic'},
-
-  // GIRLS
-  {n:'Aisha',ar:'عَائِشَة',g:'girl',m:'Alive, she who lives',o:'Arabic'},
-  {n:'Fatima',ar:'فَاطِمَة',g:'girl',m:'One who abstains, captivating',o:'Arabic'},
-  {n:'Zainab',ar:'زَيْنَب',g:'girl',m:'Fragrant flower, ornament',o:'Arabic'},
-  {n:'Maryam',ar:'مَرْيَم',g:'girl',m:'Beloved, exalted',o:'Arabic/Hebrew'},
-  {n:'Khadija',ar:'خَدِيجَة',g:'girl',m:'Early baby, premature child',o:'Arabic'},
-  {n:'Amina',ar:'آمِنَة',g:'girl',m:'Trustworthy, faithful, safe',o:'Arabic'},
-  {n:'Nour',ar:'نُور',g:'girl',m:'Light, radiance',o:'Arabic'},
-  {n:'Layla',ar:'لَيْلَى',g:'girl',m:'Night, dark beauty',o:'Arabic'},
-  {n:'Sara',ar:'سَارَة',g:'girl',m:'Princess, noblewoman',o:'Arabic/Hebrew'},
-  {n:'Hana',ar:'هَنَاء',g:'girl',m:'Happiness, bliss',o:'Arabic'},
-  {n:'Sana',ar:'سَنَاء',g:'girl',m:'Brilliance, radiance',o:'Arabic'},
-  {n:'Asma',ar:'أَسْمَاء',g:'girl',m:'Exalted, precious',o:'Arabic'},
-  {n:'Ruqayyah',ar:'رُقَيَّة',g:'girl',m:'Rise, ascend, charm',o:'Arabic'},
-  {n:'Safiya',ar:'صَفِيَّة',g:'girl',m:'Pure, serene, best friend',o:'Arabic'},
-  {n:'Sumaya',ar:'سُمَيَّة',g:'girl',m:'High above, elevated',o:'Arabic'},
-  {n:'Hafsa',ar:'حَفْصَة',g:'girl',m:'Young lioness, gathering',o:'Arabic'},
-  {n:'Ramlah',ar:'رَمْلَة',g:'girl',m:'Sandy, of the sand',o:'Arabic'},
-  {n:'Umm Kulthum',ar:'أُمّ كُلْثُوم',g:'girl',m:'Mother of many, full-cheeked',o:'Arabic'},
-  {n:'Nadia',ar:'نَادِيَة',g:'girl',m:'Caller, announcer',o:'Arabic'},
-  {n:'Yasmin',ar:'يَاسْمِين',g:'girl',m:'Jasmine flower',o:'Persian/Arabic'},
-  {n:'Salma',ar:'سَلْمَى',g:'girl',m:'Safe, peaceful',o:'Arabic'},
-  {n:'Rania',ar:'رَانِيَة',g:'girl',m:'Gazing, looking',o:'Arabic'},
-  {n:'Lina',ar:'لِينَة',g:'girl',m:'Tender, palm tree',o:'Arabic'},
-  {n:'Dina',ar:'دِينَا',g:'girl',m:'Judged, religion',o:'Arabic'},
-  {n:'Hiba',ar:'هِبَة',g:'girl',m:'Gift, donation',o:'Arabic'},
-  {n:'Iman',ar:'إِيمَان',g:'girl',m:'Faith, belief',o:'Arabic'},
-  {n:'Jana',ar:'جَنَى',g:'girl',m:'Harvest, paradise',o:'Arabic'},
-  {n:'Khawla',ar:'خَوْلَة',g:'girl',m:'Deer, graceful beauty',o:'Arabic'},
-  {n:'Lamya',ar:'لَمْيَاء',g:'girl',m:'Dark-lipped, beautiful',o:'Arabic'},
-  {n:'Marwa',ar:'مَرْوَة',g:'girl',m:'A hill in Mecca, flint stone',o:'Arabic'},
-  {n:'Nada',ar:'نَدَى',g:'girl',m:'Dew, generosity',o:'Arabic'},
-  {n:'Ola',ar:'عُلا',g:'girl',m:'Highness, ascendancy',o:'Arabic'},
-  {n:'Reem',ar:'رِيم',g:'girl',m:'White gazelle',o:'Arabic'},
-  {n:'Samira',ar:'سَمِيرَة',g:'girl',m:'Entertaining companion',o:'Arabic'},
-  {n:'Tahira',ar:'طَاهِرَة',g:'girl',m:'Pure, chaste, virtuous',o:'Arabic'},
-  {n:'Wafa',ar:'وَفَاء',g:'girl',m:'Faithfulness, loyalty',o:'Arabic'},
-  {n:'Zahra',ar:'زَهْرَاء',g:'girl',m:'Bright, radiant, flower',o:'Arabic'},
-  {n:'Amira',ar:'أَمِيرَة',g:'girl',m:'Princess, leader',o:'Arabic'},
-  {n:'Bushra',ar:'بُشْرَى',g:'girl',m:'Good news, glad tidings',o:'Arabic'},
-  {n:'Daliya',ar:'دَالِيَة',g:'girl',m:'Gentle, branch of a vine',o:'Arabic'},
-  {n:'Elham',ar:'إِلْهَام',g:'girl',m:'Inspiration, intuition',o:'Arabic'},
-  {n:'Farah',ar:'فَرَح',g:'girl',m:'Joy, happiness',o:'Arabic'},
-  {n:'Ghada',ar:'غَادَة',g:'girl',m:'Young graceful woman',o:'Arabic'},
-  {n:'Hadiya',ar:'هَدِيَّة',g:'girl',m:'Gift, present',o:'Arabic'},
-  {n:'Ibtisam',ar:'ابْتِسَام',g:'girl',m:'Smiling',o:'Arabic'},
-  {n:'Jumanah',ar:'جُمَانَة',g:'girl',m:'Silver pearl',o:'Arabic'},
-  {n:'Kawkab',ar:'كَوْكَب',g:'girl',m:'Star, planet',o:'Arabic'},
-  {n:'Lubna',ar:'لُبْنَى',g:'girl',m:'A type of tree, sweetness',o:'Arabic'},
-  {n:'Maha',ar:'مَهَا',g:'girl',m:'Beautiful eyes, wild cow',o:'Arabic'},
-  {n:'Nahla',ar:'نَهْلَة',g:'girl',m:'First drink of water',o:'Arabic'},
-  {n:'Obayda',ar:'أُبَيْدَة',g:'girl',m:'Servant of God',o:'Arabic'},
-  {n:'Qamra',ar:'قَمْرَاء',g:'girl',m:'Moonlit, bright',o:'Arabic'},
-  {n:'Rahma',ar:'رَحْمَة',g:'girl',m:'Mercy, compassion',o:'Arabic'},
-  {n:'Sabrina',ar:'صَبْرِينَة',g:'girl',m:'Patient, enduring',o:'Arabic'},
-  {n:'Thuraya',ar:'ثُرَيَّا',g:'girl',m:'Stars, Pleiades',o:'Arabic'},
-  {n:'Umnia',ar:'أُمْنِيَة',g:'girl',m:'Wish, desire, aspiration',o:'Arabic'},
-  {n:'Widad',ar:'وِدَاد',g:'girl',m:'Love, affection',o:'Arabic'},
-  {n:'Yusra',ar:'يُسْرَى',g:'girl',m:'Ease, prosperity',o:'Arabic'},
-  {n:'Zulfa',ar:'زُلْفَى',g:'girl',m:'Nearness to God',o:'Arabic'},
-  {n:'Afaf',ar:'عَفَاف',g:'girl',m:'Chastity, purity',o:'Arabic'},
-  {n:'Basmah',ar:'بَسْمَة',g:'girl',m:'Smile',o:'Arabic'},
-  {n:'Dua',ar:'دُعَاء',g:'girl',m:'Prayer, supplication',o:'Arabic'},
-  {n:'Faten',ar:'فَاتِن',g:'girl',m:'Fascinating, charming',o:'Arabic'},
-  {n:'Haneen',ar:'حَنِين',g:'girl',m:'Longing, yearning',o:'Arabic'},
-  {n:'Insaf',ar:'إِنْصَاف',g:'girl',m:'Justice, equity',o:'Arabic'},
-  {n:'Jihan',ar:'جِيهَان',g:'girl',m:'The world, universe',o:'Arabic'},
-  {n:'Kawsar',ar:'كَوْثَر',g:'girl',m:'River in paradise, abundance',o:'Arabic'},
-  {n:'Manal',ar:'مَنَال',g:'girl',m:'Attainment, achievement',o:'Arabic'},
-  {n:'Nesrin',ar:'نِسْرِين',g:'girl',m:'Wild rose',o:'Persian/Arabic'},
-  {n:'Randa',ar:'رَنْدَة',g:'girl',m:'Fragrant tree',o:'Arabic'},
-  {n:'Safa',ar:'صَفَاء',g:'girl',m:'Clarity, purity',o:'Arabic'},
-  {n:'Tasneem',ar:'تَسْنِيم',g:'girl',m:'Spring in paradise',o:'Arabic'},
-  {n:'Zara',ar:'زَارَة',g:'girl',m:'Blooming flower, dawn',o:'Arabic'},
-  {n:'Hoor',ar:'حُور',g:'girl',m:'Dark-eyed, beautiful',o:'Arabic'},
-  {n:'Minahil',ar:'مِنَاهِل',g:'girl',m:'Spring of fresh water',o:'Arabic'},
-  {n:'Naima',ar:'نَعِيمَة',g:'girl',m:'Comfort, ease, blessing',o:'Arabic'},
-  {n:'Shafia',ar:'شَافِعَة',g:'girl',m:'Healer, intercessor',o:'Arabic'},
-];
-
+let NAMES = [];
 let activeFilter = 'all';
+
+fetch('names.json')
+  .then(r => r.json())
+  .then(data => { NAMES = data; render(); })
+  .catch(() => {
+    document.getElementById('output').innerHTML = '<div class="no-results"><p>Failed to load names. Please refresh.</p></div>';
+  });
 
 function setFilter(f, btn) {
   activeFilter = f;
@@ -288,23 +131,23 @@ function setFilter(f, btn) {
 
 function render() {
   const q = document.getElementById('search').value.trim().toLowerCase();
-  const filtered = NAMES.filter(n => {
-    if (activeFilter !== 'all' && n.g !== activeFilter) return false;
+
+  let filtered = NAMES.filter(n => {
+    if (activeFilter === 'boy' && n.g !== 'boy') return false;
+    if (activeFilter === 'girl' && n.g !== 'girl') return false;
+    if (activeFilter === 'bd' && n.r !== 'bd') return false;
     if (!q) return true;
     return n.n.toLowerCase().includes(q) || n.m.toLowerCase().includes(q) || n.o.toLowerCase().includes(q);
   });
 
-  const grid = document.getElementById('grid');
-  const noRes = document.getElementById('no-results');
+  const out = document.getElementById('output');
 
   if (!filtered.length) {
-    grid.innerHTML = '';
-    noRes.style.display = '';
+    out.innerHTML = '<div class="no-results"><p>No names match your search.</p></div>';
     document.getElementById('stats').innerHTML = '';
     return;
   }
 
-  noRes.style.display = 'none';
   const boys = filtered.filter(n => n.g === 'boy').length;
   const girls = filtered.filter(n => n.g === 'girl').length;
   document.getElementById('stats').innerHTML =
@@ -312,20 +155,37 @@ function render() {
     (boys && girls ? ` — <span>${boys}</span> boys, <span>${girls}</span> girls` :
      boys ? ` — boys` : ` — girls`);
 
-  grid.innerHTML = filtered.map(n => `
-    <div class="card ${n.g}">
+  // Split: Bangladeshi first, then rest (only when not filtering by bd)
+  const bdNames = filtered.filter(n => n.r === 'bd');
+  const otherNames = filtered.filter(n => n.r !== 'bd');
+  const showSections = activeFilter !== 'bd' && bdNames.length > 0 && otherNames.length > 0;
+
+  let html = '';
+
+  if (showSections) {
+    html += `<div class="section-label">Popular in Bangladesh</div>`;
+    html += `<div class="grid">${bdNames.map(cardHtml).join('')}</div>`;
+    html += `<div class="section-label" style="margin-top:28px">More Names</div>`;
+    html += `<div class="grid">${otherNames.map(cardHtml).join('')}</div>`;
+  } else {
+    html += `<div class="grid">${filtered.map(cardHtml).join('')}</div>`;
+  }
+
+  out.innerHTML = html;
+}
+
+function cardHtml(n) {
+  const isBd = n.r === 'bd';
+  return `
+    <div class="card ${n.g}${isBd ? ' bd-card' : ''}">
       <div class="card-top">
-        <div>
-          <div class="name-en">${n.n}</div>
-          <div class="name-ar">${n.ar}</div>
-        </div>
+        <div class="name-en">${n.n}</div>
         <span class="gender-badge">${n.g === 'boy' ? '♂ Boy' : '♀ Girl'}</span>
       </div>
       <div class="meaning">${n.m}</div>
       <div class="origin">Origin: ${n.o}</div>
-      <button class="copy-btn" onclick="copyName('${n.n}',this)">Copy</button>
-    </div>
-  `).join('');
+      <button class="copy-btn" onclick="copyName('${n.n.replace(/'/g,"\\'")}',this)">Copy</button>
+    </div>`;
 }
 
 async function clip(text) {
@@ -343,8 +203,6 @@ async function copyName(name, btn) {
   const ok = await clip(name);
   if (ok) { btn.textContent = '✓ Copied'; setTimeout(() => btn.textContent = 'Copy', 1500); }
 }
-
-render();
 </script>
 </body>
 </html>
