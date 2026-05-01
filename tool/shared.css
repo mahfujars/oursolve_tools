@@ -191,3 +191,11 @@ button {
 
 /* ── JSON formatter placeholder text ── */
 [data-theme="dark"] #output span[style*="color:#475569"] { color: var(--text-muted) !important; }
+
+/* ── JSON formatter: syntax colors for dark mode ── */
+[data-theme="dark"] .json-key  { color: #60a5fa !important; }
+[data-theme="dark"] .json-str  { color: #86efac !important; }
+[data-theme="dark"] .json-num  { color: #fbbf24 !important; }
+[data-theme="dark"] .json-bool { color: #f472b6 !important; }
+[data-theme="dark"] .json-null { color: #94a3b8 !important; }
+[data-theme="dark"] pre { background: #0d1117 !important; color: #e2e8f0 !important; }
