@@ -1,0 +1,12 @@
+[
+  {"slug":"qr-generator","name":"QR Code Generator","category":"Generator","icon":"📱","iconClass":"icon-qr","desc":"Convert any URL, text, or contact info into a scannable QR code. Download as PNG instantly."},
+  {"slug":"password-generator","name":"Password Generator","category":"Security","icon":"🔑","iconClass":"icon-pass","desc":"Generate strong, random passwords with custom length and character sets. Strength meter included."},
+  {"slug":"word-counter","name":"Word Counter","category":"Writing","icon":"📝","iconClass":"icon-word","desc":"Count words, characters, sentences, and paragraphs. Estimates reading time and speaking time."},
+  {"slug":"json-formatter","name":"JSON Formatter","category":"Developer","icon":"🧰","iconClass":"icon-json","desc":"Format, minify and validate JSON instantly. Syntax highlighted output with auto-format on paste."},
+  {"slug":"base64","name":"Base64 Encoder / Decoder","category":"Encoding","icon":"🔤","iconClass":"icon-b64","desc":"Encode text or files to Base64 or decode Base64 strings back to plain text. File drag & drop supported."},
+  {"slug":"url-encoder","name":"URL Encoder / Decoder","category":"Developer","icon":"🔗","iconClass":"icon-url","desc":"Percent-encode URL strings or decode encoded URLs. Supports encodeURIComponent and encodeURI modes."},
+  {"slug":"hash-generator","name":"Hash Generator","category":"Security","icon":"🔐","iconClass":"icon-hash","desc":"Generate SHA-1, SHA-256, SHA-384, and SHA-512 hashes from text or files using native browser crypto."},
+  {"slug":"markdown-to-html","name":"Markdown to HTML","category":"Writing","icon":"📄","iconClass":"icon-md","desc":"Convert Markdown to HTML with a live side-by-side preview. Supports tables, code blocks, and more."},
+  {"slug":"regex-tester","name":"Regex Tester","category":"Developer","icon":"⚡","iconClass":"icon-rx","desc":"Test regular expressions in real-time. Match highlighting, capture group details, and all JS flags supported."},
+  {"slug":"muslim-names","name":"Muslim Baby Names","category":"Islamic","icon":"☪️","iconClass":"icon-islamic","desc":"Browse 1000+ Islamic names for boys and girls with meanings and origins. Parent name matching included."}
+]
