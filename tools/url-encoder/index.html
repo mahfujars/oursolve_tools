@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free URL Encoder & Decoder - Oursolve.com</title>
+  <meta name="description" content="Free online URL encoder and decoder. Encode special characters in URLs or decode percent-encoded strings instantly. 100% in your browser.">
+  <meta name="keywords" content="url encoder, url decoder, percent encoding, url encode online, url decode online">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://oursolve.com/tools/url-encoder/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oursolve.com/tools/url-encoder/">
+  <meta property="og:title" content="Free URL Encoder & Decoder - Oursolve.com">
+  <meta property="og:description" content="Encode or decode URL strings instantly. 100% private — nothing leaves your browser.">
+  <meta property="og:site_name" content="Oursolve">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"URL Encoder Decoder","url":"https://oursolve.com/tools/url-encoder/","description":"Encode and decode URL strings online.","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--primary:#6366f1;--primary-dark:#4f46e5;--primary-light:#e0e7ff;--bg:#f8fafc;--surface:#fff;--text:#0f172a;--text-muted:#64748b;--border:#e2e8f0;--shadow:0 1px 3px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06);--radius:16px}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+    nav{background:#fff;border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:12px}
+    nav a{text-decoration:none;color:var(--text-muted);font-size:.875rem;display:flex;align-items:center;gap:6px;transition:color .15s}
+    nav a:hover{color:var(--primary)}
+    .nav-sep{color:var(--border)}
+    .nav-current{color:var(--text);font-weight:600;font-size:.875rem}
+    .hero{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4338ca 100%);color:#fff;padding:48px 24px 56px;text-align:center}
+    .tool-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:.8rem;font-weight:600;margin-bottom:16px}
+    .hero h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-.5px;margin-bottom:12px}
+    .hero p{color:rgba(255,255,255,.75);font-size:1.05rem;max-width:480px;margin:0 auto}
+    main{max-width:760px;margin:0 auto;padding:0 24px 80px;transform:translateY(-32px)}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
+    .card-title{font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:14px}
+    .io-pair{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:14px;margin-bottom:16px}
+    @media(max-width:600px){.io-pair{grid-template-columns:1fr;}.arrow{transform:rotate(90deg)}}
+    textarea{width:100%;min-height:130px;border:1.5px solid var(--border);border-radius:10px;padding:14px;font-size:.9rem;font-family:'Menlo','Courier New',monospace;background:#f8fafc;resize:vertical;outline:none;transition:border-color .15s;line-height:1.6}
+    textarea:focus{border-color:var(--primary)}
+    .arrow{display:flex;flex-direction:column;gap:8px;align-items:center}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:9px 18px;border:none;border-radius:8px;font-size:.85rem;font-weight:700;font-family:inherit;cursor:pointer;transition:all .15s;white-space:nowrap}
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-primary:hover{background:var(--primary-dark)}
+    .btn-ghost{background:transparent;color:var(--primary);border:1.5px solid var(--primary-light)}
+    .btn-ghost:hover{background:var(--primary-light)}
+    .btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .mode-row{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+    .mode-chip{padding:6px 14px;border-radius:20px;font-size:.82rem;font-weight:600;border:1.5px solid var(--border);background:#fff;color:var(--text-muted);cursor:pointer;transition:all .15s}
+    .mode-chip.active{border-color:var(--primary);background:var(--primary-light);color:var(--primary-dark)}
+    .label{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--text-muted);margin-bottom:6px}
+    footer{text-align:center;padding:32px 24px;color:var(--text-muted);font-size:.875rem;border-top:1px solid var(--border)}
+    footer a{color:var(--primary);text-decoration:none}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../../">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Oursolve
+  </a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">URL Encoder / Decoder</span>
+</nav>
+
+<div class="hero">
+  <div class="tool-badge">🔗 Developer</div>
+  <h1>URL Encoder / Decoder</h1>
+  <p>Percent-encode or decode URL strings instantly. Nothing leaves your browser.</p>
+</div>
+
+<main>
+  <div class="card">
+    <p class="card-title">Encoding mode</p>
+    <div class="mode-row">
+      <button class="mode-chip active" id="mode-component" onclick="setMode('component')">encodeURIComponent <span style="opacity:.6;font-weight:400">(recommended)</span></button>
+      <button class="mode-chip" id="mode-full" onclick="setMode('full')">encodeURI <span style="opacity:.6;font-weight:400">(full URL)</span></button>
+    </div>
+
+    <!-- Encode -->
+    <div style="margin-bottom:24px">
+      <div class="label">Plain text / URL</div>
+      <textarea id="enc-input" placeholder="https://example.com/search?q=hello world&lang=en" oninput="liveEncode()"></textarea>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="liveEncode()">🔒 Encode</button>
+        <button class="btn btn-ghost" onclick="copyField('enc-output',this)">📋 Copy output</button>
+        <button class="btn btn-ghost" onclick="swapEnc()">⇅ Swap</button>
+      </div>
+    </div>
+    <div class="label">Encoded output</div>
+    <textarea id="enc-output" readonly placeholder="Encoded URL will appear here…"></textarea>
+
+    <hr style="border:none;border-top:1px solid var(--border);margin:24px 0">
+
+    <!-- Decode -->
+    <div style="margin-bottom:14px">
+      <div class="label">Encoded URL</div>
+      <textarea id="dec-input" placeholder="https%3A%2F%2Fexample.com%2Fsearch%3Fq%3Dhello%20world" oninput="liveDecode()"></textarea>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="liveDecode()">🔓 Decode</button>
+        <button class="btn btn-ghost" onclick="copyField('dec-output',this)">📋 Copy output</button>
+        <button class="btn btn-ghost" onclick="swapDec()">⇅ Swap</button>
+      </div>
+    </div>
+    <div class="label">Decoded output</div>
+    <textarea id="dec-output" readonly placeholder="Decoded text will appear here…"></textarea>
+  </div>
+</main>
+
+<footer>
+  <p><a href="../../">← Back to all tools</a> · Oursolve — Free online tools</p>
+</footer>
+
+<script>
+  let mode = 'component';
+
+  function setMode(m) {
+    mode = m;
+    document.getElementById('mode-component').classList.toggle('active', m === 'component');
+    document.getElementById('mode-full').classList.toggle('active', m === 'full');
+    liveEncode();
+  }
+
+  function liveEncode() {
+    const val = document.getElementById('enc-input').value;
+    if (!val) { document.getElementById('enc-output').value = ''; return; }
+    try {
+      document.getElementById('enc-output').value = mode === 'component' ? encodeURIComponent(val) : encodeURI(val);
+    } catch(e) { document.getElementById('enc-output').value = 'Error: ' + e.message; }
+  }
+
+  function liveDecode() {
+    const val = document.getElementById('dec-input').value;
+    if (!val) { document.getElementById('dec-output').value = ''; return; }
+    try {
+      document.getElementById('dec-output').value = decodeURIComponent(val.replace(/\+/g, ' '));
+    } catch(e) { document.getElementById('dec-output').value = 'Error: ' + e.message; }
+  }
+
+  function swapEnc() {
+    const out = document.getElementById('enc-output').value;
+    if (!out) return;
+    document.getElementById('enc-input').value = out;
+    document.getElementById('enc-output').value = '';
+  }
+
+  function swapDec() {
+    const out = document.getElementById('dec-output').value;
+    if (!out) return;
+    document.getElementById('dec-input').value = out;
+    document.getElementById('dec-output').value = '';
+  }
+
+  async function clip(text) {
+    try { await navigator.clipboard.writeText(text); return true; } catch {}
+    try {
+      const ta = Object.assign(document.createElement('textarea'), {value: text});
+      ta.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(ta); ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta); return ok;
+    } catch { return false; }
+  }
+
+  async function copyField(id, btn) {
+    const val = document.getElementById(id).value;
+    if (!val) return;
+    const ok = await clip(val);
+    if (ok) { const o = btn.textContent; btn.textContent = '✅ Copied!'; setTimeout(() => btn.textContent = o, 1500); }
+  }
+</script>
+</body>
+</html>

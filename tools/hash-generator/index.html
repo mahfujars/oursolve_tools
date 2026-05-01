@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Hash Generator (SHA-256, SHA-512) - Oursolve.com</title>
+  <meta name="description" content="Free online hash generator. Generate SHA-1, SHA-256, SHA-384 and SHA-512 hashes from text or files. 100% in your browser using the native Web Crypto API.">
+  <meta name="keywords" content="hash generator, sha256 generator, sha512 hash, sha-256 online, file hash checker">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://oursolve.com/tools/hash-generator/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oursolve.com/tools/hash-generator/">
+  <meta property="og:title" content="Free Hash Generator (SHA-256, SHA-512) - Oursolve.com">
+  <meta property="og:description" content="Generate SHA-1, SHA-256, SHA-384, SHA-512 hashes from text or files. 100% private — uses native browser crypto.">
+  <meta property="og:site_name" content="Oursolve">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Hash Generator","url":"https://oursolve.com/tools/hash-generator/","description":"Generate SHA hashes from text or files online.","applicationCategory":"SecurityApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--primary:#6366f1;--primary-dark:#4f46e5;--primary-light:#e0e7ff;--bg:#f8fafc;--surface:#fff;--text:#0f172a;--text-muted:#64748b;--border:#e2e8f0;--shadow:0 1px 3px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06);--radius:16px}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+    nav{background:#fff;border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:12px}
+    nav a{text-decoration:none;color:var(--text-muted);font-size:.875rem;display:flex;align-items:center;gap:6px;transition:color .15s}
+    nav a:hover{color:var(--primary)}
+    .nav-sep{color:var(--border)}
+    .nav-current{color:var(--text);font-weight:600;font-size:.875rem}
+    .hero{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4338ca 100%);color:#fff;padding:48px 24px 56px;text-align:center}
+    .tool-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:.8rem;font-weight:600;margin-bottom:16px}
+    .hero h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-.5px;margin-bottom:12px}
+    .hero p{color:rgba(255,255,255,.75);font-size:1.05rem;max-width:480px;margin:0 auto}
+    main{max-width:760px;margin:0 auto;padding:0 24px 80px;transform:translateY(-32px)}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
+    .card-title{font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px}
+    .tabs{display:flex;gap:4px;background:var(--bg);padding:4px;border-radius:10px;margin-bottom:20px}
+    .tab{flex:1;padding:9px;border:none;border-radius:7px;font-size:.9rem;font-weight:600;font-family:inherit;cursor:pointer;background:transparent;color:var(--text-muted);transition:all .15s}
+    .tab.active{background:#fff;color:var(--primary);box-shadow:var(--shadow)}
+    textarea{width:100%;min-height:120px;border:1.5px solid var(--border);border-radius:10px;padding:14px;font-size:.9rem;font-family:inherit;background:#f8fafc;resize:vertical;outline:none;transition:border-color .15s}
+    textarea:focus{border-color:var(--primary)}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:11px 24px;border:none;border-radius:8px;font-size:.9rem;font-weight:700;font-family:inherit;cursor:pointer;transition:all .15s}
+    .btn-primary{background:var(--primary);color:#fff;width:100%;margin-top:14px}
+    .btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px)}
+    .hash-row{display:flex;flex-direction:column;gap:14px;margin-top:16px}
+    .hash-item{border:1px solid var(--border);border-radius:10px;overflow:hidden}
+    .hash-label{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:var(--bg);border-bottom:1px solid var(--border)}
+    .hash-algo{font-size:.8rem;font-weight:700;color:var(--text-muted)}
+    .hash-copy{background:none;border:none;cursor:pointer;font-size:.8rem;font-weight:600;color:var(--primary);padding:2px 6px;border-radius:4px;transition:background .15s}
+    .hash-copy:hover{background:var(--primary-light)}
+    .hash-value{padding:12px 14px;font-family:'Menlo','Courier New',monospace;font-size:.82rem;word-break:break-all;color:var(--text);min-height:42px;background:#fff}
+    .hash-value.empty{color:var(--text-muted)}
+    .drop-zone{border:2px dashed var(--border);border-radius:10px;padding:24px;text-align:center;cursor:pointer;transition:all .15s;color:var(--text-muted);font-size:.9rem}
+    .drop-zone:hover,.drop-zone.drag-over{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+    .drop-zone input{display:none}
+    .file-info{font-size:.82rem;color:var(--text-muted);margin-top:8px;text-align:center}
+    footer{text-align:center;padding:32px 24px;color:var(--text-muted);font-size:.875rem;border-top:1px solid var(--border)}
+    footer a{color:var(--primary);text-decoration:none}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../../">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Oursolve
+  </a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Hash Generator</span>
+</nav>
+
+<div class="hero">
+  <div class="tool-badge">🔐 Security</div>
+  <h1>Hash Generator</h1>
+  <p>Generate SHA-1, SHA-256, SHA-384 and SHA-512 hashes from text or files using native browser crypto.</p>
+</div>
+
+<main>
+  <div class="card">
+    <div class="tabs">
+      <button class="tab active" id="tab-text" onclick="switchTab('text')">Text</button>
+      <button class="tab" id="tab-file" onclick="switchTab('file')">File</button>
+    </div>
+
+    <div id="panel-text">
+      <p class="card-title">Input text</p>
+      <textarea id="text-input" placeholder="Type or paste text to hash…"></textarea>
+      <button class="btn btn-primary" onclick="hashText()">🔐 Generate Hashes</button>
+    </div>
+
+    <div id="panel-file" style="display:none">
+      <p class="card-title">Select file</p>
+      <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()" ondragover="onDragOver(event)" ondragleave="onDragLeave()" ondrop="onDrop(event)">
+        <input type="file" id="file-input" onchange="hashFile(this)">
+        📁 Click or drag & drop a file here
+      </div>
+      <p class="file-info" id="file-info"></p>
+    </div>
+
+    <div class="hash-row" id="results">
+      <div class="hash-item" id="row-sha1">
+        <div class="hash-label"><span class="hash-algo">SHA-1</span><button class="hash-copy" onclick="copyHash('sha1',this)">Copy</button></div>
+        <div class="hash-value empty" id="hash-sha1">—</div>
+      </div>
+      <div class="hash-item" id="row-sha256">
+        <div class="hash-label"><span class="hash-algo">SHA-256</span><button class="hash-copy" onclick="copyHash('sha256',this)">Copy</button></div>
+        <div class="hash-value empty" id="hash-sha256">—</div>
+      </div>
+      <div class="hash-item" id="row-sha384">
+        <div class="hash-label"><span class="hash-algo">SHA-384</span><button class="hash-copy" onclick="copyHash('sha384',this)">Copy</button></div>
+        <div class="hash-value empty" id="hash-sha384">—</div>
+      </div>
+      <div class="hash-item" id="row-sha512">
+        <div class="hash-label"><span class="hash-algo">SHA-512</span><button class="hash-copy" onclick="copyHash('sha512',this)">Copy</button></div>
+        <div class="hash-value empty" id="hash-sha512">—</div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p><a href="../../">← Back to all tools</a> · Oursolve — Free online tools</p>
+</footer>
+
+<script>
+  const ALGOS = { sha1:'SHA-1', sha256:'SHA-256', sha384:'SHA-384', sha512:'SHA-512' };
+
+  function switchTab(tab) {
+    document.getElementById('panel-text').style.display = tab === 'text' ? '' : 'none';
+    document.getElementById('panel-file').style.display = tab === 'file' ? '' : 'none';
+    document.getElementById('tab-text').classList.toggle('active', tab === 'text');
+    document.getElementById('tab-file').classList.toggle('active', tab === 'file');
+    resetResults();
+  }
+
+  function resetResults() {
+    Object.keys(ALGOS).forEach(k => {
+      const el = document.getElementById('hash-' + k);
+      el.textContent = '—';
+      el.className = 'hash-value empty';
+    });
+  }
+
+  async function digest(algo, buffer) {
+    const hashBuffer = await crypto.subtle.digest(algo, buffer);
+    return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2,'0')).join('');
+  }
+
+  async function computeAll(buffer) {
+    resetResults();
+    for (const [key, algo] of Object.entries(ALGOS)) {
+      try {
+        const hash = await digest(algo, buffer);
+        const el = document.getElementById('hash-' + key);
+        el.textContent = hash;
+        el.className = 'hash-value';
+      } catch(e) {
+        document.getElementById('hash-' + key).textContent = 'Error: ' + e.message;
+      }
+    }
+  }
+
+  async function hashText() {
+    const text = document.getElementById('text-input').value;
+    if (!text) return;
+    const buffer = new TextEncoder().encode(text);
+    await computeAll(buffer);
+  }
+
+  async function hashFile(input) {
+    const file = input.files[0];
+    if (!file) return;
+    document.getElementById('file-info').textContent = `Hashing ${file.name} (${(file.size/1024).toFixed(1)} KB)…`;
+    const buffer = await file.arrayBuffer();
+    await computeAll(buffer);
+    document.getElementById('file-info').textContent = `File: ${file.name} · ${(file.size/1024).toFixed(1)} KB`;
+  }
+
+  async function clip(text) {
+    try { await navigator.clipboard.writeText(text); return true; } catch {}
+    try {
+      const ta = Object.assign(document.createElement('textarea'), {value: text});
+      ta.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(ta); ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta); return ok;
+    } catch { return false; }
+  }
+
+  async function copyHash(key, btn) {
+    const text = document.getElementById('hash-' + key).textContent;
+    if (text === '—') return;
+    const ok = await clip(text);
+    if (ok) { btn.textContent = '✓ Copied'; setTimeout(() => btn.textContent = 'Copy', 1500); }
+  }
+
+  function onDragOver(e) { e.preventDefault(); document.getElementById('drop-zone').classList.add('drag-over'); }
+  function onDragLeave() { document.getElementById('drop-zone').classList.remove('drag-over'); }
+  function onDrop(e) {
+    e.preventDefault(); onDragLeave();
+    const file = e.dataTransfer.files[0];
+    if (!file) return;
+    hashFile({ files: [file] });
+  }
+
+  // Auto-hash on typing
+  document.getElementById('text-input').addEventListener('input', () => {
+    clearTimeout(window._hashTimer);
+    window._hashTimer = setTimeout(hashText, 200);
+  });
+</script>
+</body>
+</html>

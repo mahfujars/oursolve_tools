@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Markdown to HTML Converter - Oursolve.com</title>
+  <meta name="description" content="Free online Markdown to HTML converter with live preview. Paste Markdown and instantly see rendered HTML output. 100% in your browser — nothing is sent to any server.">
+  <meta name="keywords" content="markdown to html, markdown converter, markdown preview, md to html online, markdown editor">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://oursolve.com/tools/markdown-to-html/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oursolve.com/tools/markdown-to-html/">
+  <meta property="og:title" content="Free Markdown to HTML Converter - Oursolve.com">
+  <meta property="og:description" content="Convert Markdown to HTML with live preview. 100% private — nothing leaves your browser.">
+  <meta property="og:site_name" content="Oursolve">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Markdown to HTML Converter","url":"https://oursolve.com/tools/markdown-to-html/","description":"Convert Markdown to HTML with live preview.","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--primary:#6366f1;--primary-dark:#4f46e5;--primary-light:#e0e7ff;--bg:#f8fafc;--surface:#fff;--text:#0f172a;--text-muted:#64748b;--border:#e2e8f0;--shadow:0 1px 3px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06);--radius:16px}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+    nav{background:#fff;border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:12px}
+    nav a{text-decoration:none;color:var(--text-muted);font-size:.875rem;display:flex;align-items:center;gap:6px;transition:color .15s}
+    nav a:hover{color:var(--primary)}
+    .nav-sep{color:var(--border)}
+    .nav-current{color:var(--text);font-weight:600;font-size:.875rem}
+    .hero{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4338ca 100%);color:#fff;padding:48px 24px 56px;text-align:center}
+    .tool-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:.8rem;font-weight:600;margin-bottom:16px}
+    .hero h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-.5px;margin-bottom:12px}
+    .hero p{color:rgba(255,255,255,.75);font-size:1.05rem;max-width:480px;margin:0 auto}
+    main{max-width:1100px;margin:0 auto;padding:0 24px 80px;transform:translateY(-32px)}
+    .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center;justify-content:space-between}
+    .toolbar-left{display:flex;gap:8px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;gap:5px;padding:7px 14px;border:none;border-radius:7px;font-size:.82rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .15s}
+    .btn-secondary{background:var(--bg);color:var(--text);border:1px solid var(--border)}
+    .btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-primary:hover{background:var(--primary-dark)}
+    .split{display:grid;grid-template-columns:1fr 1fr;gap:16px;align-items:start}
+    @media(max-width:700px){.split{grid-template-columns:1fr}}
+    .pane{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
+    .pane-header{padding:10px 16px;background:var(--bg);border-bottom:1px solid var(--border);font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--text-muted);display:flex;align-items:center;justify-content:space-between}
+    textarea{width:100%;min-height:460px;border:none;padding:16px;font-size:.9rem;font-family:'Menlo','Courier New',monospace;background:#fff;resize:vertical;outline:none;line-height:1.7}
+    .preview{min-height:460px;padding:20px 24px;line-height:1.8;font-size:.95rem;overflow:auto}
+    .preview h1,.preview h2,.preview h3,.preview h4{font-weight:700;margin:1.4em 0 .5em;line-height:1.3}
+    .preview h1{font-size:1.8rem;border-bottom:2px solid var(--border);padding-bottom:.3em}
+    .preview h2{font-size:1.4rem;border-bottom:1px solid var(--border);padding-bottom:.2em}
+    .preview h3{font-size:1.15rem}
+    .preview h4{font-size:1rem}
+    .preview p{margin-bottom:1em}
+    .preview a{color:var(--primary)}
+    .preview code{font-family:'Menlo','Courier New',monospace;font-size:.88em;background:#f1f5f9;padding:2px 6px;border-radius:4px}
+    .preview pre{background:#1e293b;color:#e2e8f0;padding:16px;border-radius:10px;overflow-x:auto;margin:1em 0}
+    .preview pre code{background:none;padding:0;color:inherit}
+    .preview blockquote{border-left:4px solid var(--primary);padding:.5em 1em;margin:1em 0;background:var(--primary-light);border-radius:0 8px 8px 0;color:var(--text-muted)}
+    .preview ul,.preview ol{margin:1em 0 1em 1.5em}
+    .preview li{margin-bottom:.3em}
+    .preview hr{border:none;border-top:2px solid var(--border);margin:1.5em 0}
+    .preview table{width:100%;border-collapse:collapse;margin:1em 0}
+    .preview th,.preview td{border:1px solid var(--border);padding:8px 12px;text-align:left}
+    .preview th{background:var(--bg);font-weight:700}
+    .preview img{max-width:100%;border-radius:6px}
+    .tab-row{display:flex;gap:4px}
+    .out-tab{padding:6px 12px;border:none;border-radius:6px;font-size:.78rem;font-weight:600;cursor:pointer;background:transparent;color:var(--text-muted)}
+    .out-tab.active{background:var(--primary-light);color:var(--primary-dark)}
+    #raw-html{display:none;min-height:460px;padding:16px;font-size:.82rem;font-family:'Menlo','Courier New',monospace;white-space:pre-wrap;word-break:break-all;color:var(--text);overflow:auto}
+    footer{text-align:center;padding:32px 24px;color:var(--text-muted);font-size:.875rem;border-top:1px solid var(--border)}
+    footer a{color:var(--primary);text-decoration:none}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../../">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Oursolve
+  </a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Markdown to HTML</span>
+</nav>
+
+<div class="hero">
+  <div class="tool-badge">📝 Writing</div>
+  <h1>Markdown to HTML</h1>
+  <p>Live Markdown preview and HTML export. Nothing leaves your browser.</p>
+</div>
+
+<main>
+  <div class="toolbar">
+    <div class="toolbar-left">
+      <button class="btn btn-secondary" onclick="insertSample()">📄 Load sample</button>
+      <button class="btn btn-secondary" onclick="clearAll()">🗑 Clear</button>
+    </div>
+    <button class="btn btn-primary" onclick="copyHtml(this)">📋 Copy HTML</button>
+  </div>
+
+  <div class="split">
+    <div class="pane">
+      <div class="pane-header">Markdown Input</div>
+      <textarea id="md-input" placeholder="# Hello World&#10;&#10;Type your **Markdown** here…" oninput="render()"></textarea>
+    </div>
+    <div class="pane">
+      <div class="pane-header">
+        Output
+        <div class="tab-row">
+          <button class="out-tab active" id="tab-preview" onclick="showTab('preview')">Preview</button>
+          <button class="out-tab" id="tab-raw" onclick="showTab('raw')">HTML</button>
+        </div>
+      </div>
+      <div class="preview" id="preview"></div>
+      <div id="raw-html"></div>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <p><a href="../../">← Back to all tools</a> · Oursolve — Free online tools</p>
+</footer>
+
+<script>
+  function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function mdToHtml(md) {
+    let html = md;
+    // Fenced code blocks
+    html = html.replace(/```(\w*)\n?([\s\S]*?)```/g, (_, lang, code) =>
+      `<pre><code${lang ? ` class="language-${lang}"`:''}>` + escHtml(code.trim()) + '</code></pre>');
+    // Inline code
+    html = html.replace(/`([^`]+)`/g, (_, c) => `<code>${escHtml(c)}</code>`);
+    // Headers
+    html = html.replace(/^#{6}\s+(.+)$/gm, '<h6>$1</h6>');
+    html = html.replace(/^#{5}\s+(.+)$/gm, '<h5>$1</h5>');
+    html = html.replace(/^#{4}\s+(.+)$/gm, '<h4>$1</h4>');
+    html = html.replace(/^#{3}\s+(.+)$/gm, '<h3>$1</h3>');
+    html = html.replace(/^#{2}\s+(.+)$/gm, '<h2>$1</h2>');
+    html = html.replace(/^#{1}\s+(.+)$/gm, '<h1>$1</h1>');
+    // Blockquotes
+    html = html.replace(/^>\s*(.+)$/gm, '<blockquote>$1</blockquote>');
+    // HR
+    html = html.replace(/^[-*_]{3,}\s*$/gm, '<hr>');
+    // Bold + italic
+    html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+    html = html.replace(/___(.+?)___/g, '<strong><em>$1</em></strong>');
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/__(.+?)__/g, '<strong>$1</strong>');
+    html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+    html = html.replace(/_(.+?)_/g, '<em>$1</em>');
+    html = html.replace(/~~(.+?)~~/g, '<del>$1</del>');
+    // Images (before links)
+    html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
+    // Links
+    html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener">$1</a>');
+    // Tables
+    html = html.replace(/^\|(.+)\|\s*\n\|[-| :]+\|\s*\n((?:\|.+\|\s*\n?)+)/gm, (_, head, body) => {
+      const th = head.split('|').map(c => `<th>${c.trim()}</th>`).join('');
+      const rows = body.trim().split('\n').map(row => {
+        const tds = row.replace(/^\||\|$/g,'').split('|').map(c => `<td>${c.trim()}</td>`).join('');
+        return `<tr>${tds}</tr>`;
+      }).join('');
+      return `<table><thead><tr>${th}</tr></thead><tbody>${rows}</tbody></table>`;
+    });
+    // Unordered lists
+    html = html.replace(/(^[-*+]\s+.+(\n|$))+/gm, match => {
+      const items = match.trim().split('\n').map(l => `<li>${l.replace(/^[-*+]\s+/,'')}</li>`).join('');
+      return `<ul>${items}</ul>`;
+    });
+    // Ordered lists
+    html = html.replace(/(^\d+\.\s+.+(\n|$))+/gm, match => {
+      const items = match.trim().split('\n').map(l => `<li>${l.replace(/^\d+\.\s+/,'')}</li>`).join('');
+      return `<ol>${items}</ol>`;
+    });
+    // Paragraphs
+    html = html.replace(/^(?!<[a-z]|\s*$)(.+)$/gm, '<p>$1</p>');
+    // Cleanup
+    html = html.replace(/\n{3,}/g, '\n\n');
+    return html.trim();
+  }
+
+  function render() {
+    const md = document.getElementById('md-input').value;
+    const html = mdToHtml(md);
+    document.getElementById('preview').innerHTML = html;
+    document.getElementById('raw-html').textContent = html;
+  }
+
+  function showTab(tab) {
+    document.getElementById('preview').style.display = tab === 'preview' ? '' : 'none';
+    document.getElementById('raw-html').style.display = tab === 'raw' ? 'block' : 'none';
+    document.getElementById('tab-preview').classList.toggle('active', tab === 'preview');
+    document.getElementById('tab-raw').classList.toggle('active', tab === 'raw');
+  }
+
+  async function clip(text) {
+    try { await navigator.clipboard.writeText(text); return true; } catch {}
+    try {
+      const ta = Object.assign(document.createElement('textarea'), {value: text});
+      ta.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(ta); ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta); return ok;
+    } catch { return false; }
+  }
+
+  async function copyHtml(btn) {
+    const html = mdToHtml(document.getElementById('md-input').value);
+    const ok = await clip(html);
+    if (ok) { btn.textContent = '✅ Copied!'; setTimeout(() => btn.textContent = '📋 Copy HTML', 1500); }
+  }
+
+  function clearAll() {
+    document.getElementById('md-input').value = '';
+    document.getElementById('preview').innerHTML = '';
+    document.getElementById('raw-html').textContent = '';
+  }
+
+  function insertSample() {
+    document.getElementById('md-input').value = `# Markdown to HTML
+
+Write **bold**, *italic*, or ~~strikethrough~~ text.
+
+## Lists
+
+- Item one
+- Item two
+- Item three
+
+1. First
+2. Second
+3. Third
+
+## Code
+
+Inline \`code\` and fenced blocks:
+
+\`\`\`javascript
+function hello(name) {
+  return \`Hello, \${name}!\`;
+}
+\`\`\`
+
+## Blockquote
+
+> This is a blockquote. Great for callouts and citations.
+
+## Table
+
+| Name   | Role     | Score |
+|--------|----------|-------|
+| Alice  | Dev      | 98    |
+| Bob    | Design   | 95    |
+
+## Link & Image
+
+[Visit Oursolve](https://oursolve.com)
+`;
+    render();
+  }
+
+  // Initial render
+  insertSample();
+</script>
+</body>
+</html>

@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog — Oursolve</title>
+  <meta name="description" content="Tips, guides, and updates from the Oursolve team.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://oursolve.com/blog/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oursolve.com/blog/">
+  <meta property="og:title" content="Blog — Oursolve">
+  <meta property="og:description" content="Tips, guides, and updates from the Oursolve team.">
+  <meta property="og:site_name" content="Oursolve">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --primary-light: #e0e7ff;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+      --shadow-hover: 0 4px 12px rgba(99,102,241,.2), 0 8px 32px rgba(0,0,0,.1);
+      --radius: 16px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Breadcrumb nav */
+    .breadcrumb {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,.65);
+      z-index: 10;
+      white-space: nowrap;
+    }
+    .breadcrumb a { color: rgba(255,255,255,.85); text-decoration: none; }
+    .breadcrumb a:hover { color: #fff; }
+    .breadcrumb svg { opacity: .5; }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+      color: #fff;
+      padding: 72px 24px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 0%, rgba(139,92,246,.3) 0%, transparent 60%),
+                  radial-gradient(ellipse at 20% 100%, rgba(99,102,241,.2) 0%, transparent 50%);
+      pointer-events: none;
+    }
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 12px;
+      position: relative;
+    }
+    header p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,.75);
+      margin-bottom: 28px;
+      position: relative;
+    }
+
+    /* Search */
+    .search-wrap {
+      position: relative;
+      max-width: 480px;
+      margin: 0 auto;
+      z-index: 1;
+    }
+    .search-wrap svg {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+    }
+    #searchInput {
+      width: 100%;
+      padding: 14px 16px 14px 44px;
+      border-radius: 50px;
+      border: none;
+      font-size: 0.95rem;
+      outline: none;
+      box-shadow: 0 4px 20px rgba(0,0,0,.2);
+      background: #fff;
+      color: var(--text);
+    }
+
+    /* Main */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      transform: translateY(-40px);
+    }
+
+    /* Filters */
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+    .filter-btn {
+      padding: 6px 16px;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all .15s;
+    }
+    .filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .filter-btn.active { background: var(--primary); border-color: var(--primary); color: #fff; }
+
+    /* Grid */
+    .posts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    /* Card */
+    .post-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow);
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    .post-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--primary);
+    }
+    .card-img {
+      height: 190px;
+      overflow: hidden;
+      background: linear-gradient(135deg, #e0e7ff, #ede9fe);
+      flex-shrink: 0;
+    }
+    .card-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .card-img-placeholder {
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+      opacity: .7;
+    }
+    .card-body {
+      padding: 20px 22px 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      align-self: flex-start;
+    }
+    .card-body h2 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .card-body p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      flex: 1;
+    }
+    .card-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-top: auto;
+    }
+    .author-avatar {
+      width: 26px;
+      height: 26px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .dot { opacity: .4; }
+
+    /* Skeleton */
+    .skeleton {
+      background: linear-gradient(90deg, #f1f5f9 25%, #e2e8f0 50%, #f1f5f9 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius: 8px;
+    }
+    @keyframes shimmer { to { background-position: -200% 0; } }
+    .sk-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .sk-img { height: 190px; }
+    .sk-body { padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 12px; }
+    .sk-badge { height: 20px; width: 80px; }
+    .sk-title { height: 18px; width: 85%; }
+    .sk-title2 { height: 18px; width: 60%; }
+    .sk-text { height: 14px; width: 100%; }
+    .sk-meta { height: 14px; width: 50%; }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      margin-top: 40px;
+    }
+    .pag-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 20px;
+      border-radius: 50px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .15s;
+      box-shadow: var(--shadow);
+    }
+    .pag-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .pag-btn:disabled { opacity: .4; cursor: not-allowed; }
+    .pag-info { font-size: 0.85rem; color: var(--text-muted); }
+
+    /* Empty / Error */
+    .state-box {
+      text-align: center;
+      padding: 60px 24px;
+      color: var(--text-muted);
+    }
+    .state-box .icon { font-size: 3rem; margin-bottom: 16px; }
+    .state-box h3 { font-size: 1.2rem; color: var(--text); margin-bottom: 8px; }
+
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--primary); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .posts-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <nav class="breadcrumb">
+    <a href="/">Oursolve</a>
+    <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+    <span>Blog</span>
+  </nav>
+  <h1>Blog</h1>
+  <p>Tips, guides, and updates from the Oursolve team.</p>
+  <div class="search-wrap">
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+    </svg>
+    <input type="search" id="searchInput" placeholder="Search articles…" autocomplete="off">
+  </div>
+</header>
+
+<main>
+  <div id="filters" class="filters"></div>
+  <div id="grid" class="posts-grid"></div>
+  <div id="pagination" class="pagination"></div>
+</main>
+
+<footer>
+  <p>Built with ♥ by <a href="/">Oursolve</a> · <a href="/blog/">Blog</a> · All tools are free and run 100% in your browser.</p>
+</footer>
+
+<script>
+  const API = '/dashboard/api';
+  let page = 1, search = '', category = '', totalPages = 1;
+
+  function fmtDate(iso) {
+    if (!iso) return '';
+    return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+
+  function skeleton() {
+    return Array(6).fill(0).map(() => `
+      <div class="sk-card">
+        <div class="sk-img skeleton"></div>
+        <div class="sk-body">
+          <div class="sk-badge skeleton"></div>
+          <div class="sk-title skeleton"></div>
+          <div class="sk-title2 skeleton"></div>
+          <div class="sk-text skeleton"></div>
+          <div class="sk-text skeleton"></div>
+          <div class="sk-meta skeleton"></div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  function cardHTML(post) {
+    const img = post.featured_image_url
+      ? `<img src="${post.featured_image_url}" alt="${escHtml(post.title)}" loading="lazy">`
+      : `<div class="card-img-placeholder"></div>`;
+    const badge = post.category ? `<span class="badge">${escHtml(post.category.name)}</span>` : '';
+    const initial = (post.author || 'O')[0].toUpperCase();
+    return `
+      <a class="post-card" href="/blog/${encodeURIComponent(post.slug)}/">
+        <div class="card-img">${img}</div>
+        <div class="card-body">
+          ${badge}
+          <h2>${escHtml(post.title)}</h2>
+          <p>${escHtml(post.excerpt || '')}</p>
+          <div class="card-meta">
+            <div class="author-avatar">${initial}</div>
+            <span>${escHtml(post.author || '')}</span>
+            <span class="dot">·</span>
+            <span>${fmtDate(post.published_at)}</span>
+          </div>
+        </div>
+      </a>
+    `;
+  }
+
+  function escHtml(str) {
+    return String(str)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  function renderFilters(categories) {
+    const all = `<button class="filter-btn active" data-slug="">All</button>`;
+    const cats = categories.map(c =>
+      `<button class="filter-btn" data-slug="${c.slug}">${escHtml(c.name)}</button>`
+    ).join('');
+    document.getElementById('filters').innerHTML = all + cats;
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        category = btn.dataset.slug;
+        page = 1;
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        loadPosts();
+      });
+    });
+  }
+
+  function renderPagination(count) {
+    const pageSize = 10;
+    totalPages = Math.ceil(count / pageSize);
+    const el = document.getElementById('pagination');
+    if (totalPages <= 1) { el.innerHTML = ''; return; }
+    el.innerHTML = `
+      <button class="pag-btn" id="prevBtn" ${page <= 1 ? 'disabled' : ''}>
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+        Previous
+      </button>
+      <span class="pag-info">Page ${page} of ${totalPages}</span>
+      <button class="pag-btn" id="nextBtn" ${page >= totalPages ? 'disabled' : ''}>
+        Next
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    `;
+    document.getElementById('prevBtn')?.addEventListener('click', () => { page--; loadPosts(); window.scrollTo({top:0,behavior:'smooth'}); });
+    document.getElementById('nextBtn')?.addEventListener('click', () => { page++; loadPosts(); window.scrollTo({top:0,behavior:'smooth'}); });
+  }
+
+  async function loadPosts() {
+    const grid = document.getElementById('grid');
+    grid.innerHTML = skeleton();
+    document.getElementById('pagination').innerHTML = '';
+
+    const params = new URLSearchParams({ page });
+    if (search) params.set('search', search);
+    if (category) params.set('category', category);
+
+    try {
+      const res = await fetch(`${API}/posts/?${params}`);
+      if (!res.ok) throw new Error('API error');
+      const data = await res.json();
+
+      if (!data.results.length) {
+        grid.innerHTML = `<div class="state-box" style="grid-column:1/-1">
+          <div class="icon">📭</div>
+          <h3>No articles found</h3>
+          <p>Try a different search term or category.</p>
+        </div>`;
+        renderPagination(0);
+        return;
+      }
+
+      grid.innerHTML = data.results.map(cardHTML).join('');
+      renderPagination(data.count);
+    } catch {
+      grid.innerHTML = `<div class="state-box" style="grid-column:1/-1">
+        <div class="icon">⚠️</div>
+        <h3>Couldn't load articles</h3>
+        <p>Please try refreshing the page.</p>
+      </div>`;
+    }
+  }
+
+  async function loadCategories() {
+    try {
+      const res = await fetch(`${API}/categories/`);
+      const cats = await res.json();
+      if (cats.length) renderFilters(cats);
+    } catch { /* skip if categories fail */ }
+  }
+
+  // Debounced search
+  let searchTimer;
+  document.getElementById('searchInput').addEventListener('input', e => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      search = e.target.value.trim();
+      page = 1;
+      loadPosts();
+    }, 400);
+  });
+
+  loadCategories();
+  loadPosts();
+</script>
+
+</body>
+</html>

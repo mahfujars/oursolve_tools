@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Free Password Generator - Oursolve.com</title>
+  <meta name="description" content="Free strong password generator. Choose length, uppercase, lowercase, numbers, and symbols. Includes a strength meter. Runs 100% in your browser — nothing is stored or sent.">
+  <meta name="keywords" content="free password generator, strong password generator, random password maker, secure password creator, online password tool">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://oursolve.com/tools/password-generator/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oursolve.com/tools/password-generator/">
+  <meta property="og:title" content="Free Password Generator - Oursolve.com">
+  <meta property="og:description" content="Generate strong, random passwords instantly. Customize length and character types. 100% private — nothing leaves your browser.">
+  <meta property="og:site_name" content="Oursolve">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="https://oursolve.com/tools/password-generator/">
+  <meta name="twitter:title" content="Free Password Generator - Oursolve.com">
+  <meta name="twitter:description" content="Generate strong, random passwords instantly. 100% private — nothing leaves your browser.">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Free Password Generator",
+    "url": "https://oursolve.com/tools/password-generator/",
+    "description": "Generate strong, random passwords with custom length, uppercase, lowercase, numbers, and symbols. Includes a strength meter.",
+    "applicationCategory": "SecurityApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "browserRequirements": "Requires a modern web browser with JavaScript enabled.",
+    "provider": {
+      "@type": "Organization",
+      "name": "Oursolve",
+      "url": "https://oursolve.com"
+    }
+  }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --primary-light: #e0e7ff;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+      --radius: 16px;
+      --danger: #ef4444;
+      --warn: #f97316;
+      --ok: #eab308;
+      --good: #22c55e;
+      --great: #6366f1;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    nav {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .15s;
+    }
+
+    nav a:hover { color: var(--primary); }
+    .nav-sep { color: var(--border); }
+    .nav-current { color: var(--text); font-weight: 600; font-size: 0.875rem; }
+
+    .hero {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+      color: #fff;
+      padding: 48px 24px 56px;
+      text-align: center;
+    }
+
+    .tool-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: rgba(255,255,255,.75);
+      font-size: 1.05rem;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    main {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      transform: translateY(-32px);
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    /* Password display */
+    .password-box {
+      position: relative;
+      margin-bottom: 12px;
+    }
+
+    #password-output {
+      width: 100%;
+      padding: 16px 100px 16px 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-family: 'Courier New', monospace;
+      font-weight: 600;
+      color: var(--text);
+      background: #f8fafc;
+      letter-spacing: 1px;
+      word-break: break-all;
+      min-height: 56px;
+      cursor: text;
+      outline: none;
+      transition: border-color .15s;
+    }
+
+    #password-output:focus { border-color: var(--primary); }
+
+    .pass-actions {
+      position: absolute;
+      right: 8px;
+      top: 50%;
+      transform: translateY(-50%);
+      display: flex;
+      gap: 4px;
+    }
+
+    .icon-btn {
+      width: 38px;
+      height: 38px;
+      border: none;
+      border-radius: 8px;
+      background: transparent;
+      cursor: pointer;
+      font-size: 1.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      transition: background .15s, color .15s;
+    }
+
+    .icon-btn:hover { background: var(--primary-light); color: var(--primary); }
+
+    /* Strength meter */
+    .strength-bar-wrap {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 6px;
+    }
+
+    .strength-seg {
+      height: 4px;
+      flex: 1;
+      border-radius: 2px;
+      background: var(--border);
+      transition: background .3s;
+    }
+
+    .strength-label {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      text-align: right;
+      margin-bottom: 20px;
+    }
+
+    /* Options */
+    .option-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .option-row:last-of-type { border-bottom: none; }
+
+    .option-label { font-size: 0.95rem; }
+    .option-desc { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* Toggle */
+    .toggle {
+      position: relative;
+      width: 44px;
+      height: 24px;
+      flex-shrink: 0;
+    }
+
+    .toggle input { opacity: 0; width: 0; height: 0; }
+
+    .toggle-track {
+      position: absolute;
+      inset: 0;
+      border-radius: 12px;
+      background: var(--border);
+      cursor: pointer;
+      transition: background .2s;
+    }
+
+    .toggle-track::after {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: #fff;
+      top: 3px;
+      left: 3px;
+      transition: transform .2s;
+      box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    }
+
+    .toggle input:checked + .toggle-track { background: var(--primary); }
+    .toggle input:checked + .toggle-track::after { transform: translateX(20px); }
+
+    /* Length slider */
+    .length-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .length-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+
+    input[type="range"] {
+      flex: 1;
+      accent-color: var(--primary);
+      height: 4px;
+    }
+
+    .length-val {
+      font-size: 1.2rem;
+      font-weight: 800;
+      color: var(--primary);
+      min-width: 36px;
+      text-align: center;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 28px;
+      border: none;
+      border-radius: 10px;
+      font-size: 1rem;
+      font-weight: 700;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all .15s;
+      width: 100%;
+    }
+
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
+    .btn-primary:active { transform: translateY(0); }
+
+    /* History */
+    .history-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+
+    .history-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      word-break: break-all;
+    }
+
+    .history-item span { flex: 1; }
+
+    .copy-small {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1rem;
+      padding: 4px;
+      border-radius: 6px;
+      color: var(--text-muted);
+      transition: color .15s;
+      flex-shrink: 0;
+    }
+
+    .copy-small:hover { color: var(--primary); }
+
+    .empty-history {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      padding: 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--primary); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../../">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Oursolve
+  </a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Password Generator</span>
+</nav>
+
+<div class="hero">
+  <div class="tool-badge">🔑 Security</div>
+  <h1>Password Generator</h1>
+  <p>Create strong, unique passwords instantly. 100% client-side — nothing is stored or sent.</p>
+</div>
+
+<main>
+  <!-- Generator card -->
+  <div class="card">
+    <p class="card-title">Generated Password</p>
+
+    <div class="password-box">
+      <input type="text" id="password-output" readonly value="Click generate below..." aria-label="Generated password">
+      <div class="pass-actions">
+        <button class="icon-btn" onclick="copyPassword()" title="Copy">📋</button>
+        <button class="icon-btn" onclick="generate()" title="Regenerate">🔄</button>
+      </div>
+    </div>
+
+    <div class="strength-bar-wrap" id="strength-bar">
+      <div class="strength-seg" id="seg1"></div>
+      <div class="strength-seg" id="seg2"></div>
+      <div class="strength-seg" id="seg3"></div>
+      <div class="strength-seg" id="seg4"></div>
+      <div class="strength-seg" id="seg5"></div>
+    </div>
+    <div class="strength-label" id="strength-label">—</div>
+
+    <!-- Length -->
+    <div class="length-row">
+      <span class="length-label">Length</span>
+      <input type="range" id="length-slider" min="6" max="64" value="16">
+      <span class="length-val" id="length-val">16</span>
+    </div>
+
+    <!-- Options -->
+    <div class="option-row">
+      <div>
+        <div class="option-label">Uppercase letters</div>
+        <div class="option-desc">A B C D … Z</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="opt-upper" checked>
+        <div class="toggle-track"></div>
+      </label>
+    </div>
+
+    <div class="option-row">
+      <div>
+        <div class="option-label">Lowercase letters</div>
+        <div class="option-desc">a b c d … z</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="opt-lower" checked>
+        <div class="toggle-track"></div>
+      </label>
+    </div>
+
+    <div class="option-row">
+      <div>
+        <div class="option-label">Numbers</div>
+        <div class="option-desc">0 1 2 3 … 9</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="opt-numbers" checked>
+        <div class="toggle-track"></div>
+      </label>
+    </div>
+
+    <div class="option-row">
+      <div>
+        <div class="option-label">Symbols</div>
+        <div class="option-desc">! @ # $ % ^ &amp; * ( ) …</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="opt-symbols" checked>
+        <div class="toggle-track"></div>
+      </label>
+    </div>
+
+    <div class="option-row">
+      <div>
+        <div class="option-label">Exclude ambiguous chars</div>
+        <div class="option-desc">Avoid 0, O, l, I, 1</div>
+      </div>
+      <label class="toggle">
+        <input type="checkbox" id="opt-ambiguous">
+        <div class="toggle-track"></div>
+      </label>
+    </div>
+
+    <button class="btn btn-primary" onclick="generate()" style="margin-top:20px;">
+      🔑 Generate Password
+    </button>
+  </div>
+
+  <!-- History card -->
+  <div class="card">
+    <p class="card-title">Recent Passwords <small style="font-weight:400;text-transform:none;letter-spacing:0;">(this session only)</small></p>
+    <ul class="history-list" id="history-list">
+      <li class="empty-history">No passwords generated yet.</li>
+    </ul>
+  </div>
+</main>
+
+<footer>
+  <p><a href="../../">← Back to all tools</a> · Oursolve — Free online tools</p>
+</footer>
+
+<script>
+  const UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  const LOWER = 'abcdefghijklmnopqrstuvwxyz';
+  const NUMS  = '0123456789';
+  const SYMS  = '!@#$%^&*()-_=+[]{}|;:,.<>?';
+  const AMBIGUOUS = /[0OlI1]/g;
+
+  const slider = document.getElementById('length-slider');
+  const lenVal = document.getElementById('length-val');
+
+  slider.addEventListener('input', () => {
+    lenVal.textContent = slider.value;
+    generate();
+  });
+
+  ['opt-upper','opt-lower','opt-numbers','opt-symbols','opt-ambiguous'].forEach(id => {
+    document.getElementById(id).addEventListener('change', generate);
+  });
+
+  const history = [];
+
+  function buildCharset() {
+    let chars = '';
+    if (document.getElementById('opt-upper').checked)   chars += UPPER;
+    if (document.getElementById('opt-lower').checked)   chars += LOWER;
+    if (document.getElementById('opt-numbers').checked) chars += NUMS;
+    if (document.getElementById('opt-symbols').checked) chars += SYMS;
+    if (!chars) chars = LOWER + UPPER; // fallback
+    if (document.getElementById('opt-ambiguous').checked) {
+      chars = chars.replace(AMBIGUOUS, '');
+    }
+    return chars;
+  }
+
+  function secureRandom(max) {
+    const arr = new Uint32Array(1);
+    let result;
+    do {
+      crypto.getRandomValues(arr);
+      result = arr[0];
+    } while (result >= Math.floor(0xFFFFFFFF / max) * max);
+    return result % max;
+  }
+
+  function generate() {
+    const len = parseInt(slider.value);
+    const chars = buildCharset();
+    let pwd = '';
+    for (let i = 0; i < len; i++) {
+      pwd += chars[secureRandom(chars.length)];
+    }
+    document.getElementById('password-output').value = pwd;
+    updateStrength(pwd);
+    addToHistory(pwd);
+    return pwd;
+  }
+
+  function updateStrength(pwd) {
+    let score = 0;
+    if (pwd.length >= 8)  score++;
+    if (pwd.length >= 12) score++;
+    if (pwd.length >= 16) score++;
+    if (/[A-Z]/.test(pwd) && /[a-z]/.test(pwd)) score++;
+    if (/[0-9]/.test(pwd)) score++;
+    if (/[^A-Za-z0-9]/.test(pwd)) score++;
+    // cap at 5
+    score = Math.min(5, score);
+
+    const colors = ['','#ef4444','#f97316','#eab308','#22c55e','#6366f1'];
+    const labels = ['','Very Weak','Weak','Fair','Strong','Very Strong'];
+    const segs = document.querySelectorAll('.strength-seg');
+    segs.forEach((seg, i) => {
+      seg.style.background = i < score ? colors[score] : 'var(--border)';
+    });
+    document.getElementById('strength-label').textContent = labels[score];
+    document.getElementById('strength-label').style.color = colors[score] || 'var(--text-muted)';
+  }
+
+  function addToHistory(pwd) {
+    history.unshift(pwd);
+    if (history.length > 10) history.pop();
+    renderHistory();
+  }
+
+  function renderHistory() {
+    const list = document.getElementById('history-list');
+    if (history.length === 0) {
+      list.innerHTML = '<li class="empty-history">No passwords generated yet.</li>';
+      return;
+    }
+    list.innerHTML = history.map((p, i) => `
+      <li class="history-item">
+        <span title="${p}">${p.length > 30 ? p.slice(0,30)+'…' : p}</span>
+        <button class="copy-small" onclick="copyText('${p.replace(/'/g,"\\'")}',this)" title="Copy">📋</button>
+      </li>
+    `).join('');
+  }
+
+  async function copyPassword() {
+    const val = document.getElementById('password-output').value;
+    await copyText(val, document.querySelector('.icon-btn'));
+  }
+
+  async function clip(text) {
+    try { await navigator.clipboard.writeText(text); return true; } catch {}
+    try {
+      const ta = Object.assign(document.createElement('textarea'), {value: text});
+      ta.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(ta); ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta); return ok;
+    } catch { return false; }
+  }
+
+  async function copyText(text, btn) {
+    const ok = await clip(text);
+    if (ok && btn) { const o = btn.textContent; btn.textContent = '✅'; setTimeout(() => btn.textContent = o, 1500); }
+  }
+
+  // Generate on page load
+  generate();
+</script>
+
+</body>
+</html>

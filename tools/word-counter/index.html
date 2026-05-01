@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Free Word Counter Online - Oursolve.com</title>
+  <meta name="description" content="Free online word counter. Count words, characters, sentences, and paragraphs instantly. Includes reading time and speaking time estimates. Paste any text and get results in real time.">
+  <meta name="keywords" content="free word counter online, word count tool, character counter, sentence counter, reading time calculator, word frequency counter">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://oursolve.com/tools/word-counter/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oursolve.com/tools/word-counter/">
+  <meta property="og:title" content="Free Word Counter Online - Oursolve.com">
+  <meta property="og:description" content="Count words, characters, sentences, and paragraphs in real time. Includes reading and speaking time estimates. Free, instant, no sign-up.">
+  <meta property="og:site_name" content="Oursolve">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="https://oursolve.com/tools/word-counter/">
+  <meta name="twitter:title" content="Free Word Counter Online - Oursolve.com">
+  <meta name="twitter:description" content="Count words, characters, sentences, and paragraphs in real time. Free, instant, no sign-up.">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Free Word Counter",
+    "url": "https://oursolve.com/tools/word-counter/",
+    "description": "Count words, characters, sentences, and paragraphs. Get reading time and speaking time estimates. Real-time results as you type.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "browserRequirements": "Requires a modern web browser with JavaScript enabled.",
+    "provider": {
+      "@type": "Organization",
+      "name": "Oursolve",
+      "url": "https://oursolve.com"
+    }
+  }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --primary-light: #e0e7ff;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+      --radius: 16px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    nav {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: color .15s;
+    }
+
+    nav a:hover { color: var(--primary); }
+    .nav-sep { color: var(--border); }
+    .nav-current { color: var(--text); font-weight: 600; font-size: 0.875rem; }
+
+    .hero {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+      color: #fff;
+      padding: 48px 24px 56px;
+      text-align: center;
+    }
+
+    .tool-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+
+    .hero p {
+      color: rgba(255,255,255,.75);
+      font-size: 1.05rem;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      transform: translateY(-32px);
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .card-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+    }
+
+    /* Stats grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .stat-box {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+
+    .stat-val {
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.1;
+      margin-bottom: 4px;
+    }
+
+    .stat-name {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    /* Time estimates */
+    .time-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    @media (max-width: 480px) {
+      .time-row { grid-template-columns: 1fr; }
+    }
+
+    .time-box {
+      background: var(--primary-light);
+      border-radius: 12px;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .time-icon { font-size: 1.4rem; }
+
+    .time-label {
+      font-size: 0.8rem;
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+
+    .time-val {
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+    }
+
+    /* Textarea */
+    .textarea-wrap { position: relative; }
+
+    #main-text {
+      width: 100%;
+      min-height: 280px;
+      padding: 16px;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--surface);
+      resize: vertical;
+      line-height: 1.7;
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+
+    #main-text:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99,102,241,.15);
+    }
+
+    #main-text::placeholder { color: var(--text-muted); }
+
+    .textarea-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all .15s;
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
+
+    /* Keyword density */
+    .keyword-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.875rem;
+    }
+
+    .keyword-table th {
+      text-align: left;
+      padding: 8px 12px;
+      border-bottom: 2px solid var(--border);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+    }
+
+    .keyword-table td {
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .keyword-table tr:last-child td { border-bottom: none; }
+
+    .kw-bar-wrap { flex: 1; height: 6px; background: var(--border); border-radius: 3px; min-width: 60px; }
+    .kw-bar { height: 6px; background: var(--primary); border-radius: 3px; transition: width .3s; }
+
+    .kw-row { display: flex; align-items: center; gap: 8px; }
+
+    .empty-keywords {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      padding: 20px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      border-top: 1px solid var(--border);
+    }
+    footer a { color: var(--primary); text-decoration: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../../">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+      <path d="M19 12H5M12 19l-7-7 7-7"/>
+    </svg>
+    Oursolve
+  </a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">Word Counter</span>
+</nav>
+
+<div class="hero">
+  <div class="tool-badge">📝 Writing</div>
+  <h1>Word Counter</h1>
+  <p>Paste or type your text to instantly count words, characters, sentences, and more.</p>
+</div>
+
+<main>
+
+  <!-- Stats card -->
+  <div class="card">
+    <p class="card-title">Stats</p>
+
+    <div class="stats-grid">
+      <div class="stat-box">
+        <div class="stat-val" id="stat-words">0</div>
+        <div class="stat-name">Words</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="stat-chars">0</div>
+        <div class="stat-name">Characters</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="stat-chars-no-space">0</div>
+        <div class="stat-name">No Spaces</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="stat-sentences">0</div>
+        <div class="stat-name">Sentences</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="stat-paragraphs">0</div>
+        <div class="stat-name">Paragraphs</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val" id="stat-lines">0</div>
+        <div class="stat-name">Lines</div>
+      </div>
+    </div>
+
+    <div class="time-row">
+      <div class="time-box">
+        <div class="time-icon">👁</div>
+        <div>
+          <div class="time-label">Reading time</div>
+          <div class="time-val" id="reading-time">0 sec</div>
+        </div>
+      </div>
+      <div class="time-box">
+        <div class="time-icon">🎤</div>
+        <div>
+          <div class="time-label">Speaking time</div>
+          <div class="time-val" id="speaking-time">0 sec</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Editor card -->
+  <div class="card">
+    <p class="card-title">Your Text</p>
+    <div class="textarea-wrap">
+      <textarea id="main-text" placeholder="Start typing or paste your text here…" autofocus></textarea>
+    </div>
+    <div class="textarea-actions">
+      <button class="btn btn-ghost" onclick="pasteText()">📋 Paste</button>
+      <button class="btn btn-ghost" onclick="clearText()">🗑 Clear</button>
+    </div>
+  </div>
+
+  <!-- Keywords card -->
+  <div class="card">
+    <p class="card-title">Top Keywords</p>
+    <div id="keywords-container">
+      <p class="empty-keywords">Start typing to see keyword density.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <p><a href="../../">← Back to all tools</a> · Oursolve — Free online tools</p>
+</footer>
+
+<script>
+  const textarea = document.getElementById('main-text');
+
+  const STOP_WORDS = new Set([
+    'a','an','the','and','or','but','in','on','at','to','for','of','with',
+    'is','are','was','were','be','been','being','have','has','had','do','does',
+    'did','will','would','could','should','may','might','shall','can','i','you',
+    'he','she','it','we','they','me','him','her','us','them','my','your','his',
+    'its','our','their','this','that','these','those','from','by','about','as',
+    'into','through','during','before','after','above','below','up','down','out',
+    'off','over','under','then','once','not','no','so','if','also','just','more'
+  ]);
+
+  function countWords(text) {
+    return text.trim() === '' ? 0 : text.trim().split(/\s+/).filter(w => w.length > 0).length;
+  }
+
+  function countSentences(text) {
+    if (!text.trim()) return 0;
+    const matches = text.match(/[^.!?]*[.!?]+/g);
+    return matches ? matches.length : (text.trim() ? 1 : 0);
+  }
+
+  function countParagraphs(text) {
+    if (!text.trim()) return 0;
+    return text.split(/\n\s*\n/).filter(p => p.trim().length > 0).length;
+  }
+
+  function formatTime(seconds) {
+    if (seconds < 60) return Math.ceil(seconds) + ' sec';
+    const m = Math.floor(seconds / 60);
+    const s = Math.round(seconds % 60);
+    return s > 0 ? `${m} min ${s} sec` : `${m} min`;
+  }
+
+  function getKeywords(text) {
+    if (!text.trim()) return [];
+    const words = text.toLowerCase().match(/\b[a-z']{3,}\b/g) || [];
+    const freq = {};
+    words.forEach(w => {
+      if (!STOP_WORDS.has(w)) freq[w] = (freq[w] || 0) + 1;
+    });
+    return Object.entries(freq)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 10);
+  }
+
+  function update() {
+    const text = textarea.value;
+
+    const words = countWords(text);
+    const chars = text.length;
+    const charsNoSpace = text.replace(/\s/g, '').length;
+    const sentences = countSentences(text);
+    const paragraphs = countParagraphs(text);
+    const lines = text === '' ? 0 : text.split('\n').length;
+
+    document.getElementById('stat-words').textContent = words.toLocaleString();
+    document.getElementById('stat-chars').textContent = chars.toLocaleString();
+    document.getElementById('stat-chars-no-space').textContent = charsNoSpace.toLocaleString();
+    document.getElementById('stat-sentences').textContent = sentences.toLocaleString();
+    document.getElementById('stat-paragraphs').textContent = paragraphs.toLocaleString();
+    document.getElementById('stat-lines').textContent = lines.toLocaleString();
+
+    // Reading ~238 wpm, speaking ~150 wpm
+    const readSec = (words / 238) * 60;
+    const speakSec = (words / 150) * 60;
+    document.getElementById('reading-time').textContent = words > 0 ? formatTime(readSec) : '0 sec';
+    document.getElementById('speaking-time').textContent = words > 0 ? formatTime(speakSec) : '0 sec';
+
+    // Keywords
+    const keywords = getKeywords(text);
+    const container = document.getElementById('keywords-container');
+
+    if (keywords.length === 0) {
+      container.innerHTML = '<p class="empty-keywords">Start typing to see keyword density.</p>';
+      return;
+    }
+
+    const maxCount = keywords[0][1];
+    container.innerHTML = `
+      <table class="keyword-table">
+        <thead>
+          <tr>
+            <th>Keyword</th>
+            <th>Count</th>
+            <th>Density</th>
+            <th style="width:40%"></th>
+          </tr>
+        </thead>
+        <tbody>
+          ${keywords.map(([word, count]) => {
+            const density = words > 0 ? ((count / words) * 100).toFixed(1) : 0;
+            const pct = Math.round((count / maxCount) * 100);
+            return `
+              <tr>
+                <td><strong>${word}</strong></td>
+                <td>${count}</td>
+                <td>${density}%</td>
+                <td>
+                  <div class="kw-row">
+                    <div class="kw-bar-wrap">
+                      <div class="kw-bar" style="width:${pct}%"></div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            `;
+          }).join('')}
+        </tbody>
+      </table>
+    `;
+  }
+
+  textarea.addEventListener('input', update);
+
+  async function pasteText() {
+    try {
+      const text = await navigator.clipboard.readText();
+      textarea.value = text;
+      update();
+      textarea.focus();
+    } catch {
+      alert('Could not access clipboard. Please paste manually with Ctrl+V.');
+    }
+  }
+
+  function clearText() {
+    if (textarea.value && !confirm('Clear all text?')) return;
+    textarea.value = '';
+    update();
+    textarea.focus();
+  }
+
+  // Initial count
+  update();
+</script>
+
+</body>
+</html>

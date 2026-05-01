@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# Redirect page — no value for crawlers
+Disallow: /tools/$
+
+Sitemap: https://oursolve.com/sitemap.xml

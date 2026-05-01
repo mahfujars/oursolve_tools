@@ -1,0 +1,4 @@
+---
+deployment:
+  tasks:
+    - /bin/cp -R index.html tools blog sitemap.xml robots.txt /home/oursolve/public_html/

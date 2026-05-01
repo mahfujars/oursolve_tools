@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Free Online Tools - Oursolve.com</title>
+  <meta name="description" content="Oursolve is a free collection of online tools for everyday tasks. QR code generator, password generator, word counter — all free, no sign-up, 100% in your browser.">
+  <meta name="keywords" content="free online tools, qr code generator, password generator, word counter, free web tools">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://oursolve.com/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oursolve.com/">
+  <meta property="og:title" content="Free Online Tools - Oursolve.com">
+  <meta property="og:description" content="Free collection of online tools for everyday tasks. QR code generator, password generator, word counter — no sign-up, 100% in your browser.">
+  <meta property="og:site_name" content="Oursolve">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="https://oursolve.com/">
+  <meta name="twitter:title" content="Free Online Tools - Oursolve.com">
+  <meta name="twitter:description" content="Free collection of online tools for everyday tasks. No sign-up. 100% in your browser.">
+
+  <!-- Schema.org -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Oursolve",
+    "url": "https://oursolve.com/",
+    "description": "Free collection of online tools for everyday tasks.",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://oursolve.com/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --primary-light: #e0e7ff;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
+      --shadow-hover: 0 4px 12px rgba(99,102,241,.2), 0 8px 32px rgba(0,0,0,.1);
+      --radius: 16px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    header {
+      background: linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #4338ca 100%);
+      color: #fff;
+      padding: 64px 24px 80px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 60% 0%, rgba(139,92,246,.3) 0%, transparent 60%),
+                  radial-gradient(ellipse at 20% 100%, rgba(99,102,241,.2) 0%, transparent 50%);
+      pointer-events: none;
+    }
+
+    .logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 1.6rem;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      background: linear-gradient(135deg, #a78bfa, #6366f1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    header h1 {
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 800;
+      letter-spacing: -1px;
+      margin-bottom: 16px;
+      position: relative;
+    }
+
+    header p {
+      font-size: 1.15rem;
+      color: rgba(255,255,255,.75);
+      max-width: 520px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* Main */
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+      transform: translateY(-40px);
+    }
+
+    .section-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    /* Tool grid */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .tool-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      box-shadow: var(--shadow);
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--primary);
+    }
+
+    .tool-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      flex-shrink: 0;
+    }
+
+    .tool-card h2 {
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+
+    .tool-card p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      flex: 1;
+    }
+
+    .tool-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--primary);
+    }
+
+    .tool-link svg {
+      transition: transform .2s;
+    }
+
+    .tool-card:hover .tool-link svg {
+      transform: translateX(4px);
+    }
+
+    /* Tag */
+    .tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+      background: var(--primary-light);
+      color: var(--primary-dark);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 32px 24px;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      border-top: 1px solid var(--border);
+    }
+
+    footer a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    /* Colors per tool */
+    .icon-qr   { background: #ede9fe; }
+    .icon-pass { background: #fce7f3; }
+    .icon-word { background: #d1fae5; }
+    .icon-json { background: #fff7ed; }
+    .icon-b64  { background: #eff6ff; }
+    .icon-url  { background: #f0fdf4; }
+    .icon-hash { background: #fdf2f8; }
+    .icon-md   { background: #f5f3ff; }
+    .icon-rx   { background: #ecfeff; }
+    .icon-soon { background: #f1f5f9; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">🛠</div>
+    Oursolve
+  </div>
+  <h1>Free Tools for Everyday Tasks</h1>
+  <p>Simple, fast, and private — all tools run entirely in your browser. No sign-up. No tracking.</p>
+</header>
+
+<main>
+  <p class="section-title">All Tools</p>
+
+  <div class="tools-grid">
+
+    <a class="tool-card" href="tools/qr-generator/">
+      <div class="tool-icon icon-qr">📱</div>
+      <div>
+        <span class="tag">Generator</span>
+        <h2>QR Code Generator</h2>
+      </div>
+      <p>Convert any URL, text, or contact info into a scannable QR code. Download as PNG instantly.</p>
+      <span class="tool-link">
+        Open tool
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </span>
+    </a>
+
+    <a class="tool-card" href="tools/password-generator/">
+      <div class="tool-icon icon-pass">🔑</div>
+      <div>
+        <span class="tag">Security</span>
+        <h2>Password Generator</h2>
+      </div>
+      <p>Generate strong, random passwords with custom length and character sets. Strength meter included.</p>
+      <span class="tool-link">
+        Open tool
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </span>
+    </a>
+
+    <a class="tool-card" href="tools/word-counter/">
+      <div class="tool-icon icon-word">📝</div>
+      <div>
+        <span class="tag">Writing</span>
+        <h2>Word Counter</h2>
+      </div>
+      <p>Count words, characters, sentences, and paragraphs. Estimates reading time and speaking time.</p>
+      <span class="tool-link">Open tool <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+    </a>
+
+    <a class="tool-card" href="tools/json-formatter/">
+      <div class="tool-icon icon-json">🧰</div>
+      <div>
+        <span class="tag">Developer</span>
+        <h2>JSON Formatter</h2>
+      </div>
+      <p>Format, minify and validate JSON instantly. Syntax highlighted output with auto-format on paste.</p>
+      <span class="tool-link">Open tool <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+    </a>
+
+    <a class="tool-card" href="tools/base64/">
+      <div class="tool-icon icon-b64">🔤</div>
+      <div>
+        <span class="tag">Encoding</span>
+        <h2>Base64 Encoder / Decoder</h2>
+      </div>
+      <p>Encode text or files to Base64 or decode Base64 strings back to plain text. File drag & drop supported.</p>
+      <span class="tool-link">Open tool <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+    </a>
+
+    <a class="tool-card" href="tools/url-encoder/">
+      <div class="tool-icon icon-url">🔗</div>
+      <div>
+        <span class="tag">Developer</span>
+        <h2>URL Encoder / Decoder</h2>
+      </div>
+      <p>Percent-encode URL strings or decode encoded URLs. Supports encodeURIComponent and encodeURI modes.</p>
+      <span class="tool-link">Open tool <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+    </a>
+
+    <a class="tool-card" href="tools/hash-generator/">
+      <div class="tool-icon icon-hash">🔐</div>
+      <div>
+        <span class="tag">Security</span>
+        <h2>Hash Generator</h2>
+      </div>
+      <p>Generate SHA-1, SHA-256, SHA-384, and SHA-512 hashes from text or files using native browser crypto.</p>
+      <span class="tool-link">Open tool <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+    </a>
+
+    <a class="tool-card" href="tools/markdown-to-html/">
+      <div class="tool-icon icon-md">📄</div>
+      <div>
+        <span class="tag">Writing</span>
+        <h2>Markdown to HTML</h2>
+      </div>
+      <p>Convert Markdown to HTML with a live side-by-side preview. Supports tables, code blocks, and more.</p>
+      <span class="tool-link">Open tool <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+    </a>
+
+    <a class="tool-card" href="tools/regex-tester/">
+      <div class="tool-icon icon-rx">⚡</div>
+      <div>
+        <span class="tag">Developer</span>
+        <h2>Regex Tester</h2>
+      </div>
+      <p>Test regular expressions in real-time. Match highlighting, capture group details, and all JS flags supported.</p>
+      <span class="tool-link">Open tool <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
+    </a>
+
+  </div>
+
+  <p class="section-title" style="margin-top:48px">From the Blog</p>
+  <div id="blogPosts" class="tools-grid"></div>
+  <div style="margin-top:20px;text-align:center">
+    <a href="/blog/" style="display:inline-flex;align-items:center;gap:6px;font-size:.875rem;font-weight:600;color:var(--primary);text-decoration:none;padding:10px 22px;border:1px solid var(--primary-light);border-radius:50px;background:var(--primary-light);transition:all .15s"
+       onmouseover="this.style.background='var(--primary)';this.style.color='#fff'"
+       onmouseout="this.style.background='var(--primary-light)';this.style.color='var(--primary)'">
+      View all articles
+      <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</main>
+
+<footer>
+  <p>Built with ♥ by <a href="/">Oursolve</a> · <a href="/blog/">Blog</a> · All tools are free and run 100% in your browser.</p>
+</footer>
+
+<script>
+  async function loadBlogPosts() {
+    try {
+      const res = await fetch('/dashboard/api/posts/?page=1');
+      if (!res.ok) return;
+      const data = await res.json();
+      const posts = data.results.slice(0, 3);
+      if (!posts.length) { document.getElementById('blogPosts').closest('div').style.display='none'; return; }
+      document.getElementById('blogPosts').innerHTML = posts.map(p => {
+        const date = p.published_at ? new Date(p.published_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '';
+        const badge = p.category ? `<span class="tag">${p.category.name}</span>` : '';
+        return `
+          <a class="tool-card" href="/blog/${encodeURIComponent(p.slug)}/">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+              ${badge}
+              <span style="font-size:.75rem;color:var(--text-muted);flex-shrink:0">${date}</span>
+            </div>
+            <h2>${p.title}</h2>
+            <p>${p.excerpt || ''}</p>
+            <span class="tool-link">Read article
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </span>
+          </a>
+        `;
+      }).join('');
+    } catch { /* hide section if API unavailable */ }
+  }
+  loadBlogPosts();
+</script>
+
+</body>
+</html>

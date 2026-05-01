@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free JSON Formatter & Validator - Oursolve.com</title>
+  <meta name="description" content="Free online JSON formatter, beautifier and validator. Paste JSON to format, minify or validate instantly. 100% in your browser — nothing is sent to any server.">
+  <meta name="keywords" content="json formatter, json beautifier, json validator, format json online, json minifier">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://oursolve.com/tools/json-formatter/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oursolve.com/tools/json-formatter/">
+  <meta property="og:title" content="Free JSON Formatter & Validator - Oursolve.com">
+  <meta property="og:description" content="Format, minify and validate JSON instantly. 100% private — nothing leaves your browser.">
+  <meta property="og:site_name" content="Oursolve">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON Formatter","url":"https://oursolve.com/tools/json-formatter/","description":"Format, minify and validate JSON online.","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{--primary:#6366f1;--primary-dark:#4f46e5;--primary-light:#e0e7ff;--bg:#f8fafc;--surface:#fff;--text:#0f172a;--text-muted:#64748b;--border:#e2e8f0;--shadow:0 1px 3px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06);--radius:16px;--ok:#22c55e;--error:#ef4444}
+    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+    nav{background:#fff;border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:12px}
+    nav a{text-decoration:none;color:var(--text-muted);font-size:.875rem;display:flex;align-items:center;gap:6px;transition:color .15s}
+    nav a:hover{color:var(--primary)}
+    .nav-sep{color:var(--border)}
+    .nav-current{color:var(--text);font-weight:600;font-size:.875rem}
+    .hero{background:linear-gradient(135deg,#1e1b4b 0%,#312e81 50%,#4338ca 100%);color:#fff;padding:48px 24px 56px;text-align:center}
+    .tool-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:.8rem;font-weight:600;margin-bottom:16px}
+    .hero h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-.5px;margin-bottom:12px}
+    .hero p{color:rgba(255,255,255,.75);font-size:1.05rem;max-width:480px;margin:0 auto}
+    main{max-width:900px;margin:0 auto;padding:0 24px 80px;transform:translateY(-32px)}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
+    .card-title{font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px}
+    .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 20px;border:none;border-radius:8px;font-size:.9rem;font-weight:700;font-family:inherit;cursor:pointer;transition:all .15s}
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px)}
+    .btn-secondary{background:var(--bg);color:var(--text);border:1px solid var(--border)}
+    .btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
+    .btn-sm{padding:7px 14px;font-size:.82rem}
+    textarea,pre{width:100%;border:1.5px solid var(--border);border-radius:10px;padding:14px;font-size:.9rem;font-family:'Menlo','Courier New',monospace;background:#f8fafc;resize:vertical;outline:none;transition:border-color .15s;line-height:1.6}
+    textarea{min-height:200px}
+    textarea:focus{border-color:var(--primary)}
+    pre{min-height:200px;white-space:pre-wrap;word-break:break-all;background:#1e1b4b;color:#e2e8f0;border-color:#312e81}
+    .status{display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:600;padding:10px 14px;border-radius:8px;margin-bottom:12px}
+    .status.ok{background:#f0fdf4;color:var(--ok);border:1px solid #bbf7d0}
+    .status.error{background:#fef2f2;color:var(--error);border:1px solid #fecaca}
+    .status.hidden{display:none}
+    .output-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+    .indent-row{display:flex;align-items:center;gap:10px;font-size:.875rem;color:var(--text-muted)}
+    .indent-row select{border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:.875rem;background:#fff;color:var(--text);cursor:pointer}
+    .json-key{color:#60a5fa}
+    .json-str{color:#86efac}
+    .json-num{color:#fbbf24}
+    .json-bool{color:#f472b6}
+    .json-null{color:#94a3b8}
+    footer{text-align:center;padding:32px 24px;color:var(--text-muted);font-size:.875rem;border-top:1px solid var(--border)}
+    footer a{color:var(--primary);text-decoration:none}
+    @media(max-width:600px){.btn-row{flex-direction:column}}
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="../../">
+    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    Oursolve
+  </a>
+  <span class="nav-sep">/</span>
+  <span class="nav-current">JSON Formatter</span>
+</nav>
+
+<div class="hero">
+  <div class="tool-badge">🧰 Developer</div>
+  <h1>JSON Formatter & Validator</h1>
+  <p>Format, minify and validate JSON instantly. Nothing leaves your browser.</p>
+</div>
+
+<main>
+  <div class="card">
+    <p class="card-title">Input</p>
+    <textarea id="input" placeholder='Paste your JSON here, e.g. {"name":"Alice","age":30}'></textarea>
+    <div class="btn-row" style="margin-top:12px">
+      <button class="btn btn-primary" onclick="format()">✨ Format</button>
+      <button class="btn btn-secondary" onclick="minify()">🗜 Minify</button>
+      <button class="btn btn-secondary" onclick="validate()">✅ Validate</button>
+      <button class="btn btn-secondary" onclick="clearAll()">🗑 Clear</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="output-header">
+      <p class="card-title" style="margin:0">Output</p>
+      <div style="display:flex;align-items:center;gap:12px">
+        <div class="indent-row">
+          Indent:
+          <select id="indent" onchange="if(lastAction)lastAction()">
+            <option value="2" selected>2 spaces</option>
+            <option value="4">4 spaces</option>
+            <option value="tab">Tab</option>
+          </select>
+        </div>
+        <button class="btn btn-secondary btn-sm" onclick="copyOutput(this)">📋 Copy</button>
+      </div>
+    </div>
+    <div id="status" class="status hidden"></div>
+    <pre id="output"><span style="color:#475569">Output will appear here…</span></pre>
+  </div>
+</main>
+
+<footer>
+  <p><a href="../../">← Back to all tools</a> · Oursolve — Free online tools</p>
+</footer>
+
+<script>
+  let lastAction = null;
+
+  function getIndent() {
+    const v = document.getElementById('indent').value;
+    return v === 'tab' ? '\t' : parseInt(v);
+  }
+
+  function showStatus(ok, msg) {
+    const el = document.getElementById('status');
+    el.className = 'status ' + (ok ? 'ok' : 'error');
+    el.textContent = (ok ? '✓ ' : '✗ ') + msg;
+  }
+
+  function syntaxHighlight(json) {
+    return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, match => {
+      let cls = 'json-num';
+      if (/^"/.test(match)) cls = /:$/.test(match) ? 'json-key' : 'json-str';
+      else if (/true|false/.test(match)) cls = 'json-bool';
+      else if (/null/.test(match)) cls = 'json-null';
+      return `<span class="${cls}">${match}</span>`;
+    });
+  }
+
+  function format() {
+    lastAction = format;
+    const raw = document.getElementById('input').value.trim();
+    if (!raw) return;
+    try {
+      const parsed = JSON.parse(raw);
+      const pretty = JSON.stringify(parsed, null, getIndent());
+      document.getElementById('output').innerHTML = syntaxHighlight(escHtml(pretty));
+      showStatus(true, 'Valid JSON — formatted successfully');
+    } catch(e) {
+      document.getElementById('output').innerHTML = '<span style="color:#f87171">Fix errors and try again.</span>';
+      showStatus(false, e.message);
+    }
+  }
+
+  function minify() {
+    lastAction = minify;
+    const raw = document.getElementById('input').value.trim();
+    if (!raw) return;
+    try {
+      const parsed = JSON.parse(raw);
+      document.getElementById('output').innerHTML = escHtml(JSON.stringify(parsed));
+      showStatus(true, 'Minified successfully');
+    } catch(e) {
+      showStatus(false, e.message);
+    }
+  }
+
+  function validate() {
+    lastAction = null;
+    const raw = document.getElementById('input').value.trim();
+    if (!raw) { showStatus(false, 'Nothing to validate'); return; }
+    try {
+      const parsed = JSON.parse(raw);
+      const type = Array.isArray(parsed) ? 'array' : typeof parsed;
+      showStatus(true, `Valid JSON (${type})`);
+    } catch(e) {
+      showStatus(false, e.message);
+    }
+  }
+
+  function clearAll() {
+    document.getElementById('input').value = '';
+    document.getElementById('output').innerHTML = '<span style="color:#475569">Output will appear here…</span>';
+    document.getElementById('status').className = 'status hidden';
+    lastAction = null;
+  }
+
+  async function copyOutput(btn) {
+    const text = document.getElementById('output').textContent;
+    const ok = await clip(text);
+    if (ok) { const o = btn.textContent; btn.textContent = '✅ Copied!'; setTimeout(() => btn.textContent = o, 1500); }
+  }
+
+  async function clip(text) {
+    try { await navigator.clipboard.writeText(text); return true; } catch {}
+    try {
+      const ta = Object.assign(document.createElement('textarea'), {value: text});
+      ta.style.cssText = 'position:fixed;opacity:0';
+      document.body.appendChild(ta); ta.select();
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta); return ok;
+    } catch { return false; }
+  }
+
+  function escHtml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  // Auto-format on paste
+  document.getElementById('input').addEventListener('paste', () => setTimeout(format, 50));
+</script>
+</body>
+</html>
