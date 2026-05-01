@@ -281,17 +281,11 @@
   crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
 <script>
-  const API = '/dashboard/api';
+  const API = '/wp-json/wp/v2';
 
   function fmtDate(iso) {
     if (!iso) return '';
     return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-  }
-
-  function escHtml(str) {
-    return String(str)
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
   }
 
   async function loadPost() {
@@ -303,52 +297,51 @@
     const content = document.getElementById('content');
 
     try {
-      const res = await fetch(`${API}/posts/${encodeURIComponent(slug)}/`);
-      if (res.status === 404) throw new Error('not-found');
+      const res = await fetch(`${API}/posts?slug=${encodeURIComponent(slug)}&_embed=1`);
       if (!res.ok) throw new Error('api-error');
-      const post = await res.json();
+      const posts = await res.json();
+      if (!posts.length) throw new Error('not-found');
+      const post = posts[0];
 
-      // Update <title> and meta
-      document.title = `${post.meta_title || post.title} — Oursolve Blog`;
-      document.querySelector('meta[name="robots"]').setAttribute('content', 'index, follow');
+      document.title = `${post.title.rendered} — Oursolve Blog`;
 
-      // Update header
-      document.getElementById('bcTitle').textContent = post.title;
-      document.getElementById('postTitle').textContent = post.title;
+      document.getElementById('bcTitle').textContent = post.title.rendered;
+      document.getElementById('postTitle').innerHTML = post.title.rendered;
 
-      const badge = post.category
-        ? `<span class="badge">${escHtml(post.category.name)}</span><span class="dot">·</span>` : '';
-      const initial = (post.author || 'O')[0].toUpperCase();
+      const cats = post._embedded?.['wp:term']?.[0] || [];
+      const badge = cats.length ? `<span class="badge">${cats[0].name}</span><span class="dot">·</span>` : '';
+      const author = post._embedded?.author?.[0];
+      const authorName = author?.name || 'Oursolve';
+
       document.getElementById('postMeta').innerHTML = `
         ${badge}
-        <span>${escHtml(post.author || '')}</span>
+        <span>${authorName}</span>
         <span class="dot">·</span>
-        <span>${fmtDate(post.published_at)}</span>
+        <span>${fmtDate(post.date)}</span>
       `;
 
-      // Featured image
-      const imgHtml = post.featured_image_url
-        ? `<div class="featured-img"><img src="${post.featured_image_url}" alt="${escHtml(post.title)}"></div>` : '';
+      const media = post._embedded?.['wp:featuredmedia']?.[0];
+      const imgHtml = media?.source_url
+        ? `<div class="featured-img"><img src="${media.source_url}" alt="${post.title.rendered}"></div>` : '';
 
-      // Tags
-      const tagsHtml = post.tags && post.tags.length
-        ? `<div class="tags">${post.tags.map(t => `<span class="tag">${escHtml(t)}</span>`).join('')}</div>` : '';
+      const tagTerms = post._embedded?.['wp:term']?.[1] || [];
+      const tagsHtml = tagTerms.length
+        ? `<div class="tags">${tagTerms.map(t => `<span class="tag">${t.name}</span>`).join('')}</div>` : '';
 
       content.innerHTML = `
         ${imgHtml}
         <div class="article-card">
-          <div class="prose">${post.content}</div>
+          <div class="prose">${post.content.rendered}</div>
           ${tagsHtml}
         </div>
       `;
 
-      // Syntax highlight all code blocks
       document.querySelectorAll('pre code').forEach(el => hljs.highlightElement(el));
 
     } catch (err) {
       const msg = err.message === 'not-found'
-        ? { icon: '🔍', title: 'Post not found', desc: 'This article doesn\'t exist or has been removed.' }
-        : { icon: '⚠️', title: 'Couldn\'t load post', desc: 'Please try refreshing the page.' };
+        ? { icon: '🔍', title: 'Post not found', desc: "This article doesn't exist or has been removed." }
+        : { icon: '⚠️', title: "Couldn't load post", desc: 'Please try refreshing the page.' };
 
       document.getElementById('postTitle').textContent = msg.title;
       document.getElementById('bcTitle').textContent = msg.title;

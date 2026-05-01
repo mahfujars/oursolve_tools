@@ -501,22 +501,23 @@
 
   async function loadBlogPosts() {
     try {
-      const res = await fetch('/dashboard/api/posts/?page=1');
+      const res = await fetch('/wp-json/wp/v2/posts?per_page=3&_embed=1');
       if (!res.ok) return;
-      const data = await res.json();
-      const posts = data.results.slice(0, 3);
+      const posts = await res.json();
       if (!posts.length) { document.getElementById('blogPosts').closest('div').style.display='none'; return; }
       document.getElementById('blogPosts').innerHTML = posts.map(p => {
-        const date = p.published_at ? new Date(p.published_at).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '';
-        const badge = p.category ? `<span class="tag">${p.category.name}</span>` : '';
+        const date = p.date ? new Date(p.date).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}) : '';
+        const cats = p._embedded?.['wp:term']?.[0] || [];
+        const badge = cats.length ? `<span class="tag">${cats[0].name}</span>` : '';
+        const excerpt = (p.excerpt?.rendered || '').replace(/<[^>]+>/g,'').replace(/&#8230;|…/g,'…').trim();
         return `
-          <a class="tool-card" href="/blog/${encodeURIComponent(p.slug)}/">
+          <a class="tool-card" href="${p.link}">
             <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
               ${badge}
               <span style="font-size:.75rem;color:var(--text-muted);flex-shrink:0">${date}</span>
             </div>
-            <h2>${p.title}</h2>
-            <p>${p.excerpt || ''}</p>
+            <h2>${p.title.rendered}</h2>
+            <p>${excerpt}</p>
             <span class="tool-link">Read article
               <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </span>

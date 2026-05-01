@@ -347,12 +347,16 @@
 </footer>
 
 <script>
-  const API = '/dashboard/api';
-  let page = 1, search = '', category = '', totalPages = 1;
+  const API = '/wp-json/wp/v2';
+  let page = 1, search = '', categoryId = '', totalPages = 1;
 
   function fmtDate(iso) {
     if (!iso) return '';
     return new Date(iso).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+  }
+
+  function stripHtml(html) {
+    return html ? html.replace(/<[^>]+>/g, '').replace(/\[&hellip;\]|&#8230;/g, '…').trim() : '';
   }
 
   function skeleton() {
@@ -372,44 +376,43 @@
   }
 
   function cardHTML(post) {
-    const img = post.featured_image_url
-      ? `<img src="${post.featured_image_url}" alt="${escHtml(post.title)}" loading="lazy">`
+    const media = post._embedded?.['wp:featuredmedia']?.[0];
+    const img = media?.source_url
+      ? `<img src="${media.source_url}" alt="${post.title.rendered}" loading="lazy">`
       : `<div class="card-img-placeholder"></div>`;
-    const badge = post.category ? `<span class="badge">${escHtml(post.category.name)}</span>` : '';
-    const initial = (post.author || 'O')[0].toUpperCase();
+    const cats = post._embedded?.['wp:term']?.[0] || [];
+    const badge = cats.length ? `<span class="badge">${cats[0].name}</span>` : '';
+    const author = post._embedded?.author?.[0];
+    const authorName = author?.name || 'Oursolve';
+    const initial = authorName[0].toUpperCase();
+    const excerpt = stripHtml(post.excerpt?.rendered || '');
     return `
-      <a class="post-card" href="/blog/${encodeURIComponent(post.slug)}/">
+      <a class="post-card" href="${post.link}">
         <div class="card-img">${img}</div>
         <div class="card-body">
           ${badge}
-          <h2>${escHtml(post.title)}</h2>
-          <p>${escHtml(post.excerpt || '')}</p>
+          <h2>${post.title.rendered}</h2>
+          <p>${excerpt}</p>
           <div class="card-meta">
             <div class="author-avatar">${initial}</div>
-            <span>${escHtml(post.author || '')}</span>
+            <span>${authorName}</span>
             <span class="dot">·</span>
-            <span>${fmtDate(post.published_at)}</span>
+            <span>${fmtDate(post.date)}</span>
           </div>
         </div>
       </a>
     `;
   }
 
-  function escHtml(str) {
-    return String(str)
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-      .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
-  }
-
   function renderFilters(categories) {
-    const all = `<button class="filter-btn active" data-slug="">All</button>`;
+    const all = `<button class="filter-btn active" data-id="">All</button>`;
     const cats = categories.map(c =>
-      `<button class="filter-btn" data-slug="${c.slug}">${escHtml(c.name)}</button>`
+      `<button class="filter-btn" data-id="${c.id}">${c.name}</button>`
     ).join('');
     document.getElementById('filters').innerHTML = all + cats;
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        category = btn.dataset.slug;
+        categoryId = btn.dataset.id;
         page = 1;
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
@@ -418,9 +421,8 @@
     });
   }
 
-  function renderPagination(count) {
-    const pageSize = 10;
-    totalPages = Math.ceil(count / pageSize);
+  function renderPagination(tp) {
+    totalPages = tp;
     const el = document.getElementById('pagination');
     if (totalPages <= 1) { el.innerHTML = ''; return; }
     el.innerHTML = `
@@ -443,16 +445,17 @@
     grid.innerHTML = skeleton();
     document.getElementById('pagination').innerHTML = '';
 
-    const params = new URLSearchParams({ page });
+    const params = new URLSearchParams({ per_page: 10, page, _embed: 1 });
     if (search) params.set('search', search);
-    if (category) params.set('category', category);
+    if (categoryId) params.set('categories', categoryId);
 
     try {
-      const res = await fetch(`${API}/posts/?${params}`);
+      const res = await fetch(`${API}/posts?${params}`);
       if (!res.ok) throw new Error('API error');
-      const data = await res.json();
+      const posts = await res.json();
+      const tp = parseInt(res.headers.get('X-WP-TotalPages') || '1');
 
-      if (!data.results.length) {
+      if (!posts.length) {
         grid.innerHTML = `<div class="state-box" style="grid-column:1/-1">
           <div class="icon">📭</div>
           <h3>No articles found</h3>
@@ -462,8 +465,8 @@
         return;
       }
 
-      grid.innerHTML = data.results.map(cardHTML).join('');
-      renderPagination(data.count);
+      grid.innerHTML = posts.map(cardHTML).join('');
+      renderPagination(tp);
     } catch {
       grid.innerHTML = `<div class="state-box" style="grid-column:1/-1">
         <div class="icon">⚠️</div>
@@ -475,21 +478,16 @@
 
   async function loadCategories() {
     try {
-      const res = await fetch(`${API}/categories/`);
+      const res = await fetch(`${API}/categories?per_page=50&hide_empty=true`);
       const cats = await res.json();
       if (cats.length) renderFilters(cats);
-    } catch { /* skip if categories fail */ }
+    } catch { /* skip */ }
   }
 
-  // Debounced search
   let searchTimer;
   document.getElementById('searchInput').addEventListener('input', e => {
     clearTimeout(searchTimer);
-    searchTimer = setTimeout(() => {
-      search = e.target.value.trim();
-      page = 1;
-      loadPosts();
-    }, 400);
+    searchTimer = setTimeout(() => { search = e.target.value.trim(); page = 1; loadPosts(); }, 400);
   });
 
   loadCategories();
