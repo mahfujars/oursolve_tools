@@ -120,8 +120,29 @@ textarea:focus, input:focus, select:focus {
 [data-theme="dark"] input[type="text"],
 [data-theme="dark"] input[type="number"],
 [data-theme="dark"] input[type="password"],
+[data-theme="dark"] input[type="search"],
 [data-theme="dark"] select { background: var(--bg); color: var(--text); border-color: var(--border); }
 button {
   cursor: pointer; font-family: inherit;
   border-radius: 10px; font-weight: 600; transition: all .15s;
 }
+
+/* ── Dark mode: override hardcoded #fff / #f8fafc in tool inline styles ── */
+[data-theme="dark"] .card { background: var(--surface); border-color: var(--border); }
+[data-theme="dark"] .hash-value { background: var(--bg) !important; color: var(--text) !important; }
+[data-theme="dark"] .tab.active { background: var(--surface) !important; }
+[data-theme="dark"] .highlighted { background: var(--bg) !important; color: var(--text) !important; }
+[data-theme="dark"] .pattern-wrap { background: var(--bg) !important; }
+[data-theme="dark"] .mode-chip,
+[data-theme="dark"] .flag-chip,
+[data-theme="dark"] .filter-btn { background: var(--surface) !important; color: var(--text-muted) !important; border-color: var(--border) !important; }
+[data-theme="dark"] textarea { background: var(--bg) !important; color: var(--text) !important; }
+[data-theme="dark"] pre { background: var(--bg) !important; color: var(--text) !important; }
+[data-theme="dark"] .qr-wrapper,
+[data-theme="dark"] .output-box,
+[data-theme="dark"] .result-box,
+[data-theme="dark"] .preview-pane { background: var(--surface) !important; color: var(--text) !important; }
+/* Catch-all: any element with inline or class bg:#fff */
+[data-theme="dark"] input[type="search"] { background: var(--bg) !important; color: var(--text) !important; }
+[data-theme="dark"] .indent-row select { background: var(--bg) !important; color: var(--text) !important; }
+[data-theme="dark"] .parent-inputs input { background: var(--bg) !important; color: var(--text) !important; }
