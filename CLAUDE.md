@@ -180,14 +180,26 @@ Push to GitHub → cPanel Git Version Control → **Update from Remote** → **D
 
 ---
 
+## tools/tools.json — Dynamic Tool Manifest
+
+Homepage (`index.html`) and tools listing (`tools/index.html`) both fetch `tools/tools.json` via JS to render tool cards dynamically. No HTML editing needed to add a new tool to the grid.
+
+Entry format:
+```json
+{"slug":"tool-slug","name":"Tool Name","category":"Category","icon":"emoji","iconClass":"icon-css-class","desc":"Short description."}
+```
+
+Categories in use: `Generator`, `Security`, `Writing`, `Developer`
+
+---
+
 ## Adding a New Tool
 
 1. Create `tools/<tool-slug>/index.html`
-2. Use the standard page structure: nav → hero (with `.tool-badge`) → main (`transform: translateY(-32px)`) → footer
-3. Add tool card to `index.html` homepage grid
-4. Add tool card to `tools/index.html` tools listing
-5. Apply Safari copy fix pattern if the tool has copy buttons
-6. Update `sitemap.xml` with the new tool URL
+2. Use standard page structure: nav → hero (with `.tool-badge`) → main (`transform: translateY(-32px)`) → footer
+3. **Add one entry to `tools/tools.json`** — homepage and tools listing auto-update
+4. Apply Safari copy fix pattern if tool has copy buttons
+5. Update `sitemap.xml` with new tool URL
 
 ---
 
@@ -195,9 +207,10 @@ Push to GitHub → cPanel Git Version Control → **Update from Remote** → **D
 
 ```
 oursolve_tools/
-├── index.html                       # Homepage — all tools grid + blog preview
+├── index.html                       # Homepage — tools grid + blog preview (fetches tools.json)
 ├── tools/
-│   ├── index.html                   # All tools listing page
+│   ├── index.html                   # All tools listing (fetches tools.json)
+│   ├── tools.json                   # Tool manifest — add entry here to add tool to site
 │   ├── qr-generator/index.html
 │   ├── password-generator/index.html
 │   ├── word-counter/index.html
@@ -206,11 +219,12 @@ oursolve_tools/
 │   ├── url-encoder/index.html
 │   ├── hash-generator/index.html
 │   ├── markdown-to-html/index.html
-│   └── regex-tester/index.html
+│   ├── regex-tester/index.html
+│   └── muslim-names/index.html      # names loaded from names.json (1000 names, p:1 = priority)
 ├── blog/
-│   ├── index.html                   # Blog listing
-│   ├── post/index.html              # Single post view
-│   └── .htaccess                    # Clean URL routing
+│   ├── index.html                   # Blog listing — fetches WP REST API
+│   ├── post/index.html              # Single post view — fetches WP REST API
+│   └── .htaccess                    # Clean URL routing: /blog/<slug>/ → post/index.html
 ├── sitemap.xml
 ├── robots.txt
 ├── .cpanel.yml
