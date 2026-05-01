@@ -239,7 +239,132 @@
     .icon-hash { background: #fdf2f8; }
     .icon-md   { background: #f5f3ff; }
     .icon-rx   { background: #ecfeff; }
+    .icon-islamic { background: #fef9c3; }
     .icon-soon { background: #f1f5f9; }
+
+    /* Search + filter bar */
+    .toolbar {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .search-wrap {
+      position: relative;
+      margin-bottom: 12px;
+    }
+
+    .search-wrap svg {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 12px 14px 12px 42px;
+      font-size: 0.95rem;
+      font-family: inherit;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg);
+      color: var(--text);
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+
+    .search-input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(99,102,241,.15);
+    }
+
+    .filter-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      font-size: 0.82rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 50px;
+      background: var(--surface);
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all .15s;
+      font-family: inherit;
+    }
+
+    .chip:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .chip.active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .chip .count {
+      opacity: 0.7;
+      margin-left: 4px;
+      font-weight: 500;
+    }
+
+    /* Category section */
+    .category-section {
+      margin-bottom: 36px;
+    }
+
+    .category-section:last-child {
+      margin-bottom: 0;
+    }
+
+    .category-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .category-heading h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .category-heading .count-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--text-muted);
+      background: var(--border);
+      padding: 2px 10px;
+      border-radius: 50px;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 48px 24px;
+      color: var(--text-muted);
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: var(--radius);
+    }
+
+    .empty-state strong {
+      color: var(--text);
+      display: block;
+      margin-bottom: 4px;
+    }
   </style>
 </head>
 <body>
@@ -254,125 +379,22 @@
 </header>
 
 <main>
-  <p class="section-title">All Tools</p>
-
-  <div class="tools-grid">
-
-    <a class="tool-card" href="tools/qr-generator/">
-      <div class="tool-icon icon-qr">📱</div>
-      <div>
-        <span class="tag">Generator</span>
-        <h2>QR Code Generator</h2>
-      </div>
-      <p>Convert any URL, text, or contact info into a scannable QR code. Download as PNG instantly.</p>
-      <span class="tool-link">
-        Open tool
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
-      </span>
-    </a>
-
-    <a class="tool-card" href="tools/password-generator/">
-      <div class="tool-icon icon-pass">🔑</div>
-      <div>
-        <span class="tag">Security</span>
-        <h2>Password Generator</h2>
-      </div>
-      <p>Generate strong, random passwords with custom length and character sets. Strength meter included.</p>
-      <span class="tool-link">
-        Open tool
-        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
-      </span>
-    </a>
-
-    <a class="tool-card" href="tools/word-counter/">
-      <div class="tool-icon icon-word">📝</div>
-      <div>
-        <span class="tag">Writing</span>
-        <h2>Word Counter</h2>
-      </div>
-      <p>Count words, characters, sentences, and paragraphs. Estimates reading time and speaking time.</p>
-      <span class="tool-link">Open tool <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-    </a>
-
-    <a class="tool-card" href="tools/json-formatter/">
-      <div class="tool-icon icon-json">🧰</div>
-      <div>
-        <span class="tag">Developer</span>
-        <h2>JSON Formatter</h2>
-      </div>
-      <p>Format, minify and validate JSON instantly. Syntax highlighted output with auto-format on paste.</p>
-      <span class="tool-link">Open tool <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-    </a>
-
-    <a class="tool-card" href="tools/base64/">
-      <div class="tool-icon icon-b64">🔤</div>
-      <div>
-        <span class="tag">Encoding</span>
-        <h2>Base64 Encoder / Decoder</h2>
-      </div>
-      <p>Encode text or files to Base64 or decode Base64 strings back to plain text. File drag & drop supported.</p>
-      <span class="tool-link">Open tool <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-    </a>
-
-    <a class="tool-card" href="tools/url-encoder/">
-      <div class="tool-icon icon-url">🔗</div>
-      <div>
-        <span class="tag">Developer</span>
-        <h2>URL Encoder / Decoder</h2>
-      </div>
-      <p>Percent-encode URL strings or decode encoded URLs. Supports encodeURIComponent and encodeURI modes.</p>
-      <span class="tool-link">Open tool <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-    </a>
-
-    <a class="tool-card" href="tools/hash-generator/">
-      <div class="tool-icon icon-hash">🔐</div>
-      <div>
-        <span class="tag">Security</span>
-        <h2>Hash Generator</h2>
-      </div>
-      <p>Generate SHA-1, SHA-256, SHA-384, and SHA-512 hashes from text or files using native browser crypto.</p>
-      <span class="tool-link">Open tool <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-    </a>
-
-    <a class="tool-card" href="tools/markdown-to-html/">
-      <div class="tool-icon icon-md">📄</div>
-      <div>
-        <span class="tag">Writing</span>
-        <h2>Markdown to HTML</h2>
-      </div>
-      <p>Convert Markdown to HTML with a live side-by-side preview. Supports tables, code blocks, and more.</p>
-      <span class="tool-link">Open tool <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-    </a>
-
-    <a class="tool-card" href="tools/regex-tester/">
-      <div class="tool-icon icon-rx">⚡</div>
-      <div>
-        <span class="tag">Developer</span>
-        <h2>Regex Tester</h2>
-      </div>
-      <p>Test regular expressions in real-time. Match highlighting, capture group details, and all JS flags supported.</p>
-      <span class="tool-link">Open tool <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-    </a>
-
-    <a class="tool-card" href="tools/muslim-names/">
-      <div class="tool-icon">☪️</div>
-      <div>
-        <span class="tag">Islamic</span>
-        <h2>Muslim Baby Names</h2>
-      </div>
-      <p>Browse 200+ Islamic names for boys and girls with Arabic script, meanings, and origins.</p>
-      <span class="tool-link">Open tool <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg></span>
-    </a>
-
+  <div class="toolbar">
+    <div class="search-wrap">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="7"/>
+        <path d="m20 20-3.5-3.5"/>
+      </svg>
+      <input id="searchInput" class="search-input" type="search" placeholder="Search tools..." autocomplete="off">
+    </div>
+    <div id="filterChips" class="filter-chips"></div>
   </div>
+
+  <div id="toolsContainer"></div>
 
   <p class="section-title" style="margin-top:48px">From the Blog</p>
   <div id="blogPosts" class="tools-grid"></div>
-  <div style="margin-top:20px;text-align:center">
+  <div id="blogFooter" style="margin-top:20px;text-align:center">
     <a href="/blog/" style="display:inline-flex;align-items:center;gap:6px;font-size:.875rem;font-weight:600;color:var(--primary);text-decoration:none;padding:10px 22px;border:1px solid var(--primary-light);border-radius:50px;background:var(--primary-light);transition:all .15s"
        onmouseover="this.style.background='var(--primary)';this.style.color='#fff'"
        onmouseout="this.style.background='var(--primary-light)';this.style.color='var(--primary)'">
@@ -387,6 +409,96 @@
 </footer>
 
 <script>
+  /* Tool registry — add new tools here. Order within category preserved. */
+  const TOOLS = [
+    { slug: 'qr-generator',      name: 'QR Code Generator',      category: 'Generator', icon: '📱', iconClass: 'icon-qr',   desc: 'Convert any URL, text, or contact info into a scannable QR code. Download as PNG instantly.' },
+    { slug: 'password-generator', name: 'Password Generator',     category: 'Security',  icon: '🔑', iconClass: 'icon-pass', desc: 'Generate strong, random passwords with custom length and character sets. Strength meter included.' },
+    { slug: 'word-counter',      name: 'Word Counter',           category: 'Writing',   icon: '📝', iconClass: 'icon-word', desc: 'Count words, characters, sentences, and paragraphs. Estimates reading time and speaking time.' },
+    { slug: 'json-formatter',    name: 'JSON Formatter',         category: 'Developer', icon: '🧰', iconClass: 'icon-json', desc: 'Format, minify and validate JSON instantly. Syntax highlighted output with auto-format on paste.' },
+    { slug: 'base64',            name: 'Base64 Encoder / Decoder', category: 'Encoding', icon: '🔤', iconClass: 'icon-b64', desc: 'Encode text or files to Base64 or decode Base64 strings back to plain text. File drag & drop supported.' },
+    { slug: 'url-encoder',       name: 'URL Encoder / Decoder',  category: 'Developer', icon: '🔗', iconClass: 'icon-url',  desc: 'Percent-encode URL strings or decode encoded URLs. Supports encodeURIComponent and encodeURI modes.' },
+    { slug: 'hash-generator',    name: 'Hash Generator',         category: 'Security',  icon: '🔐', iconClass: 'icon-hash', desc: 'Generate SHA-1, SHA-256, SHA-384, and SHA-512 hashes from text or files using native browser crypto.' },
+    { slug: 'markdown-to-html',  name: 'Markdown to HTML',       category: 'Writing',   icon: '📄', iconClass: 'icon-md',   desc: 'Convert Markdown to HTML with a live side-by-side preview. Supports tables, code blocks, and more.' },
+    { slug: 'regex-tester',      name: 'Regex Tester',           category: 'Developer', icon: '⚡', iconClass: 'icon-rx',   desc: 'Test regular expressions in real-time. Match highlighting, capture group details, and all JS flags supported.' },
+    { slug: 'muslim-names',      name: 'Muslim Baby Names',      category: 'Islamic',   icon: '☪️', iconClass: 'icon-islamic', desc: 'Browse 200+ Islamic names for boys and girls with Arabic script, meanings, and origins.' },
+  ];
+
+  /* Category display order */
+  const CATEGORY_ORDER = ['Developer', 'Security', 'Generator', 'Encoding', 'Writing', 'Islamic'];
+
+  const ARROW_SVG = '<svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>';
+
+  let activeFilter = 'All';
+  let searchTerm = '';
+
+  function cardHTML(t) {
+    return `
+      <a class="tool-card" href="tools/${t.slug}/">
+        <div class="tool-icon ${t.iconClass}">${t.icon}</div>
+        <div>
+          <span class="tag">${t.category}</span>
+          <h2>${t.name}</h2>
+        </div>
+        <p>${t.desc}</p>
+        <span class="tool-link">Open tool ${ARROW_SVG}</span>
+      </a>`;
+  }
+
+  function renderChips() {
+    const counts = TOOLS.reduce((acc, t) => (acc[t.category] = (acc[t.category] || 0) + 1, acc), {});
+    const cats = ['All', ...CATEGORY_ORDER.filter(c => counts[c])];
+    const html = cats.map(c => {
+      const n = c === 'All' ? TOOLS.length : counts[c];
+      const cls = c === activeFilter ? 'chip active' : 'chip';
+      return `<button class="${cls}" data-cat="${c}">${c}<span class="count">${n}</span></button>`;
+    }).join('');
+    document.getElementById('filterChips').innerHTML = html;
+    document.querySelectorAll('#filterChips .chip').forEach(b => {
+      b.addEventListener('click', () => { activeFilter = b.dataset.cat; renderChips(); renderTools(); });
+    });
+  }
+
+  function renderTools() {
+    const q = searchTerm.trim().toLowerCase();
+    const filtered = TOOLS.filter(t => {
+      if (activeFilter !== 'All' && t.category !== activeFilter) return false;
+      if (q && !(t.name.toLowerCase().includes(q) || t.desc.toLowerCase().includes(q) || t.category.toLowerCase().includes(q))) return false;
+      return true;
+    });
+
+    const container = document.getElementById('toolsContainer');
+    if (!filtered.length) {
+      container.innerHTML = `<div class="empty-state"><strong>No tools match your search.</strong>Try a different keyword or category.</div>`;
+      return;
+    }
+
+    /* Search active OR specific category: flat grid. Otherwise group by category. */
+    if (q || activeFilter !== 'All') {
+      container.innerHTML = `<div class="tools-grid">${filtered.map(cardHTML).join('')}</div>`;
+      return;
+    }
+
+    const groups = {};
+    filtered.forEach(t => { (groups[t.category] = groups[t.category] || []).push(t); });
+    const sections = CATEGORY_ORDER.filter(c => groups[c]).map(c => `
+      <section class="category-section">
+        <div class="category-heading">
+          <h3>${c}</h3>
+          <span class="count-badge">${groups[c].length}</span>
+        </div>
+        <div class="tools-grid">${groups[c].map(cardHTML).join('')}</div>
+      </section>`).join('');
+    container.innerHTML = sections;
+  }
+
+  document.getElementById('searchInput').addEventListener('input', e => {
+    searchTerm = e.target.value;
+    renderTools();
+  });
+
+  renderChips();
+  renderTools();
+
   async function loadBlogPosts() {
     try {
       const res = await fetch('/dashboard/api/posts/?page=1');
