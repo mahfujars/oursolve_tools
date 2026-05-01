@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Muslim Baby Names with Meanings - Oursolve.com</title>
-  <meta name="description" content="Browse 200+ Muslim baby names for boys and girls with meanings and origins. Search by name or meaning. Free Islamic name finder.">
+  <meta name="description" content="Browse 1000+ Muslim baby names for boys and girls with meanings and origins. Search by name or meaning. Free Islamic name finder.">
   <meta name="keywords" content="muslim baby names, islamic names, muslim boy names, muslim girl names, arabic names with meaning, bangladeshi muslim names">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://oursolve.com/tools/muslim-names/">
@@ -86,7 +86,7 @@
 <div class="hero">
   <div class="tool-badge">☪️ Islamic</div>
   <h1>Muslim Baby Names</h1>
-  <p>200+ beautiful Islamic names for boys and girls with meanings and origins.</p>
+  <p>1000+ beautiful Islamic names for boys and girls with meanings and origins.</p>
 </div>
 
 <main>
@@ -108,8 +108,7 @@
   <div class="parent-match">
     <h3>Match with parent name (optional)</h3>
     <div class="parent-inputs">
-      <input type="text" id="father-name" placeholder="Father's name (e.g. Abdul)" oninput="render()">
-      <input type="text" id="mother-name" placeholder="Mother's name (e.g. Fatima)" oninput="render()">
+      <input type="text" id="parent-name" placeholder="Enter parent's name to find matching baby names…" oninput="render()">
     </div>
   </div>
 
@@ -139,12 +138,8 @@ function setFilter(f, btn) {
 }
 
 function getMatchLetters() {
-  const father = document.getElementById('father-name').value.trim();
-  const mother = document.getElementById('mother-name').value.trim();
-  const letters = [];
-  if (father) letters.push(father[0].toLowerCase());
-  if (mother) letters.push(mother[0].toLowerCase());
-  return [...new Set(letters)];
+  const parent = document.getElementById('parent-name').value.trim();
+  return parent ? [parent[0].toLowerCase()] : [];
 }
 
 function isMatch(name, matchLetters) {
@@ -166,7 +161,13 @@ function render() {
   if (matchLetters.length) {
     filtered = [
       ...filtered.filter(n => isMatch(n.n, matchLetters)),
-      ...filtered.filter(n => !isMatch(n.n, matchLetters))
+      ...filtered.filter(n => !isMatch(n.n, matchLetters) && n.p),
+      ...filtered.filter(n => !isMatch(n.n, matchLetters) && !n.p)
+    ];
+  } else {
+    filtered = [
+      ...filtered.filter(n => n.p),
+      ...filtered.filter(n => !n.p)
     ];
   }
 
