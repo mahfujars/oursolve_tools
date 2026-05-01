@@ -165,5 +165,29 @@ button {
 [data-theme="dark"] .preview h1,[data-theme="dark"] .preview h2,[data-theme="dark"] .preview h3,
 [data-theme="dark"] .preview h4,[data-theme="dark"] .preview p,[data-theme="dark"] .preview li { color: var(--text) !important; }
 
-/* ── Base64 error ── */
+/* ── Base64 / general error ── */
 [data-theme="dark"] .error { color: #fca5a5 !important; }
+
+/* ── Password generator ── */
+[data-theme="dark"] #password-output { background: var(--bg) !important; color: var(--text) !important; }
+[data-theme="dark"] .strength-row { background: var(--bg) !important; color: var(--text) !important; }
+/* toggle knob stays white — intentional, don't override */
+
+/* ── QR generator ── */
+[data-theme="dark"] #qr-container { background: #fff !important; }
+
+/* ── Markdown to HTML ── */
+[data-theme="dark"] textarea { background: var(--bg) !important; color: var(--text) !important; }
+[data-theme="dark"] .preview { background: var(--surface) !important; color: var(--text) !important; }
+[data-theme="dark"] .preview code { background: #0f172a !important; color: #e2e8f0 !important; }
+
+/* ── Regex: group highlight ── */
+[data-theme="dark"] mark.group { background: #14532d !important; color: #bbf7d0 !important; }
+
+/* ── Word counter stats box ── */
+[data-theme="dark"] .stats-grid .stat,
+[data-theme="dark"] .stat-card,
+[data-theme="dark"] .stat-box { background: var(--surface) !important; color: var(--text) !important; }
+
+/* ── JSON formatter placeholder text ── */
+[data-theme="dark"] #output span[style*="color:#475569"] { color: var(--text-muted) !important; }
