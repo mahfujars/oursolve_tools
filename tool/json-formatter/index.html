@@ -15,11 +15,9 @@
   <meta property="og:site_name" content="Oursolve">
   <meta name="twitter:card" content="summary">
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"JSON Formatter","url":"https://oursolve.com/tool/json-formatter/","description":"Format, minify and validate JSON online.","applicationCategory":"DeveloperApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+    <link rel="stylesheet" href="/tool/shared.css">
   <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{--primary:#6366f1;--primary-dark:#4f46e5;--primary-light:#e0e7ff;--bg:#f8fafc;--surface:#fff;--text:#0f172a;--text-muted:#64748b;--border:#e2e8f0;--shadow:0 1px 3px rgba(0,0,0,.08),0 4px 16px rgba(0,0,0,.06);--radius:16px;--ok:#22c55e;--error:#ef4444}
-    body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
-    nav{background:#fff;border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:12px}
+nav{background:#fff;border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;gap:12px}
     nav a{text-decoration:none;color:var(--text-muted);font-size:.875rem;display:flex;align-items:center;gap:6px;transition:color .15s}
     nav a:hover{color:var(--primary)}
     .nav-sep{color:var(--border)}
@@ -54,22 +52,20 @@
     .json-num{color:#fbbf24}
     .json-bool{color:#f472b6}
     .json-null{color:#94a3b8}
-    footer{text-align:center;padding:32px 24px;color:var(--text-muted);font-size:.875rem;border-top:1px solid var(--border)}
-    footer a{color:var(--primary);text-decoration:none}
     @media(max-width:600px){.btn-row{flex-direction:column}}
   </style>
+<script>
+  (function() {
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = saved || (prefersDark ? 'dark' : 'light');
+    if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  })();
+</script>
 </head>
 <body>
 
-<nav>
-  <a href="../../">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    Oursolve
-  </a>
-  <span class="nav-sep">/</span>
-  <span class="nav-current">JSON Formatter</span>
-</nav>
-
+<div id="tool-header"></div>
 <div class="hero">
   <div class="tool-badge">🧰 Developer</div>
   <h1>JSON Formatter & Validator</h1>
@@ -108,10 +104,7 @@
   </div>
 </main>
 
-<footer>
-  <p><a href="../../">← Back to all tools</a> · Oursolve — Free online tools</p>
-</footer>
-
+<div id="tool-footer"></div>
 <script>
   let lastAction = null;
 
@@ -207,6 +200,28 @@
 
   // Auto-format on paste
   document.getElementById('input').addEventListener('paste', () => setTimeout(format, 50));
+</script>
+<script>
+  fetch('/tool/header.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-header');
+    if (el) { el.outerHTML = html; }
+    const t = document.getElementById('navTitle');
+    if (t) t.textContent = document.title.split(' - ')[0].replace('Free ','');
+    const btn = document.getElementById('themeToggle');
+    if (btn) {
+      btn.textContent = document.documentElement.getAttribute('data-theme')==='dark' ? '☀️' : '🌙';
+      btn.addEventListener('click', function() {
+        const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+        document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        btn.textContent = isDark ? '🌙' : '☀️';
+      });
+    }
+  });
+  fetch('/tool/footer.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-footer');
+    if (el) el.outerHTML = html;
+  });
 </script>
 </body>
 </html>

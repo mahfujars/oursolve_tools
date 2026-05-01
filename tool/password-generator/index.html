@@ -46,36 +46,9 @@
     }
   }
   </script>
+    <link rel="stylesheet" href="/tool/shared.css">
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --primary: #6366f1;
-      --primary-dark: #4f46e5;
-      --primary-light: #e0e7ff;
-      --bg: #f8fafc;
-      --surface: #ffffff;
-      --text: #0f172a;
-      --text-muted: #64748b;
-      --border: #e2e8f0;
-      --shadow: 0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
-      --radius: 16px;
-      --danger: #ef4444;
-      --warn: #f97316;
-      --ok: #eab308;
-      --good: #22c55e;
-      --great: #6366f1;
-    }
-
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      min-height: 100vh;
-    }
-
-    nav {
+nav {
       background: #fff;
       border-bottom: 1px solid var(--border);
       padding: 14px 24px;
@@ -367,30 +340,19 @@
       font-size: 0.875rem;
       padding: 20px;
     }
-
-    footer {
-      text-align: center;
-      padding: 32px 24px;
-      color: var(--text-muted);
-      font-size: 0.875rem;
-      border-top: 1px solid var(--border);
-    }
-    footer a { color: var(--primary); text-decoration: none; }
   </style>
+<script>
+  (function() {
+    const saved = localStorage.getItem('theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const theme = saved || (prefersDark ? 'dark' : 'light');
+    if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  })();
+</script>
 </head>
 <body>
 
-<nav>
-  <a href="../../">
-    <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
-      <path d="M19 12H5M12 19l-7-7 7-7"/>
-    </svg>
-    Oursolve
-  </a>
-  <span class="nav-sep">/</span>
-  <span class="nav-current">Password Generator</span>
-</nav>
-
+<div id="tool-header"></div>
 <div class="hero">
   <div class="tool-badge">🔑 Security</div>
   <h1>Password Generator</h1>
@@ -496,10 +458,7 @@
   </div>
 </main>
 
-<footer>
-  <p><a href="../../">← Back to all tools</a> · Oursolve — Free online tools</p>
-</footer>
-
+<div id="tool-footer"></div>
 <script>
   const UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   const LOWER = 'abcdefghijklmnopqrstuvwxyz';
@@ -623,5 +582,27 @@
   generate();
 </script>
 
+<script>
+  fetch('/tool/header.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-header');
+    if (el) { el.outerHTML = html; }
+    const t = document.getElementById('navTitle');
+    if (t) t.textContent = document.title.split(' - ')[0].replace('Free ','');
+    const btn = document.getElementById('themeToggle');
+    if (btn) {
+      btn.textContent = document.documentElement.getAttribute('data-theme')==='dark' ? '☀️' : '🌙';
+      btn.addEventListener('click', function() {
+        const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+        document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        btn.textContent = isDark ? '🌙' : '☀️';
+      });
+    }
+  });
+  fetch('/tool/footer.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-footer');
+    if (el) el.outerHTML = html;
+  });
+</script>
 </body>
 </html>
