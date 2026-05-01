@@ -5,4 +5,3 @@ deployment:
     - /bin/cp sitemap.xml /home/oursolve/public_html/sitemap.xml
     - /bin/cp robots.txt /home/oursolve/public_html/robots.txt
     - /bin/cp -R tool /home/oursolve/public_html/
-    - /bin/cp -R blog /home/oursolve/public_html/
