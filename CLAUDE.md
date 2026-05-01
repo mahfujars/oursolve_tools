@@ -1,11 +1,12 @@
 # oursolve_tools — Claude Context
 
 ## What Is This
-Static HTML/CSS/JS site at oursolve.com. No build step, no frameworks, no npm. Every tool is a self-contained single HTML file deployed directly to `/home/oursolve/public_html/` via cPanel Git.
+Static HTML/CSS/JS site at oursolve.com. No build step, no frameworks, no npm. Tools live in `tool/<slug>/index.html`, deployed to `public_html/` via cPanel Git.
 
 - **Live URL:** https://oursolve.com/
 - **GitHub:** https://github.com/mahfujars/oursolve_tools
 - **Deploy target:** `/home/oursolve/public_html/`
+- **Git repo on server:** `/home/oursolve/oursolve_tools/` (not inside public_html)
 
 ---
 
@@ -15,7 +16,7 @@ Static HTML/CSS/JS site at oursolve.com. No build step, no frameworks, no npm. E
 - **File Manager** — browse/edit/delete files
 - **Git Version Control** — "Deploy HEAD Commit" runs `.cpanel.yml`
 
-Never suggest terminal commands. For file edits, use File Manager as fallback.
+Never suggest terminal commands.
 
 ---
 
@@ -25,36 +26,75 @@ Never suggest terminal commands. For file edits, use File Manager as fallback.
 - **100% client-side.** Every tool works without any backend.
 - **No tracking, no ads, no sign-ups.** No data leaves the browser.
 - **Mobile-first and responsive.** Works on phones and tablets.
-- **CDN libraries OK** only when a feature requires non-trivial pure-JS implementation AND library has SRI hash.
+- **CDN libraries OK** only when feature requires non-trivial pure-JS AND library has SRI hash.
 
 ---
 
 ## Design System
 
-| Token | Value |
-|-------|-------|
-| Primary color | `#6366f1` (indigo) |
-| Primary dark | `#4f46e5` |
-| Primary light | `#e0e7ff` |
-| Background | `#f8fafc` |
-| Surface | `#ffffff` |
-| Text | `#0f172a` |
-| Text muted | `#64748b` |
-| Border | `#e2e8f0` |
-| Border radius | `16px` (cards), `10px` (inputs), `8px` (buttons) |
-| Hero gradient | `linear-gradient(135deg, #1e1b4b, #312e81, #4338ca)` |
-| Font | `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif` |
+### Colors (navy/blue — NOT indigo)
+
+| Token | Light mode | Dark mode |
+|-------|-----------|-----------|
+| `--primary` | `#1C4D8D` | `#4d8fd4` |
+| `--primary-dark` | `#093C5D` | `#93c5fd` |
+| `--primary-light` | `#dbeafe` | `#1e3a5f` |
+| `--bg` | `#f8fafc` | `#0f172a` |
+| `--surface` | `#ffffff` | `#1e293b` |
+| `--text` | `#0f172a` | `#f1f5f9` |
+| `--text-muted` | `#64748b` | `#94a3b8` |
+| `--border` | `#e2e8f0` | `#334155` |
+| `--hero-gradient` | `linear-gradient(135deg, #051e3e, #093C5D, #1C4D8D)` | darker variant |
+
+All tokens defined in `tool/shared.css` as CSS vars with `[data-theme="dark"]` overrides.
+
+### Dark/Light Mode
+- Toggle button (🌙/☀️) in nav on every page
+- Preference saved to `localStorage` key `theme`
+- Respects `prefers-color-scheme` on first visit
+- `data-theme="dark"` set on `<html>` element via inline script in `<head>` (before paint)
 
 ### Page Structure (all tool pages)
 ```
-nav (breadcrumb: Oursolve / Tool Name)
+<nav class="site-nav"> (loaded from /tool/header.html via JS fetch)
   ↓
-.hero (gradient background, tool badge + h1 + subtitle)
+.hero (var(--hero-gradient), tool badge + h1 + subtitle)
   ↓
-main (max-width varies, transform: translateY(-32px) — overlaps hero bottom)
+main (max-width varies, transform: translateY(-32px))
   ↓
-footer (centered, link back to all tools)
+<footer> (loaded from /tool/footer.html via JS fetch)
 ```
+
+### Shared Files (tool/)
+| File | Purpose |
+|------|---------|
+| `tool/shared.css` | All CSS vars, dark mode vars, nav, hero, footer, common element styles |
+| `tool/header.html` | Nav HTML snippet — fetched and injected by every tool page |
+| `tool/footer.html` | Footer HTML snippet — fetched and injected by every tool page |
+| `tool/tools.json` | Tool manifest for homepage + WP tools page |
+
+Every tool `index.html` links `shared.css` and fetches header/footer:
+```html
+<link rel="stylesheet" href="/tool/shared.css">
+```
+```js
+fetch('/tool/header.html').then(r=>r.text()).then(html=>{ document.getElementById('tool-header').outerHTML=html; ... });
+fetch('/tool/footer.html').then(r=>r.text()).then(html=>{ document.getElementById('tool-footer').outerHTML=html; });
+```
+
+---
+
+## URL Structure
+
+| URL | What serves it |
+|-----|---------------|
+| `/` | WP homepage (`front-page.php`) — shows 6 featured tools + blog preview |
+| `/tools/` | WP page with "Tools Listing" template (`page-tools.php`) — all tools, search, filter |
+| `/tool/<slug>/` | Static HTML from `public_html/tool/<slug>/index.html` |
+| `/blog/` | Static `blog/index.html` — fetches WP REST API |
+| `/blog/<slug>/` | Static `blog/post/index.html` — fetches WP REST API |
+
+Note: `/tools/` is a WP page (no static file). `/tool/` is a real directory with static files.
 
 ---
 
@@ -62,15 +102,31 @@ footer (centered, link back to all tools)
 
 | Tool | Path | Category | Notes |
 |------|------|----------|-------|
-| QR Code Generator | `tools/qr-generator/` | Utility | Uses qrcode.js from cdnjs (SRI hash) |
-| Password Generator | `tools/password-generator/` | Security | `crypto.getRandomValues()`, copy Safari fix applied |
-| Word Counter | `tools/word-counter/` | Writing | Pure JS |
-| JSON Formatter | `tools/json-formatter/` | Developer | Format/minify/validate, syntax highlight, auto-format on paste |
-| Base64 Encoder | `tools/base64/` | Developer | Encode/decode tabs, file drag & drop |
-| URL Encoder | `tools/url-encoder/` | Developer | encodeURIComponent + encodeURI modes, swap buttons |
-| Hash Generator | `tools/hash-generator/` | Security | SHA-1/256/384/512 via Web Crypto API, text + file input |
-| Markdown to HTML | `tools/markdown-to-html/` | Writing | Live split preview, pure-JS parser, tables/code/blockquotes |
-| Regex Tester | `tools/regex-tester/` | Developer | Real-time highlight, match table, capture groups, all flags |
+| QR Code Generator | `tool/qr-generator/` | Generator | qrcode.js from cdnjs (SRI hash) |
+| Password Generator | `tool/password-generator/` | Security | `crypto.getRandomValues()`, Safari copy fix |
+| Word Counter | `tool/word-counter/` | Writing | Pure JS |
+| JSON Formatter | `tool/json-formatter/` | Developer | Format/minify/validate, syntax highlight |
+| Base64 Encoder | `tool/base64/` | Encoding | Encode/decode tabs, file drag & drop |
+| URL Encoder | `tool/url-encoder/` | Developer | encodeURIComponent + encodeURI modes |
+| Hash Generator | `tool/hash-generator/` | Security | SHA-1/256/384/512 via Web Crypto API |
+| Markdown to HTML | `tool/markdown-to-html/` | Writing | Live split preview, pure-JS parser |
+| Regex Tester | `tool/regex-tester/` | Developer | Real-time highlight, capture groups, all flags |
+| Muslim Baby Names | `tool/muslim-names/` | Islamic | 1000 names, `p:1` = priority (99 names derivatives) |
+
+---
+
+## tool/tools.json — Dynamic Manifest
+
+`front-page.php` (WP homepage) and `page-tools.php` (WP tools page) both fetch `/tool/tools.json` to render tool cards. No PHP edit needed to add a new tool.
+
+Entry format:
+```json
+{"slug":"tool-slug","name":"Tool Name","category":"Category","icon":"emoji","iconClass":"icon-css-class","desc":"Short description."}
+```
+
+Categories: `Generator`, `Security`, `Writing`, `Developer`, `Encoding`, `Islamic`
+
+Icon CSS classes defined in `tool/shared.css`: `icon-qr`, `icon-pass`, `icon-word`, `icon-json`, `icon-b64`, `icon-url`, `icon-hash`, `icon-md`, `icon-rx`, `icon-islamic`
 
 ---
 
@@ -81,25 +137,9 @@ footer (centered, link back to all tools)
 **Fix:** Always pass `this` from the `onclick` attribute. Never use `event.target` in async functions.
 
 ```html
-<!-- CORRECT -->
 <button onclick="copyField('output-id', this)">Copy</button>
-
-<!-- WRONG — breaks on Safari -->
-<button onclick="copyField('output-id')">Copy</button>
 ```
-
 ```javascript
-async function clip(text) {
-  try { await navigator.clipboard.writeText(text); return true; } catch {}
-  try {
-    const ta = Object.assign(document.createElement('textarea'), {value: text});
-    ta.style.cssText = 'position:fixed;opacity:0';
-    document.body.appendChild(ta); ta.select();
-    const ok = document.execCommand('copy');
-    document.body.removeChild(ta); return ok;
-  } catch { return false; }
-}
-
 async function copyField(id, btn) {
   const val = document.getElementById(id).value;
   if (!val) return;
@@ -107,8 +147,6 @@ async function copyField(id, btn) {
   if (ok) { const o = btn.textContent; btn.textContent = '✅ Copied!'; setTimeout(() => btn.textContent = o, 1500); }
 }
 ```
-
-The `execCommand('copy')` fallback handles environments where `navigator.clipboard` is unavailable (non-HTTPS, Safari quirks).
 
 ---
 
@@ -119,87 +157,42 @@ Blog posts written in **WordPress Admin** (`oursolve.com/wp-admin/`). Static blo
 ### Files
 | File | Purpose |
 |------|---------|
-| `blog/index.html` | Post listing, fetches `GET /wp-json/wp/v2/posts` |
-| `blog/post/index.html` | Single post view, fetches `GET /wp-json/wp/v2/posts?slug=<slug>&_embed=1` |
-| `blog/.htaccess` | Clean URL routing |
-
-### Clean URL Routing
-
-`blog/.htaccess` rewrites `/blog/<slug>/` → `post/index.html`:
-```apache
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^[a-zA-Z0-9_-]+/?$ post/index.html [L]
-```
-
-`blog/post/index.html` extracts slug from pathname:
-```javascript
-const pathSlug = window.location.pathname.replace(/\/$/, '').split('/').pop();
-const slug = params.get('slug') || (pathSlug && pathSlug !== 'post' ? pathSlug : null);
-```
+| `blog/index.html` | Post listing — fetches WP REST API |
+| `blog/post/index.html` | Single post view — fetches WP REST API |
+| `blog/.htaccess` | Clean URL: `/blog/<slug>/` → `post/index.html` |
 
 ### WP REST API
-- Post listing: `GET /wp-json/wp/v2/posts?per_page=10&page=1&_embed=1`
-- Single post: `GET /wp-json/wp/v2/posts?slug=<slug>&_embed=1`
-- Categories: `GET /wp-json/wp/v2/categories?hide_empty=true`
+- Listing: `GET /wp-json/wp/v2/posts?per_page=10&page=1&_embed=1`
+- Single: `GET /wp-json/wp/v2/posts?slug=<slug>&_embed=1`
 - Pagination: `X-WP-TotalPages` response header
-- `_embed=1` includes: `wp:featuredmedia` (image), `wp:term` (categories/tags), `author`
-
-### WP Post Fields Used
-| Field | Value |
-|-------|-------|
-| Title | `post.title.rendered` |
-| Content | `post.content.rendered` |
-| Excerpt | `post.excerpt.rendered` (strip HTML tags) |
-| Date | `post.date` |
-| URL | `post.link` |
-| Featured image | `post._embedded['wp:featuredmedia'][0].source_url` |
-| Categories | `post._embedded['wp:term'][0]` |
-| Tags | `post._embedded['wp:term'][1]` |
-| Author | `post._embedded.author[0].name` |
+- `_embed=1` includes featured image, categories/tags, author
 
 ---
 
 ## Deploy
 
-WordPress is installed at `public_html/` root. `.cpanel.yml` copies only static tool files — never touches WP files:
+`.cpanel.yml` copies only static files — never touches WP core:
 ```yaml
 deployment:
   tasks:
     - /bin/cp index.html /home/oursolve/public_html/index.html
     - /bin/cp sitemap.xml /home/oursolve/public_html/sitemap.xml
     - /bin/cp robots.txt /home/oursolve/public_html/robots.txt
-    - /bin/cp -R tools /home/oursolve/public_html/
+    - /bin/cp -R tool /home/oursolve/public_html/
     - /bin/cp -R blog /home/oursolve/public_html/
 ```
 
-**Git repo cloned to:** `/home/oursolve/oursolve_tools/` (not public_html)
-
-Push to GitHub → cPanel Git Version Control → **Update from Remote** → **Deploy HEAD Commit**.
-
----
-
-## tools/tools.json — Dynamic Tool Manifest
-
-Homepage (`index.html`) and tools listing (`tools/index.html`) both fetch `tools/tools.json` via JS to render tool cards dynamically. No HTML editing needed to add a new tool to the grid.
-
-Entry format:
-```json
-{"slug":"tool-slug","name":"Tool Name","category":"Category","icon":"emoji","iconClass":"icon-css-class","desc":"Short description."}
-```
-
-Categories in use: `Generator`, `Security`, `Writing`, `Developer`
+Push to GitHub → cPanel Git → **Update from Remote** → **Deploy HEAD Commit**.
 
 ---
 
 ## Adding a New Tool
 
-1. Create `tools/<tool-slug>/index.html`
-2. Use standard page structure: nav → hero (with `.tool-badge`) → main (`transform: translateY(-32px)`) → footer
-3. **Add one entry to `tools/tools.json`** — homepage and tools listing auto-update
-4. Apply Safari copy fix pattern if tool has copy buttons
-5. Update `sitemap.xml` with new tool URL
+1. Create `tool/<slug>/index.html`
+2. Link `shared.css`, add `<div id="tool-header"></div>` and `<div id="tool-footer"></div>`, add header/footer fetch JS + dark mode init script
+3. Add entry to `tool/tools.json` — homepage and tools page auto-update
+4. Apply Safari copy fix if tool has copy buttons
+5. Update `sitemap.xml`
 
 ---
 
@@ -207,10 +200,12 @@ Categories in use: `Generator`, `Security`, `Writing`, `Developer`
 
 ```
 oursolve_tools/
-├── index.html                       # Homepage — tools grid + blog preview (fetches tools.json)
-├── tools/
-│   ├── index.html                   # All tools listing (fetches tools.json)
-│   ├── tools.json                   # Tool manifest — add entry here to add tool to site
+├── index.html                       # Homepage (WP handles /, this file unused by WP)
+├── tool/
+│   ├── shared.css                   # Shared CSS vars, dark mode, nav, hero, footer styles
+│   ├── header.html                  # Shared nav snippet (fetched by each tool)
+│   ├── footer.html                  # Shared footer snippet (fetched by each tool)
+│   ├── tools.json                   # Tool manifest — add entry here to add new tool
 │   ├── qr-generator/index.html
 │   ├── password-generator/index.html
 │   ├── word-counter/index.html
@@ -220,11 +215,13 @@ oursolve_tools/
 │   ├── hash-generator/index.html
 │   ├── markdown-to-html/index.html
 │   ├── regex-tester/index.html
-│   └── muslim-names/index.html      # names loaded from names.json (1000 names, p:1 = priority)
+│   └── muslim-names/
+│       ├── index.html
+│       └── names.json               # 1000 names, p:1 = Allah's 99 names derivatives (shown first)
 ├── blog/
 │   ├── index.html                   # Blog listing — fetches WP REST API
-│   ├── post/index.html              # Single post view — fetches WP REST API
-│   └── .htaccess                    # Clean URL routing: /blog/<slug>/ → post/index.html
+│   ├── post/index.html              # Single post — fetches WP REST API
+│   └── .htaccess                    # Clean URL routing
 ├── sitemap.xml
 ├── robots.txt
 ├── .cpanel.yml
