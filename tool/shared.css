@@ -146,3 +146,24 @@ button {
 [data-theme="dark"] input[type="search"] { background: var(--bg) !important; color: var(--text) !important; }
 [data-theme="dark"] .indent-row select { background: var(--bg) !important; color: var(--text) !important; }
 [data-theme="dark"] .parent-inputs input { background: var(--bg) !important; color: var(--text) !important; }
+
+/* ── Regex tester ── */
+[data-theme="dark"] .matches-table tr:nth-child(even) td { background: rgba(255,255,255,.04) !important; }
+[data-theme="dark"] .matches-table td, [data-theme="dark"] .matches-table th { color: var(--text) !important; border-color: var(--border) !important; }
+[data-theme="dark"] .highlighted { background: var(--bg) !important; color: var(--text) !important; }
+[data-theme="dark"] mark { background: #854d0e !important; color: #fef9c3 !important; }
+[data-theme="dark"] .stat.has-match { background: #052e16 !important; border-color: #166534 !important; color: #86efac !important; }
+[data-theme="dark"] .stat.no-match { background: #450a0a !important; border-color: #991b1b !important; color: #fca5a5 !important; }
+[data-theme="dark"] .pattern-wrap { background: var(--bg) !important; }
+
+/* ── JSON formatter ── */
+[data-theme="dark"] pre { background: #0d1117 !important; color: #e2e8f0 !important; border-color: var(--border) !important; }
+[data-theme="dark"] .status.error { background: #450a0a !important; color: #fca5a5 !important; border-color: #991b1b !important; }
+
+/* ── Markdown to HTML ── */
+[data-theme="dark"] .preview { background: var(--surface) !important; color: var(--text) !important; }
+[data-theme="dark"] .preview h1,[data-theme="dark"] .preview h2,[data-theme="dark"] .preview h3,
+[data-theme="dark"] .preview h4,[data-theme="dark"] .preview p,[data-theme="dark"] .preview li { color: var(--text) !important; }
+
+/* ── Base64 error ── */
+[data-theme="dark"] .error { color: #fca5a5 !important; }
