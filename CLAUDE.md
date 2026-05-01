@@ -114,13 +114,13 @@ The `execCommand('copy')` fallback handles environments where `navigator.clipboa
 
 ## Blog System
 
-Blog posts are written in the Django admin (`oursolve_dashboard`) and served via API. The static blog pages fetch from the API.
+Blog posts written in **WordPress Admin** (`oursolve.com/wp-admin/`). Static blog pages fetch from WP REST API.
 
 ### Files
 | File | Purpose |
 |------|---------|
-| `blog/index.html` | Post listing, fetches `GET /dashboard/api/posts/` |
-| `blog/post/index.html` | Single post view, fetches `GET /dashboard/api/posts/<slug>/` |
+| `blog/index.html` | Post listing, fetches `GET /wp-json/wp/v2/posts` |
+| `blog/post/index.html` | Single post view, fetches `GET /wp-json/wp/v2/posts?slug=<slug>&_embed=1` |
 | `blog/.htaccess` | Clean URL routing |
 
 ### Clean URL Routing
@@ -133,34 +133,50 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^[a-zA-Z0-9_-]+/?$ post/index.html [L]
 ```
 
-`blog/post/index.html` extracts the slug from the pathname (not just `?slug=` param):
+`blog/post/index.html` extracts slug from pathname:
 ```javascript
-const params = new URLSearchParams(window.location.search);
 const pathSlug = window.location.pathname.replace(/\/$/, '').split('/').pop();
 const slug = params.get('slug') || (pathSlug && pathSlug !== 'post' ? pathSlug : null);
-if (!slug) { window.location.href = '/blog/'; return; }
 ```
 
-Post cards in `blog/index.html` link to clean URLs: `/blog/${post.slug}/`
-Post cards in `index.html` (homepage preview) also use clean URL format.
+### WP REST API
+- Post listing: `GET /wp-json/wp/v2/posts?per_page=10&page=1&_embed=1`
+- Single post: `GET /wp-json/wp/v2/posts?slug=<slug>&_embed=1`
+- Categories: `GET /wp-json/wp/v2/categories?hide_empty=true`
+- Pagination: `X-WP-TotalPages` response header
+- `_embed=1` includes: `wp:featuredmedia` (image), `wp:term` (categories/tags), `author`
 
-### API Integration
-- Fetch from `https://oursolve.com/dashboard/api/posts/` (paginated, 10/page)
-- Fetch single post: `https://oursolve.com/dashboard/api/posts/<slug>/`
-- API returns: `title`, `slug`, `content` (HTML), `excerpt`, `featured_image_url`, `category`, `tags`, `author`, `published_at`, `meta_title`, `meta_description`
+### WP Post Fields Used
+| Field | Value |
+|-------|-------|
+| Title | `post.title.rendered` |
+| Content | `post.content.rendered` |
+| Excerpt | `post.excerpt.rendered` (strip HTML tags) |
+| Date | `post.date` |
+| URL | `post.link` |
+| Featured image | `post._embedded['wp:featuredmedia'][0].source_url` |
+| Categories | `post._embedded['wp:term'][0]` |
+| Tags | `post._embedded['wp:term'][1]` |
+| Author | `post._embedded.author[0].name` |
 
 ---
 
 ## Deploy
 
-`.cpanel.yml` copies all files to `public_html/`:
+WordPress is installed at `public_html/` root. `.cpanel.yml` copies only static tool files — never touches WP files:
 ```yaml
 deployment:
   tasks:
-    - /bin/cp -r * /home/oursolve/public_html/
+    - /bin/cp index.html /home/oursolve/public_html/index.html
+    - /bin/cp sitemap.xml /home/oursolve/public_html/sitemap.xml
+    - /bin/cp robots.txt /home/oursolve/public_html/robots.txt
+    - /bin/cp -R tools /home/oursolve/public_html/
+    - /bin/cp -R blog /home/oursolve/public_html/
 ```
 
-Push to GitHub → cPanel Git Version Control → Deploy HEAD Commit.
+**Git repo cloned to:** `/home/oursolve/oursolve_tools/` (not public_html)
+
+Push to GitHub → cPanel Git Version Control → **Update from Remote** → **Deploy HEAD Commit**.
 
 ---
 
