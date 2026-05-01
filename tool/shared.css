@@ -74,7 +74,7 @@ body {
 .hero {
   background: var(--hero-gradient);
   color: #fff;
-  padding: 48px 24px 56px;
+  padding: 28px 24px 40px;
   text-align: center;
 }
 .tool-badge {
