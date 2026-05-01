@@ -41,27 +41,22 @@
     .filter-btn.all.active{background:var(--primary);border-color:var(--primary);color:#fff}
     .filter-btn.boy.active{background:var(--boy);border-color:var(--boy);color:#fff}
     .filter-btn.girl.active{background:var(--girl);border-color:var(--girl);color:#fff}
-    .filter-btn.bd.active{background:#006a4e;border-color:#006a4e;color:#fff}
-    .filter-btn.bd:hover{border-color:#006a4e;color:#006a4e}
     .stats{font-size:.82rem;color:var(--text-muted);margin-top:12px}
     .stats span{font-weight:700;color:var(--text)}
-    .section-label{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin:20px 0 10px;padding-left:2px}
-    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
-    .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 20px 40px;box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s;cursor:default;position:relative;overflow:hidden}
-    .card:hover{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.1)}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px 12px 32px;box-shadow:var(--shadow);transition:transform .15s,box-shadow .15s;cursor:default;position:relative;overflow:hidden}
+    .card:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.09)}
     .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
     .card.boy::before{background:var(--boy)}
     .card.girl::before{background:var(--girl)}
-    .card.bd-card{border-color:#c3e6db}
-    .card.bd-card::after{content:'★';position:absolute;top:10px;right:10px;font-size:.65rem;color:#006a4e;background:#e6f4f0;border-radius:20px;padding:1px 6px;font-weight:700;letter-spacing:.3px}
-    .card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px}
-    .name-en{font-size:1.2rem;font-weight:800;color:var(--text);letter-spacing:-.3px}
-    .gender-badge{padding:3px 10px;border-radius:20px;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;flex-shrink:0}
+    .card-top{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:6px}
+    .name-en{font-size:1rem;font-weight:800;color:var(--text)}
+    .gender-badge{padding:2px 7px;border-radius:20px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;flex-shrink:0}
     .boy .gender-badge{background:var(--boy-light);color:var(--boy)}
     .girl .gender-badge{background:var(--girl-light);color:var(--girl)}
-    .meaning{font-size:.88rem;color:var(--text);margin-bottom:6px;line-height:1.5}
-    .origin{font-size:.78rem;color:var(--text-muted);font-weight:600}
-    .copy-btn{position:absolute;bottom:12px;right:12px;background:none;border:1px solid var(--border);border-radius:6px;padding:4px 8px;font-size:.72rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all .15s}
+    .meaning{font-size:.8rem;color:var(--text);margin-bottom:4px;line-height:1.4}
+    .origin{font-size:.72rem;color:var(--text-muted);font-weight:600}
+    .copy-btn{position:absolute;bottom:8px;right:8px;background:none;border:1px solid var(--border);border-radius:5px;padding:3px 7px;font-size:.68rem;font-weight:600;color:var(--text-muted);cursor:pointer;transition:all .15s}
     .copy-btn:hover{border-color:var(--primary);color:var(--primary)}
     .no-results{text-align:center;padding:60px 24px;color:var(--text-muted)}
     .loading{text-align:center;padding:60px 24px;color:var(--text-muted)}
@@ -98,7 +93,6 @@
         <button class="filter-btn all active" onclick="setFilter('all',this)">All</button>
         <button class="filter-btn boy" onclick="setFilter('boy',this)">Boys</button>
         <button class="filter-btn girl" onclick="setFilter('girl',this)">Girls</button>
-        <button class="filter-btn bd" onclick="setFilter('bd',this)">Bangladeshi</button>
       </div>
     </div>
     <div class="stats" id="stats"></div>
@@ -132,10 +126,9 @@ function setFilter(f, btn) {
 function render() {
   const q = document.getElementById('search').value.trim().toLowerCase();
 
-  let filtered = NAMES.filter(n => {
+  const filtered = NAMES.filter(n => {
     if (activeFilter === 'boy' && n.g !== 'boy') return false;
     if (activeFilter === 'girl' && n.g !== 'girl') return false;
-    if (activeFilter === 'bd' && n.r !== 'bd') return false;
     if (!q) return true;
     return n.n.toLowerCase().includes(q) || n.m.toLowerCase().includes(q) || n.o.toLowerCase().includes(q);
   });
@@ -155,35 +148,18 @@ function render() {
     (boys && girls ? ` — <span>${boys}</span> boys, <span>${girls}</span> girls` :
      boys ? ` — boys` : ` — girls`);
 
-  // Split: Bangladeshi first, then rest (only when not filtering by bd)
-  const bdNames = filtered.filter(n => n.r === 'bd');
-  const otherNames = filtered.filter(n => n.r !== 'bd');
-  const showSections = activeFilter !== 'bd' && bdNames.length > 0 && otherNames.length > 0;
-
-  let html = '';
-
-  if (showSections) {
-    html += `<div class="section-label">Popular in Bangladesh</div>`;
-    html += `<div class="grid">${bdNames.map(cardHtml).join('')}</div>`;
-    html += `<div class="section-label" style="margin-top:28px">More Names</div>`;
-    html += `<div class="grid">${otherNames.map(cardHtml).join('')}</div>`;
-  } else {
-    html += `<div class="grid">${filtered.map(cardHtml).join('')}</div>`;
-  }
-
-  out.innerHTML = html;
+  out.innerHTML = `<div class="grid">${filtered.map(cardHtml).join('')}</div>`;
 }
 
 function cardHtml(n) {
-  const isBd = n.r === 'bd';
   return `
-    <div class="card ${n.g}${isBd ? ' bd-card' : ''}">
+    <div class="card ${n.g}">
       <div class="card-top">
         <div class="name-en">${n.n}</div>
         <span class="gender-badge">${n.g === 'boy' ? '♂ Boy' : '♀ Girl'}</span>
       </div>
       <div class="meaning">${n.m}</div>
-      <div class="origin">Origin: ${n.o}</div>
+      <div class="origin">${n.o}</div>
       <button class="copy-btn" onclick="copyName('${n.n.replace(/'/g,"\\'")}',this)">Copy</button>
     </div>`;
 }

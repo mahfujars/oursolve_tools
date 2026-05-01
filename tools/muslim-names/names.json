@@ -1,195 +1,1142 @@
 [
-  {"n":"Ashraful","g":"boy","m":"Most noble, most honourable","o":"Arabic","r":"bd"},
-  {"n":"Mahfuz","g":"boy","m":"Protected, safe, preserved","o":"Arabic","r":"bd"},
-  {"n":"Humayun","g":"boy","m":"Blessed, auspicious, fortunate","o":"Persian","r":"bd"},
-  {"n":"Jahangir","g":"boy","m":"Conqueror of the world","o":"Persian","r":"bd"},
-  {"n":"Faruq","g":"boy","m":"One who distinguishes truth from falsehood","o":"Arabic","r":"bd"},
-  {"n":"Nurul","g":"boy","m":"Light of (used with Islam/Huda)","o":"Arabic","r":"bd"},
-  {"n":"Helal","g":"boy","m":"Crescent moon","o":"Arabic","r":"bd"},
-  {"n":"Delwar","g":"boy","m":"Brave heart, courageous","o":"Arabic","r":"bd"},
-  {"n":"Kamal","g":"boy","m":"Perfection, excellence, beauty","o":"Arabic","r":"bd"},
-  {"n":"Lutfur","g":"boy","m":"Kindness, grace, gentleness","o":"Arabic","r":"bd"},
-  {"n":"Rezaul","g":"boy","m":"Satisfaction, contentment, pleasure","o":"Arabic","r":"bd"},
-  {"n":"Shafiqul","g":"boy","m":"Compassionate, tender-hearted","o":"Arabic","r":"bd"},
-  {"n":"Nazrul","g":"boy","m":"Helper of religion","o":"Arabic","r":"bd"},
-  {"n":"Aminul","g":"boy","m":"Trustworthy, faithful","o":"Arabic","r":"bd"},
-  {"n":"Habibur","g":"boy","m":"Beloved, dear one","o":"Arabic","r":"bd"},
-  {"n":"Nazmul","g":"boy","m":"Order, arrangement, system","o":"Arabic","r":"bd"},
-  {"n":"Sabbir","g":"boy","m":"Patient, enduring, steadfast","o":"Arabic","r":"bd"},
-  {"n":"Yeasin","g":"boy","m":"Name from Quran, Ya Sin","o":"Arabic","r":"bd"},
-  {"n":"Zakir","g":"boy","m":"One who remembers and praises God","o":"Arabic","r":"bd"},
-  {"n":"Imdadul","g":"boy","m":"Support, help, assistance","o":"Arabic","r":"bd"},
-  {"n":"Ruhul","g":"boy","m":"Soul, spirit","o":"Arabic","r":"bd"},
-  {"n":"Quamrul","g":"boy","m":"Moon-like, lunar","o":"Arabic","r":"bd"},
-  {"n":"Mofazzal","g":"boy","m":"Favoured, preferred, blessed","o":"Arabic","r":"bd"},
-  {"n":"Ekramul","g":"boy","m":"Honour, respect, generosity","o":"Arabic","r":"bd"},
-  {"n":"Forhad","g":"boy","m":"Happiness, joy","o":"Persian","r":"bd"},
-  {"n":"Golam","g":"boy","m":"Servant, devoted one","o":"Arabic","r":"bd"},
-  {"n":"Badrul","g":"boy","m":"Full moon","o":"Arabic","r":"bd"},
-  {"n":"Mizan","g":"boy","m":"Balance, justice, scales","o":"Arabic","r":"bd"},
-  {"n":"Alamin","g":"boy","m":"The trustworthy, the faithful","o":"Arabic","r":"bd"},
-  {"n":"Borhan","g":"boy","m":"Proof, evidence, argument","o":"Arabic","r":"bd"},
-  {"n":"Khorshed","g":"boy","m":"Sun, bright as the sun","o":"Persian","r":"bd"},
-  {"n":"Jalal","g":"boy","m":"Glory, grandeur, majesty","o":"Arabic","r":"bd"},
-  {"n":"Mozammel","g":"boy","m":"Wrapped in honour, veiled","o":"Arabic","r":"bd"},
-  {"n":"Atiqur","g":"boy","m":"Ancient, freed, liberated","o":"Arabic","r":"bd"},
-  {"n":"Shahidul","g":"boy","m":"Witness, martyr","o":"Arabic","r":"bd"},
-  {"n":"Iftekharul","g":"boy","m":"Pride, glory, honour","o":"Arabic","r":"bd"},
-
-  {"n":"Nasrin","g":"girl","m":"Wild rose, fragrant flower","o":"Persian","r":"bd"},
-  {"n":"Sultana","g":"girl","m":"Queen, empress, ruler","o":"Arabic","r":"bd"},
-  {"n":"Bilkis","g":"girl","m":"Queen of Sheba, wise queen","o":"Arabic","r":"bd"},
-  {"n":"Dilruba","g":"girl","m":"Heart-stealer, beloved, charming","o":"Persian","r":"bd"},
-  {"n":"Farida","g":"girl","m":"Unique, precious gem, peerless","o":"Arabic","r":"bd"},
-  {"n":"Gulshan","g":"girl","m":"Rose garden, flower garden","o":"Persian","r":"bd"},
-  {"n":"Hasina","g":"girl","m":"Beautiful, pretty, graceful","o":"Arabic","r":"bd"},
-  {"n":"Ishrat","g":"girl","m":"Happiness, joy, pleasure","o":"Arabic","r":"bd"},
-  {"n":"Jahanara","g":"girl","m":"Ornament of the world","o":"Persian","r":"bd"},
-  {"n":"Monira","g":"girl","m":"Luminous, radiant, shining","o":"Arabic","r":"bd"},
-  {"n":"Nasima","g":"girl","m":"Gentle breeze, fresh air","o":"Arabic","r":"bd"},
-  {"n":"Parvin","g":"girl","m":"Pleiades stars, cluster of stars","o":"Persian","r":"bd"},
-  {"n":"Rahima","g":"girl","m":"Merciful, compassionate, kind","o":"Arabic","r":"bd"},
-  {"n":"Sabina","g":"girl","m":"Patient, flower name","o":"Arabic","r":"bd"},
-  {"n":"Tahmina","g":"girl","m":"Valuable, precious, strong","o":"Persian","r":"bd"},
-  {"n":"Zebunnesa","g":"girl","m":"Ornament of women","o":"Persian/Arabic","r":"bd"},
-  {"n":"Rokeya","g":"girl","m":"Alert, one who rises, ascendant","o":"Arabic","r":"bd"},
-  {"n":"Shirin","g":"girl","m":"Sweet, pleasant, charming","o":"Persian","r":"bd"},
-  {"n":"Nargis","g":"girl","m":"Narcissus flower, beautiful eyes","o":"Persian","r":"bd"},
-  {"n":"Rehana","g":"girl","m":"Sweet basil, fragrant plant","o":"Arabic","r":"bd"},
-  {"n":"Shapna","g":"girl","m":"Dream, vision, aspiration","o":"Arabic","r":"bd"},
-  {"n":"Kamrunnesa","g":"girl","m":"Moon-faced, lunar beauty","o":"Arabic/Persian","r":"bd"},
-  {"n":"Wahida","g":"girl","m":"Unique, one of a kind","o":"Arabic","r":"bd"},
-  {"n":"Parveen","g":"girl","m":"Star cluster, Pleiades","o":"Persian","r":"bd"},
-  {"n":"Roksana","g":"girl","m":"Bright dawn, luminous","o":"Persian","r":"bd"},
-
-  {"n":"Muhammad","g":"boy","m":"Praised, commendable","o":"Arabic"},
-  {"n":"Ahmed","g":"boy","m":"Most praiseworthy","o":"Arabic"},
-  {"n":"Ali","g":"boy","m":"Exalted, noble, high","o":"Arabic"},
-  {"n":"Omar","g":"boy","m":"Long-lived, flourishing","o":"Arabic"},
-  {"n":"Ibrahim","g":"boy","m":"Father of nations","o":"Arabic/Hebrew"},
-  {"n":"Yusuf","g":"boy","m":"God increases in power","o":"Arabic/Hebrew"},
-  {"n":"Hassan","g":"boy","m":"Good, handsome, beautiful","o":"Arabic"},
-  {"n":"Hussain","g":"boy","m":"Good, handsome (diminutive)","o":"Arabic"},
-  {"n":"Khalid","g":"boy","m":"Eternal, immortal","o":"Arabic"},
-  {"n":"Bilal","g":"boy","m":"Moisture, freshness of water","o":"Arabic"},
-  {"n":"Hamza","g":"boy","m":"Strong, steadfast, lion","o":"Arabic"},
-  {"n":"Zaid","g":"boy","m":"Growth, abundance","o":"Arabic"},
-  {"n":"Tariq","g":"boy","m":"Morning star, one who knocks","o":"Arabic"},
-  {"n":"Idris","g":"boy","m":"Studious, learned","o":"Arabic"},
-  {"n":"Musa","g":"boy","m":"Drawn from water","o":"Arabic/Hebrew"},
-  {"n":"Isa","g":"boy","m":"God is salvation","o":"Arabic"},
-  {"n":"Dawud","g":"boy","m":"Beloved","o":"Arabic/Hebrew"},
-  {"n":"Sulayman","g":"boy","m":"Man of peace","o":"Arabic/Hebrew"},
-  {"n":"Yahya","g":"boy","m":"God is gracious, to live","o":"Arabic"},
-  {"n":"Zakariya","g":"boy","m":"God remembers","o":"Arabic/Hebrew"},
-  {"n":"Nuh","g":"boy","m":"Rest, comfort","o":"Arabic"},
-  {"n":"Saleh","g":"boy","m":"Righteous, virtuous","o":"Arabic"},
-  {"n":"Abdallah","g":"boy","m":"Servant of God","o":"Arabic"},
-  {"n":"Abdul Rahman","g":"boy","m":"Servant of the Most Merciful","o":"Arabic"},
-  {"n":"Rayyan","g":"boy","m":"Lush, full of life","o":"Arabic"},
-  {"n":"Ismail","g":"boy","m":"God will hear","o":"Arabic/Hebrew"},
-  {"n":"Ishaq","g":"boy","m":"He laughs, laughter","o":"Arabic/Hebrew"},
-  {"n":"Yaqub","g":"boy","m":"Supplanter, holder of heel","o":"Arabic/Hebrew"},
-  {"n":"Haroon","g":"boy","m":"Lofty, exalted, mountain of strength","o":"Arabic"},
-  {"n":"Luqman","g":"boy","m":"Wise, gifted with wisdom","o":"Arabic"},
-  {"n":"Talha","g":"boy","m":"A kind of tree, generous","o":"Arabic"},
-  {"n":"Zubair","g":"boy","m":"Strong, brave","o":"Arabic"},
-  {"n":"Saad","g":"boy","m":"Happiness, good luck","o":"Arabic"},
-  {"n":"Faisal","g":"boy","m":"Decisive, judge","o":"Arabic"},
-  {"n":"Imran","g":"boy","m":"Prosperity, long life","o":"Arabic"},
-  {"n":"Adnan","g":"boy","m":"Settler, one who stays","o":"Arabic"},
-  {"n":"Kamil","g":"boy","m":"Perfect, complete","o":"Arabic"},
-  {"n":"Nabil","g":"boy","m":"Noble, honourable","o":"Arabic"},
-  {"n":"Sami","g":"boy","m":"Elevated, sublime","o":"Arabic"},
-  {"n":"Walid","g":"boy","m":"Newborn, newly born","o":"Arabic"},
-  {"n":"Yasir","g":"boy","m":"Easy, wealthy","o":"Arabic"},
-  {"n":"Zafar","g":"boy","m":"Victory, triumph","o":"Arabic"},
-  {"n":"Amir","g":"boy","m":"Prince, commander","o":"Arabic"},
-  {"n":"Badr","g":"boy","m":"Full moon","o":"Arabic"},
-  {"n":"Farhan","g":"boy","m":"Happy, joyful","o":"Arabic"},
-  {"n":"Hadi","g":"boy","m":"Guide to righteousness","o":"Arabic"},
-  {"n":"Ilyas","g":"boy","m":"My God is Yahweh","o":"Arabic/Hebrew"},
-  {"n":"Jawad","g":"boy","m":"Generous, liberal","o":"Arabic"},
-  {"n":"Kareem","g":"boy","m":"Generous, noble","o":"Arabic"},
-  {"n":"Layth","g":"boy","m":"Lion","o":"Arabic"},
-  {"n":"Malik","g":"boy","m":"King, master","o":"Arabic"},
-  {"n":"Nasir","g":"boy","m":"Helper, supporter","o":"Arabic"},
-  {"n":"Qasim","g":"boy","m":"One who distributes","o":"Arabic"},
-  {"n":"Rafiq","g":"boy","m":"Kind, gentle friend","o":"Arabic"},
-  {"n":"Shafiq","g":"boy","m":"Compassionate, tender","o":"Arabic"},
-  {"n":"Taha","g":"boy","m":"Pure, name from Quran","o":"Arabic"},
-  {"n":"Waqar","g":"boy","m":"Dignity, prestige","o":"Arabic"},
-  {"n":"Ziyad","g":"boy","m":"Growth, addition","o":"Arabic"},
-  {"n":"Anas","g":"boy","m":"Affection, intimacy","o":"Arabic"},
-  {"n":"Fahad","g":"boy","m":"Leopard, lynx","o":"Arabic"},
-  {"n":"Ghalib","g":"boy","m":"Victor, dominant","o":"Arabic"},
-  {"n":"Haider","g":"boy","m":"Lion, brave","o":"Arabic"},
-  {"n":"Junaid","g":"boy","m":"Soldier, young warrior","o":"Arabic"},
-  {"n":"Layth","g":"boy","m":"Lion","o":"Arabic"},
-  {"n":"Mazin","g":"boy","m":"Rain cloud","o":"Arabic"},
-  {"n":"Osama","g":"boy","m":"Lion cub","o":"Arabic"},
-  {"n":"Rafi","g":"boy","m":"Exalting, elevating","o":"Arabic"},
-  {"n":"Mikail","g":"boy","m":"Who is like God","o":"Arabic/Hebrew"},
-  {"n":"Ehsan","g":"boy","m":"Excellence, goodness","o":"Arabic"},
-  {"n":"Burhan","g":"boy","m":"Proof, evidence","o":"Arabic"},
-
-  {"n":"Aisha","g":"girl","m":"Alive, she who lives","o":"Arabic"},
-  {"n":"Fatima","g":"girl","m":"One who abstains, captivating","o":"Arabic"},
-  {"n":"Zainab","g":"girl","m":"Fragrant flower, ornament","o":"Arabic"},
-  {"n":"Maryam","g":"girl","m":"Beloved, exalted","o":"Arabic/Hebrew"},
-  {"n":"Khadija","g":"girl","m":"Early baby, premature child","o":"Arabic"},
-  {"n":"Amina","g":"girl","m":"Trustworthy, faithful, safe","o":"Arabic"},
-  {"n":"Nour","g":"girl","m":"Light, radiance","o":"Arabic"},
-  {"n":"Layla","g":"girl","m":"Night, dark beauty","o":"Arabic"},
-  {"n":"Sara","g":"girl","m":"Princess, noblewoman","o":"Arabic/Hebrew"},
-  {"n":"Hana","g":"girl","m":"Happiness, bliss","o":"Arabic"},
-  {"n":"Sana","g":"girl","m":"Brilliance, radiance","o":"Arabic"},
-  {"n":"Asma","g":"girl","m":"Exalted, precious","o":"Arabic"},
-  {"n":"Ruqayyah","g":"girl","m":"Rise, ascend, charm","o":"Arabic"},
-  {"n":"Safiya","g":"girl","m":"Pure, serene, best friend","o":"Arabic"},
-  {"n":"Sumaya","g":"girl","m":"High above, elevated","o":"Arabic"},
-  {"n":"Hafsa","g":"girl","m":"Young lioness, gathering","o":"Arabic"},
-  {"n":"Nadia","g":"girl","m":"Caller, announcer","o":"Arabic"},
-  {"n":"Yasmin","g":"girl","m":"Jasmine flower","o":"Persian/Arabic"},
-  {"n":"Salma","g":"girl","m":"Safe, peaceful","o":"Arabic"},
-  {"n":"Rania","g":"girl","m":"Gazing, looking","o":"Arabic"},
-  {"n":"Lina","g":"girl","m":"Tender, palm tree","o":"Arabic"},
-  {"n":"Hiba","g":"girl","m":"Gift, donation","o":"Arabic"},
-  {"n":"Iman","g":"girl","m":"Faith, belief","o":"Arabic"},
-  {"n":"Jana","g":"girl","m":"Harvest, paradise","o":"Arabic"},
-  {"n":"Khawla","g":"girl","m":"Deer, graceful beauty","o":"Arabic"},
-  {"n":"Marwa","g":"girl","m":"A hill in Mecca, flint stone","o":"Arabic"},
-  {"n":"Nada","g":"girl","m":"Dew, generosity","o":"Arabic"},
-  {"n":"Reem","g":"girl","m":"White gazelle","o":"Arabic"},
-  {"n":"Samira","g":"girl","m":"Entertaining companion","o":"Arabic"},
-  {"n":"Tahira","g":"girl","m":"Pure, chaste, virtuous","o":"Arabic"},
-  {"n":"Wafa","g":"girl","m":"Faithfulness, loyalty","o":"Arabic"},
-  {"n":"Zahra","g":"girl","m":"Bright, radiant, flower","o":"Arabic"},
-  {"n":"Amira","g":"girl","m":"Princess, leader","o":"Arabic"},
-  {"n":"Bushra","g":"girl","m":"Good news, glad tidings","o":"Arabic"},
-  {"n":"Farah","g":"girl","m":"Joy, happiness","o":"Arabic"},
-  {"n":"Ghada","g":"girl","m":"Young graceful woman","o":"Arabic"},
-  {"n":"Hadiya","g":"girl","m":"Gift, present","o":"Arabic"},
-  {"n":"Jumanah","g":"girl","m":"Silver pearl","o":"Arabic"},
-  {"n":"Lubna","g":"girl","m":"A type of tree, sweetness","o":"Arabic"},
-  {"n":"Maha","g":"girl","m":"Beautiful eyes, wild cow","o":"Arabic"},
-  {"n":"Nahla","g":"girl","m":"First drink of water","o":"Arabic"},
-  {"n":"Rahma","g":"girl","m":"Mercy, compassion","o":"Arabic"},
-  {"n":"Safa","g":"girl","m":"Clarity, purity","o":"Arabic"},
-  {"n":"Tasneem","g":"girl","m":"Spring in paradise","o":"Arabic"},
-  {"n":"Zara","g":"girl","m":"Blooming flower, dawn","o":"Arabic"},
-  {"n":"Hoor","g":"girl","m":"Dark-eyed, beautiful","o":"Arabic"},
-  {"n":"Minahil","g":"girl","m":"Spring of fresh water","o":"Arabic"},
-  {"n":"Naima","g":"girl","m":"Comfort, ease, blessing","o":"Arabic"},
-  {"n":"Dua","g":"girl","m":"Prayer, supplication","o":"Arabic"},
-  {"n":"Faten","g":"girl","m":"Fascinating, charming","o":"Arabic"},
-  {"n":"Haneen","g":"girl","m":"Longing, yearning","o":"Arabic"},
-  {"n":"Kawsar","g":"girl","m":"River in paradise, abundance","o":"Arabic"},
-  {"n":"Manal","g":"girl","m":"Attainment, achievement","o":"Arabic"},
-  {"n":"Randa","g":"girl","m":"Fragrant tree","o":"Arabic"},
-  {"n":"Thuraya","g":"girl","m":"Stars, Pleiades","o":"Arabic"},
-  {"n":"Yusra","g":"girl","m":"Ease, prosperity","o":"Arabic"},
-  {"n":"Zulfa","g":"girl","m":"Nearness to God","o":"Arabic"},
-  {"n":"Basmah","g":"girl","m":"Smile","o":"Arabic"},
-  {"n":"Jihan","g":"girl","m":"The world, universe","o":"Arabic"}
+  {
+    "n": "Ashraful",
+    "g": "boy",
+    "m": "Most noble, most honourable",
+    "o": "Arabic"
+  },
+  {
+    "n": "Mahfuz",
+    "g": "boy",
+    "m": "Protected, safe, preserved",
+    "o": "Arabic"
+  },
+  {
+    "n": "Humayun",
+    "g": "boy",
+    "m": "Blessed, auspicious, fortunate",
+    "o": "Persian"
+  },
+  {
+    "n": "Jahangir",
+    "g": "boy",
+    "m": "Conqueror of the world",
+    "o": "Persian"
+  },
+  {
+    "n": "Faruq",
+    "g": "boy",
+    "m": "One who distinguishes truth from falsehood",
+    "o": "Arabic"
+  },
+  {
+    "n": "Nurul",
+    "g": "boy",
+    "m": "Light of (used with Islam/Huda)",
+    "o": "Arabic"
+  },
+  {
+    "n": "Helal",
+    "g": "boy",
+    "m": "Crescent moon",
+    "o": "Arabic"
+  },
+  {
+    "n": "Delwar",
+    "g": "boy",
+    "m": "Brave heart, courageous",
+    "o": "Arabic"
+  },
+  {
+    "n": "Kamal",
+    "g": "boy",
+    "m": "Perfection, excellence, beauty",
+    "o": "Arabic"
+  },
+  {
+    "n": "Lutfur",
+    "g": "boy",
+    "m": "Kindness, grace, gentleness",
+    "o": "Arabic"
+  },
+  {
+    "n": "Rezaul",
+    "g": "boy",
+    "m": "Satisfaction, contentment, pleasure",
+    "o": "Arabic"
+  },
+  {
+    "n": "Shafiqul",
+    "g": "boy",
+    "m": "Compassionate, tender-hearted",
+    "o": "Arabic"
+  },
+  {
+    "n": "Nazrul",
+    "g": "boy",
+    "m": "Helper of religion",
+    "o": "Arabic"
+  },
+  {
+    "n": "Aminul",
+    "g": "boy",
+    "m": "Trustworthy, faithful",
+    "o": "Arabic"
+  },
+  {
+    "n": "Habibur",
+    "g": "boy",
+    "m": "Beloved, dear one",
+    "o": "Arabic"
+  },
+  {
+    "n": "Nazmul",
+    "g": "boy",
+    "m": "Order, arrangement, system",
+    "o": "Arabic"
+  },
+  {
+    "n": "Sabbir",
+    "g": "boy",
+    "m": "Patient, enduring, steadfast",
+    "o": "Arabic"
+  },
+  {
+    "n": "Yeasin",
+    "g": "boy",
+    "m": "Name from Quran, Ya Sin",
+    "o": "Arabic"
+  },
+  {
+    "n": "Zakir",
+    "g": "boy",
+    "m": "One who remembers and praises God",
+    "o": "Arabic"
+  },
+  {
+    "n": "Imdadul",
+    "g": "boy",
+    "m": "Support, help, assistance",
+    "o": "Arabic"
+  },
+  {
+    "n": "Ruhul",
+    "g": "boy",
+    "m": "Soul, spirit",
+    "o": "Arabic"
+  },
+  {
+    "n": "Quamrul",
+    "g": "boy",
+    "m": "Moon-like, lunar",
+    "o": "Arabic"
+  },
+  {
+    "n": "Mofazzal",
+    "g": "boy",
+    "m": "Favoured, preferred, blessed",
+    "o": "Arabic"
+  },
+  {
+    "n": "Ekramul",
+    "g": "boy",
+    "m": "Honour, respect, generosity",
+    "o": "Arabic"
+  },
+  {
+    "n": "Forhad",
+    "g": "boy",
+    "m": "Happiness, joy",
+    "o": "Persian"
+  },
+  {
+    "n": "Golam",
+    "g": "boy",
+    "m": "Servant, devoted one",
+    "o": "Arabic"
+  },
+  {
+    "n": "Badrul",
+    "g": "boy",
+    "m": "Full moon",
+    "o": "Arabic"
+  },
+  {
+    "n": "Mizan",
+    "g": "boy",
+    "m": "Balance, justice, scales",
+    "o": "Arabic"
+  },
+  {
+    "n": "Alamin",
+    "g": "boy",
+    "m": "The trustworthy, the faithful",
+    "o": "Arabic"
+  },
+  {
+    "n": "Borhan",
+    "g": "boy",
+    "m": "Proof, evidence, argument",
+    "o": "Arabic"
+  },
+  {
+    "n": "Khorshed",
+    "g": "boy",
+    "m": "Sun, bright as the sun",
+    "o": "Persian"
+  },
+  {
+    "n": "Jalal",
+    "g": "boy",
+    "m": "Glory, grandeur, majesty",
+    "o": "Arabic"
+  },
+  {
+    "n": "Mozammel",
+    "g": "boy",
+    "m": "Wrapped in honour, veiled",
+    "o": "Arabic"
+  },
+  {
+    "n": "Atiqur",
+    "g": "boy",
+    "m": "Ancient, freed, liberated",
+    "o": "Arabic"
+  },
+  {
+    "n": "Shahidul",
+    "g": "boy",
+    "m": "Witness, martyr",
+    "o": "Arabic"
+  },
+  {
+    "n": "Iftekharul",
+    "g": "boy",
+    "m": "Pride, glory, honour",
+    "o": "Arabic"
+  },
+  {
+    "n": "Nasrin",
+    "g": "girl",
+    "m": "Wild rose, fragrant flower",
+    "o": "Persian"
+  },
+  {
+    "n": "Sultana",
+    "g": "girl",
+    "m": "Queen, empress, ruler",
+    "o": "Arabic"
+  },
+  {
+    "n": "Bilkis",
+    "g": "girl",
+    "m": "Queen of Sheba, wise queen",
+    "o": "Arabic"
+  },
+  {
+    "n": "Dilruba",
+    "g": "girl",
+    "m": "Heart-stealer, beloved, charming",
+    "o": "Persian"
+  },
+  {
+    "n": "Farida",
+    "g": "girl",
+    "m": "Unique, precious gem, peerless",
+    "o": "Arabic"
+  },
+  {
+    "n": "Gulshan",
+    "g": "girl",
+    "m": "Rose garden, flower garden",
+    "o": "Persian"
+  },
+  {
+    "n": "Hasina",
+    "g": "girl",
+    "m": "Beautiful, pretty, graceful",
+    "o": "Arabic"
+  },
+  {
+    "n": "Ishrat",
+    "g": "girl",
+    "m": "Happiness, joy, pleasure",
+    "o": "Arabic"
+  },
+  {
+    "n": "Jahanara",
+    "g": "girl",
+    "m": "Ornament of the world",
+    "o": "Persian"
+  },
+  {
+    "n": "Monira",
+    "g": "girl",
+    "m": "Luminous, radiant, shining",
+    "o": "Arabic"
+  },
+  {
+    "n": "Nasima",
+    "g": "girl",
+    "m": "Gentle breeze, fresh air",
+    "o": "Arabic"
+  },
+  {
+    "n": "Parvin",
+    "g": "girl",
+    "m": "Pleiades stars, cluster of stars",
+    "o": "Persian"
+  },
+  {
+    "n": "Rahima",
+    "g": "girl",
+    "m": "Merciful, compassionate, kind",
+    "o": "Arabic"
+  },
+  {
+    "n": "Sabina",
+    "g": "girl",
+    "m": "Patient, flower name",
+    "o": "Arabic"
+  },
+  {
+    "n": "Tahmina",
+    "g": "girl",
+    "m": "Valuable, precious, strong",
+    "o": "Persian"
+  },
+  {
+    "n": "Zebunnesa",
+    "g": "girl",
+    "m": "Ornament of women",
+    "o": "Persian/Arabic"
+  },
+  {
+    "n": "Rokeya",
+    "g": "girl",
+    "m": "Alert, one who rises, ascendant",
+    "o": "Arabic"
+  },
+  {
+    "n": "Shirin",
+    "g": "girl",
+    "m": "Sweet, pleasant, charming",
+    "o": "Persian"
+  },
+  {
+    "n": "Nargis",
+    "g": "girl",
+    "m": "Narcissus flower, beautiful eyes",
+    "o": "Persian"
+  },
+  {
+    "n": "Rehana",
+    "g": "girl",
+    "m": "Sweet basil, fragrant plant",
+    "o": "Arabic"
+  },
+  {
+    "n": "Shapna",
+    "g": "girl",
+    "m": "Dream, vision, aspiration",
+    "o": "Arabic"
+  },
+  {
+    "n": "Kamrunnesa",
+    "g": "girl",
+    "m": "Moon-faced, lunar beauty",
+    "o": "Arabic/Persian"
+  },
+  {
+    "n": "Wahida",
+    "g": "girl",
+    "m": "Unique, one of a kind",
+    "o": "Arabic"
+  },
+  {
+    "n": "Parveen",
+    "g": "girl",
+    "m": "Star cluster, Pleiades",
+    "o": "Persian"
+  },
+  {
+    "n": "Roksana",
+    "g": "girl",
+    "m": "Bright dawn, luminous",
+    "o": "Persian"
+  },
+  {
+    "n": "Muhammad",
+    "g": "boy",
+    "m": "Praised, commendable",
+    "o": "Arabic"
+  },
+  {
+    "n": "Ahmed",
+    "g": "boy",
+    "m": "Most praiseworthy",
+    "o": "Arabic"
+  },
+  {
+    "n": "Ali",
+    "g": "boy",
+    "m": "Exalted, noble, high",
+    "o": "Arabic"
+  },
+  {
+    "n": "Omar",
+    "g": "boy",
+    "m": "Long-lived, flourishing",
+    "o": "Arabic"
+  },
+  {
+    "n": "Ibrahim",
+    "g": "boy",
+    "m": "Father of nations",
+    "o": "Arabic/Hebrew"
+  },
+  {
+    "n": "Yusuf",
+    "g": "boy",
+    "m": "God increases in power",
+    "o": "Arabic/Hebrew"
+  },
+  {
+    "n": "Hassan",
+    "g": "boy",
+    "m": "Good, handsome, beautiful",
+    "o": "Arabic"
+  },
+  {
+    "n": "Hussain",
+    "g": "boy",
+    "m": "Good, handsome (diminutive)",
+    "o": "Arabic"
+  },
+  {
+    "n": "Khalid",
+    "g": "boy",
+    "m": "Eternal, immortal",
+    "o": "Arabic"
+  },
+  {
+    "n": "Bilal",
+    "g": "boy",
+    "m": "Moisture, freshness of water",
+    "o": "Arabic"
+  },
+  {
+    "n": "Hamza",
+    "g": "boy",
+    "m": "Strong, steadfast, lion",
+    "o": "Arabic"
+  },
+  {
+    "n": "Zaid",
+    "g": "boy",
+    "m": "Growth, abundance",
+    "o": "Arabic"
+  },
+  {
+    "n": "Tariq",
+    "g": "boy",
+    "m": "Morning star, one who knocks",
+    "o": "Arabic"
+  },
+  {
+    "n": "Idris",
+    "g": "boy",
+    "m": "Studious, learned",
+    "o": "Arabic"
+  },
+  {
+    "n": "Musa",
+    "g": "boy",
+    "m": "Drawn from water",
+    "o": "Arabic/Hebrew"
+  },
+  {
+    "n": "Isa",
+    "g": "boy",
+    "m": "God is salvation",
+    "o": "Arabic"
+  },
+  {
+    "n": "Dawud",
+    "g": "boy",
+    "m": "Beloved",
+    "o": "Arabic/Hebrew"
+  },
+  {
+    "n": "Sulayman",
+    "g": "boy",
+    "m": "Man of peace",
+    "o": "Arabic/Hebrew"
+  },
+  {
+    "n": "Yahya",
+    "g": "boy",
+    "m": "God is gracious, to live",
+    "o": "Arabic"
+  },
+  {
+    "n": "Zakariya",
+    "g": "boy",
+    "m": "God remembers",
+    "o": "Arabic/Hebrew"
+  },
+  {
+    "n": "Nuh",
+    "g": "boy",
+    "m": "Rest, comfort",
+    "o": "Arabic"
+  },
+  {
+    "n": "Saleh",
+    "g": "boy",
+    "m": "Righteous, virtuous",
+    "o": "Arabic"
+  },
+  {
+    "n": "Abdallah",
+    "g": "boy",
+    "m": "Servant of God",
+    "o": "Arabic"
+  },
+  {
+    "n": "Abdul Rahman",
+    "g": "boy",
+    "m": "Servant of the Most Merciful",
+    "o": "Arabic"
+  },
+  {
+    "n": "Rayyan",
+    "g": "boy",
+    "m": "Lush, full of life",
+    "o": "Arabic"
+  },
+  {
+    "n": "Ismail",
+    "g": "boy",
+    "m": "God will hear",
+    "o": "Arabic/Hebrew"
+  },
+  {
+    "n": "Ishaq",
+    "g": "boy",
+    "m": "He laughs, laughter",
+    "o": "Arabic/Hebrew"
+  },
+  {
+    "n": "Yaqub",
+    "g": "boy",
+    "m": "Supplanter, holder of heel",
+    "o": "Arabic/Hebrew"
+  },
+  {
+    "n": "Haroon",
+    "g": "boy",
+    "m": "Lofty, exalted, mountain of strength",
+    "o": "Arabic"
+  },
+  {
+    "n": "Luqman",
+    "g": "boy",
+    "m": "Wise, gifted with wisdom",
+    "o": "Arabic"
+  },
+  {
+    "n": "Talha",
+    "g": "boy",
+    "m": "A kind of tree, generous",
+    "o": "Arabic"
+  },
+  {
+    "n": "Zubair",
+    "g": "boy",
+    "m": "Strong, brave",
+    "o": "Arabic"
+  },
+  {
+    "n": "Saad",
+    "g": "boy",
+    "m": "Happiness, good luck",
+    "o": "Arabic"
+  },
+  {
+    "n": "Faisal",
+    "g": "boy",
+    "m": "Decisive, judge",
+    "o": "Arabic"
+  },
+  {
+    "n": "Imran",
+    "g": "boy",
+    "m": "Prosperity, long life",
+    "o": "Arabic"
+  },
+  {
+    "n": "Adnan",
+    "g": "boy",
+    "m": "Settler, one who stays",
+    "o": "Arabic"
+  },
+  {
+    "n": "Kamil",
+    "g": "boy",
+    "m": "Perfect, complete",
+    "o": "Arabic"
+  },
+  {
+    "n": "Nabil",
+    "g": "boy",
+    "m": "Noble, honourable",
+    "o": "Arabic"
+  },
+  {
+    "n": "Sami",
+    "g": "boy",
+    "m": "Elevated, sublime",
+    "o": "Arabic"
+  },
+  {
+    "n": "Walid",
+    "g": "boy",
+    "m": "Newborn, newly born",
+    "o": "Arabic"
+  },
+  {
+    "n": "Yasir",
+    "g": "boy",
+    "m": "Easy, wealthy",
+    "o": "Arabic"
+  },
+  {
+    "n": "Zafar",
+    "g": "boy",
+    "m": "Victory, triumph",
+    "o": "Arabic"
+  },
+  {
+    "n": "Amir",
+    "g": "boy",
+    "m": "Prince, commander",
+    "o": "Arabic"
+  },
+  {
+    "n": "Badr",
+    "g": "boy",
+    "m": "Full moon",
+    "o": "Arabic"
+  },
+  {
+    "n": "Farhan",
+    "g": "boy",
+    "m": "Happy, joyful",
+    "o": "Arabic"
+  },
+  {
+    "n": "Hadi",
+    "g": "boy",
+    "m": "Guide to righteousness",
+    "o": "Arabic"
+  },
+  {
+    "n": "Ilyas",
+    "g": "boy",
+    "m": "My God is Yahweh",
+    "o": "Arabic/Hebrew"
+  },
+  {
+    "n": "Jawad",
+    "g": "boy",
+    "m": "Generous, liberal",
+    "o": "Arabic"
+  },
+  {
+    "n": "Kareem",
+    "g": "boy",
+    "m": "Generous, noble",
+    "o": "Arabic"
+  },
+  {
+    "n": "Layth",
+    "g": "boy",
+    "m": "Lion",
+    "o": "Arabic"
+  },
+  {
+    "n": "Malik",
+    "g": "boy",
+    "m": "King, master",
+    "o": "Arabic"
+  },
+  {
+    "n": "Nasir",
+    "g": "boy",
+    "m": "Helper, supporter",
+    "o": "Arabic"
+  },
+  {
+    "n": "Qasim",
+    "g": "boy",
+    "m": "One who distributes",
+    "o": "Arabic"
+  },
+  {
+    "n": "Rafiq",
+    "g": "boy",
+    "m": "Kind, gentle friend",
+    "o": "Arabic"
+  },
+  {
+    "n": "Shafiq",
+    "g": "boy",
+    "m": "Compassionate, tender",
+    "o": "Arabic"
+  },
+  {
+    "n": "Taha",
+    "g": "boy",
+    "m": "Pure, name from Quran",
+    "o": "Arabic"
+  },
+  {
+    "n": "Waqar",
+    "g": "boy",
+    "m": "Dignity, prestige",
+    "o": "Arabic"
+  },
+  {
+    "n": "Ziyad",
+    "g": "boy",
+    "m": "Growth, addition",
+    "o": "Arabic"
+  },
+  {
+    "n": "Anas",
+    "g": "boy",
+    "m": "Affection, intimacy",
+    "o": "Arabic"
+  },
+  {
+    "n": "Fahad",
+    "g": "boy",
+    "m": "Leopard, lynx",
+    "o": "Arabic"
+  },
+  {
+    "n": "Ghalib",
+    "g": "boy",
+    "m": "Victor, dominant",
+    "o": "Arabic"
+  },
+  {
+    "n": "Haider",
+    "g": "boy",
+    "m": "Lion, brave",
+    "o": "Arabic"
+  },
+  {
+    "n": "Junaid",
+    "g": "boy",
+    "m": "Soldier, young warrior",
+    "o": "Arabic"
+  },
+  {
+    "n": "Layth",
+    "g": "boy",
+    "m": "Lion",
+    "o": "Arabic"
+  },
+  {
+    "n": "Mazin",
+    "g": "boy",
+    "m": "Rain cloud",
+    "o": "Arabic"
+  },
+  {
+    "n": "Osama",
+    "g": "boy",
+    "m": "Lion cub",
+    "o": "Arabic"
+  },
+  {
+    "n": "Rafi",
+    "g": "boy",
+    "m": "Exalting, elevating",
+    "o": "Arabic"
+  },
+  {
+    "n": "Mikail",
+    "g": "boy",
+    "m": "Who is like God",
+    "o": "Arabic/Hebrew"
+  },
+  {
+    "n": "Ehsan",
+    "g": "boy",
+    "m": "Excellence, goodness",
+    "o": "Arabic"
+  },
+  {
+    "n": "Burhan",
+    "g": "boy",
+    "m": "Proof, evidence",
+    "o": "Arabic"
+  },
+  {
+    "n": "Aisha",
+    "g": "girl",
+    "m": "Alive, she who lives",
+    "o": "Arabic"
+  },
+  {
+    "n": "Fatima",
+    "g": "girl",
+    "m": "One who abstains, captivating",
+    "o": "Arabic"
+  },
+  {
+    "n": "Zainab",
+    "g": "girl",
+    "m": "Fragrant flower, ornament",
+    "o": "Arabic"
+  },
+  {
+    "n": "Maryam",
+    "g": "girl",
+    "m": "Beloved, exalted",
+    "o": "Arabic/Hebrew"
+  },
+  {
+    "n": "Khadija",
+    "g": "girl",
+    "m": "Early baby, premature child",
+    "o": "Arabic"
+  },
+  {
+    "n": "Amina",
+    "g": "girl",
+    "m": "Trustworthy, faithful, safe",
+    "o": "Arabic"
+  },
+  {
+    "n": "Nour",
+    "g": "girl",
+    "m": "Light, radiance",
+    "o": "Arabic"
+  },
+  {
+    "n": "Layla",
+    "g": "girl",
+    "m": "Night, dark beauty",
+    "o": "Arabic"
+  },
+  {
+    "n": "Sara",
+    "g": "girl",
+    "m": "Princess, noblewoman",
+    "o": "Arabic/Hebrew"
+  },
+  {
+    "n": "Hana",
+    "g": "girl",
+    "m": "Happiness, bliss",
+    "o": "Arabic"
+  },
+  {
+    "n": "Sana",
+    "g": "girl",
+    "m": "Brilliance, radiance",
+    "o": "Arabic"
+  },
+  {
+    "n": "Asma",
+    "g": "girl",
+    "m": "Exalted, precious",
+    "o": "Arabic"
+  },
+  {
+    "n": "Ruqayyah",
+    "g": "girl",
+    "m": "Rise, ascend, charm",
+    "o": "Arabic"
+  },
+  {
+    "n": "Safiya",
+    "g": "girl",
+    "m": "Pure, serene, best friend",
+    "o": "Arabic"
+  },
+  {
+    "n": "Sumaya",
+    "g": "girl",
+    "m": "High above, elevated",
+    "o": "Arabic"
+  },
+  {
+    "n": "Hafsa",
+    "g": "girl",
+    "m": "Young lioness, gathering",
+    "o": "Arabic"
+  },
+  {
+    "n": "Nadia",
+    "g": "girl",
+    "m": "Caller, announcer",
+    "o": "Arabic"
+  },
+  {
+    "n": "Yasmin",
+    "g": "girl",
+    "m": "Jasmine flower",
+    "o": "Persian/Arabic"
+  },
+  {
+    "n": "Salma",
+    "g": "girl",
+    "m": "Safe, peaceful",
+    "o": "Arabic"
+  },
+  {
+    "n": "Rania",
+    "g": "girl",
+    "m": "Gazing, looking",
+    "o": "Arabic"
+  },
+  {
+    "n": "Lina",
+    "g": "girl",
+    "m": "Tender, palm tree",
+    "o": "Arabic"
+  },
+  {
+    "n": "Hiba",
+    "g": "girl",
+    "m": "Gift, donation",
+    "o": "Arabic"
+  },
+  {
+    "n": "Iman",
+    "g": "girl",
+    "m": "Faith, belief",
+    "o": "Arabic"
+  },
+  {
+    "n": "Jana",
+    "g": "girl",
+    "m": "Harvest, paradise",
+    "o": "Arabic"
+  },
+  {
+    "n": "Khawla",
+    "g": "girl",
+    "m": "Deer, graceful beauty",
+    "o": "Arabic"
+  },
+  {
+    "n": "Marwa",
+    "g": "girl",
+    "m": "A hill in Mecca, flint stone",
+    "o": "Arabic"
+  },
+  {
+    "n": "Nada",
+    "g": "girl",
+    "m": "Dew, generosity",
+    "o": "Arabic"
+  },
+  {
+    "n": "Reem",
+    "g": "girl",
+    "m": "White gazelle",
+    "o": "Arabic"
+  },
+  {
+    "n": "Samira",
+    "g": "girl",
+    "m": "Entertaining companion",
+    "o": "Arabic"
+  },
+  {
+    "n": "Tahira",
+    "g": "girl",
+    "m": "Pure, chaste, virtuous",
+    "o": "Arabic"
+  },
+  {
+    "n": "Wafa",
+    "g": "girl",
+    "m": "Faithfulness, loyalty",
+    "o": "Arabic"
+  },
+  {
+    "n": "Zahra",
+    "g": "girl",
+    "m": "Bright, radiant, flower",
+    "o": "Arabic"
+  },
+  {
+    "n": "Amira",
+    "g": "girl",
+    "m": "Princess, leader",
+    "o": "Arabic"
+  },
+  {
+    "n": "Bushra",
+    "g": "girl",
+    "m": "Good news, glad tidings",
+    "o": "Arabic"
+  },
+  {
+    "n": "Farah",
+    "g": "girl",
+    "m": "Joy, happiness",
+    "o": "Arabic"
+  },
+  {
+    "n": "Ghada",
+    "g": "girl",
+    "m": "Young graceful woman",
+    "o": "Arabic"
+  },
+  {
+    "n": "Hadiya",
+    "g": "girl",
+    "m": "Gift, present",
+    "o": "Arabic"
+  },
+  {
+    "n": "Jumanah",
+    "g": "girl",
+    "m": "Silver pearl",
+    "o": "Arabic"
+  },
+  {
+    "n": "Lubna",
+    "g": "girl",
+    "m": "A type of tree, sweetness",
+    "o": "Arabic"
+  },
+  {
+    "n": "Maha",
+    "g": "girl",
+    "m": "Beautiful eyes, wild cow",
+    "o": "Arabic"
+  },
+  {
+    "n": "Nahla",
+    "g": "girl",
+    "m": "First drink of water",
+    "o": "Arabic"
+  },
+  {
+    "n": "Rahma",
+    "g": "girl",
+    "m": "Mercy, compassion",
+    "o": "Arabic"
+  },
+  {
+    "n": "Safa",
+    "g": "girl",
+    "m": "Clarity, purity",
+    "o": "Arabic"
+  },
+  {
+    "n": "Tasneem",
+    "g": "girl",
+    "m": "Spring in paradise",
+    "o": "Arabic"
+  },
+  {
+    "n": "Zara",
+    "g": "girl",
+    "m": "Blooming flower, dawn",
+    "o": "Arabic"
+  },
+  {
+    "n": "Hoor",
+    "g": "girl",
+    "m": "Dark-eyed, beautiful",
+    "o": "Arabic"
+  },
+  {
+    "n": "Minahil",
+    "g": "girl",
+    "m": "Spring of fresh water",
+    "o": "Arabic"
+  },
+  {
+    "n": "Naima",
+    "g": "girl",
+    "m": "Comfort, ease, blessing",
+    "o": "Arabic"
+  },
+  {
+    "n": "Dua",
+    "g": "girl",
+    "m": "Prayer, supplication",
+    "o": "Arabic"
+  },
+  {
+    "n": "Faten",
+    "g": "girl",
+    "m": "Fascinating, charming",
+    "o": "Arabic"
+  },
+  {
+    "n": "Haneen",
+    "g": "girl",
+    "m": "Longing, yearning",
+    "o": "Arabic"
+  },
+  {
+    "n": "Kawsar",
+    "g": "girl",
+    "m": "River in paradise, abundance",
+    "o": "Arabic"
+  },
+  {
+    "n": "Manal",
+    "g": "girl",
+    "m": "Attainment, achievement",
+    "o": "Arabic"
+  },
+  {
+    "n": "Randa",
+    "g": "girl",
+    "m": "Fragrant tree",
+    "o": "Arabic"
+  },
+  {
+    "n": "Thuraya",
+    "g": "girl",
+    "m": "Stars, Pleiades",
+    "o": "Arabic"
+  },
+  {
+    "n": "Yusra",
+    "g": "girl",
+    "m": "Ease, prosperity",
+    "o": "Arabic"
+  },
+  {
+    "n": "Zulfa",
+    "g": "girl",
+    "m": "Nearness to God",
+    "o": "Arabic"
+  },
+  {
+    "n": "Basmah",
+    "g": "girl",
+    "m": "Smile",
+    "o": "Arabic"
+  },
+  {
+    "n": "Jihan",
+    "g": "girl",
+    "m": "The world, universe",
+    "o": "Arabic"
+  }
 ]
