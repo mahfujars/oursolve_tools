@@ -200,3 +200,5 @@ button {
 [data-theme="dark"] .json-bool { color: #f472b6 !important; }
 [data-theme="dark"] .json-null { color: #94a3b8 !important; }
 [data-theme="dark"] pre { background: #0d1117 !important; color: #e2e8f0 !important; }
+
+[data-theme="dark"] .chip.active { background: #1C4D8D; border-color: #4d8fd4; color: #fff; box-shadow: 0 0 0 2px rgba(77,143,212,.4); }
