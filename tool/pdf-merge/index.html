@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Merge — Combine PDFs Online Free - Oursolve.com</title>
+  <meta name="description" content="Merge multiple PDF files into one document online. Free, instant, and 100% in your browser. No upload, no sign-up required.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://oursolve.com/tool/pdf-merge/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oursolve.com/tool/pdf-merge/">
+  <meta property="og:title" content="PDF Merge — Combine PDFs Online Free - Oursolve.com">
+  <meta property="og:description" content="Merge multiple PDF files into one document. Free, instant, browser-only.">
+  <meta property="og:site_name" content="Oursolve">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="https://oursolve.com/tool/pdf-merge/">
+  <meta name="twitter:title" content="PDF Merge — Combine PDFs Online Free - Oursolve.com">
+  <meta name="twitter:description" content="Merge multiple PDF files into one document. Free, instant, browser-only.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"PDF Merge","url":"https://oursolve.com/tool/pdf-merge/","description":"Merge multiple PDF files into one document online. Free and browser-only.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"provider":{"@type":"Organization","name":"Oursolve","url":"https://oursolve.com"}}</script>
+  <script>(function(){var t=localStorage.getItem('theme'),d=window.matchMedia('(prefers-color-scheme:dark)').matches;if((t||(d?'dark':'light'))==='dark')document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js" integrity="sha512-6UK7GZAD5fCILp/UOQ4Ob6WJBXKpQRZJLKRX7bMlT6qYXFEJISLxKVQ4uXNnWuTPLKgGJkHaWODXxTL1BZMA==" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/tool/shared.css">
+  <style>
+    main { max-width: 820px; margin: 0 auto; padding: 0 24px 80px; transform: translateY(-32px); }
+    .drop-zone {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 48px 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: border-color .2s, background .2s;
+      background: var(--surface);
+    }
+    .drop-zone:hover, .drop-zone.over { border-color: var(--primary); background: var(--primary-light); }
+    .drop-zone svg { margin: 0 auto 12px; display: block; opacity: .4; }
+    .drop-zone p { color: var(--text-muted); margin: 0; }
+    .drop-zone strong { color: var(--primary); }
+    #file-input { display: none; }
+    .file-list { margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+    .file-item {
+      display: flex; align-items: center; gap: 12px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 16px; cursor: grab;
+    }
+    .file-item.dragging { opacity: .4; }
+    .drag-handle { color: var(--text-muted); font-size: 1.1rem; cursor: grab; user-select: none; }
+    .file-name { flex: 1; font-size: .9rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .file-size { font-size: .8rem; color: var(--text-muted); white-space: nowrap; }
+    .remove-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.1rem; padding: 0 4px; line-height: 1; }
+    .remove-btn:hover { color: #ef4444; }
+    .btn-primary {
+      display: block; width: 100%; padding: 14px; margin-top: 20px;
+      background: #1C4D8D; color: #fff; border: none; border-radius: 10px;
+      font-size: 1rem; font-weight: 700; cursor: pointer; font-family: inherit;
+      transition: background .15s, transform .15s;
+    }
+    .btn-primary:hover { background: #093C5D; transform: translateY(-1px); }
+    .btn-primary:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+    .status { margin-top: 16px; text-align: center; font-size: .95rem; color: var(--text-muted); }
+    .download-btn {
+      display: block; width: 100%; padding: 14px; margin-top: 12px;
+      background: #16a34a; color: #fff; border: none; border-radius: 10px;
+      font-size: 1rem; font-weight: 700; cursor: pointer; font-family: inherit;
+      text-align: center; text-decoration: none;
+    }
+    .download-btn:hover { background: #15803d; }
+  </style>
+</head>
+<body>
+<div id="tool-header"></div>
+<div class="hero">
+  <div class="tool-badge">📄 PDF Tools</div>
+  <h1>PDF Merge</h1>
+  <p>Combine multiple PDF files into one document — drag to reorder, then merge.</p>
+</div>
+<main>
+  <div class="card">
+    <p class="card-title">Add PDF Files</p>
+    <div class="drop-zone" id="drop-zone">
+      <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 16V4m0 0L8 8m4-4 4 4"/><path d="M20 16v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2"/></svg>
+      <p><strong>Drop PDFs here</strong> or click to browse</p>
+      <p style="font-size:.85rem;margin-top:6px;">Multiple files allowed</p>
+    </div>
+    <input type="file" id="file-input" accept=".pdf,application/pdf" multiple>
+    <div class="file-list" id="file-list"></div>
+    <button class="btn-primary" id="merge-btn" onclick="mergePDFs()" disabled>Merge PDFs</button>
+    <div class="status" id="status"></div>
+    <a class="download-btn" id="download-btn" style="display:none;" download="merged.pdf">⬇ Download Merged PDF</a>
+  </div>
+</main>
+<div id="tool-footer"></div>
+<script>
+  const files = [];
+  let dragSrc = null;
+
+  const dropZone = document.getElementById('drop-zone');
+  const fileInput = document.getElementById('file-input');
+  const fileList = document.getElementById('file-list');
+  const mergeBtn = document.getElementById('merge-btn');
+  const status = document.getElementById('status');
+  const downloadBtn = document.getElementById('download-btn');
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('over'));
+  dropZone.addEventListener('drop', e => {
+    e.preventDefault(); dropZone.classList.remove('over');
+    addFiles([...e.dataTransfer.files]);
+  });
+  fileInput.addEventListener('change', () => { addFiles([...fileInput.files]); fileInput.value = ''; });
+
+  function addFiles(newFiles) {
+    newFiles.filter(f => f.type === 'application/pdf' || f.name.endsWith('.pdf')).forEach(f => files.push(f));
+    renderList();
+  }
+
+  function renderList() {
+    fileList.innerHTML = '';
+    files.forEach((f, i) => {
+      const item = document.createElement('div');
+      item.className = 'file-item';
+      item.draggable = true;
+      item.dataset.index = i;
+      item.innerHTML = `<span class="drag-handle">⠿</span><span class="file-name">${f.name}</span><span class="file-size">${(f.size/1024).toFixed(0)} KB</span><button class="remove-btn" onclick="removeFile(${i})">×</button>`;
+      item.addEventListener('dragstart', e => { dragSrc = i; item.classList.add('dragging'); e.dataTransfer.effectAllowed = 'move'; });
+      item.addEventListener('dragend', () => item.classList.remove('dragging'));
+      item.addEventListener('dragover', e => { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; });
+      item.addEventListener('drop', e => { e.preventDefault(); if (dragSrc !== null && dragSrc !== i) { const moved = files.splice(dragSrc, 1)[0]; files.splice(i, 0, moved); renderList(); } dragSrc = null; });
+      fileList.appendChild(item);
+    });
+    mergeBtn.disabled = files.length < 2;
+    downloadBtn.style.display = 'none';
+    status.textContent = files.length ? `${files.length} file${files.length > 1 ? 's' : ''} added` : '';
+  }
+
+  function removeFile(i) { files.splice(i, 1); renderList(); }
+
+  async function mergePDFs() {
+    if (files.length < 2) return;
+    mergeBtn.disabled = true;
+    status.textContent = 'Merging…';
+    downloadBtn.style.display = 'none';
+    try {
+      const { PDFDocument } = PDFLib;
+      const merged = await PDFDocument.create();
+      for (const file of files) {
+        const buf = await file.arrayBuffer();
+        const doc = await PDFDocument.load(buf);
+        const pages = await merged.copyPages(doc, doc.getPageIndices());
+        pages.forEach(p => merged.addPage(p));
+      }
+      const bytes = await merged.save();
+      const blob = new Blob([bytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      downloadBtn.href = url;
+      downloadBtn.style.display = 'block';
+      status.textContent = `Done! ${(bytes.length / 1024).toFixed(0)} KB merged PDF ready.`;
+    } catch (err) {
+      status.textContent = 'Error: ' + err.message;
+    }
+    mergeBtn.disabled = false;
+  }
+</script>
+<script>
+  fetch('/tool/header.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-header');
+    if (el) { el.outerHTML = html; }
+    const t = document.getElementById('navTitle');
+    if (t) t.textContent = document.title.split(' - ')[0].replace('Free ','');
+    const btn = document.getElementById('themeToggle');
+    if (btn) {
+      btn.textContent = document.documentElement.getAttribute('data-theme')==='dark' ? '☀️' : '🌙';
+      btn.addEventListener('click', function() {
+        const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+        document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        btn.textContent = isDark ? '🌙' : '☀️';
+      });
+    }
+  });
+  fetch('/tool/footer.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-footer');
+    if (el) el.outerHTML = html;
+  });
+</script>
+</body>
+</html>

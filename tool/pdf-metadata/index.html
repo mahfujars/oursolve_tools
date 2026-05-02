@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Metadata Editor — View and Edit PDF Info Free - Oursolve.com</title>
+  <meta name="description" content="View and edit PDF metadata: title, author, subject, keywords, creator, producer, and dates. Free, instant, browser-only.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://oursolve.com/tool/pdf-metadata/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oursolve.com/tool/pdf-metadata/">
+  <meta property="og:title" content="PDF Metadata Editor — View and Edit PDF Info Free - Oursolve.com">
+  <meta property="og:description" content="View and edit PDF metadata — title, author, subject, keywords and more. Free, browser-only.">
+  <meta property="og:site_name" content="Oursolve">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="https://oursolve.com/tool/pdf-metadata/">
+  <meta name="twitter:title" content="PDF Metadata Editor — View and Edit PDF Info Free - Oursolve.com">
+  <meta name="twitter:description" content="View and edit PDF metadata — title, author, subject, keywords and more. Free, browser-only.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"PDF Metadata Editor","url":"https://oursolve.com/tool/pdf-metadata/","description":"View and edit PDF metadata including title, author, subject, and keywords. Free and browser-only.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"provider":{"@type":"Organization","name":"Oursolve","url":"https://oursolve.com"}}</script>
+  <script>(function(){var t=localStorage.getItem('theme'),d=window.matchMedia('(prefers-color-scheme:dark)').matches;if((t||(d?'dark':'light'))==='dark')document.documentElement.setAttribute('data-theme','dark');})();</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js" integrity="sha512-6UK7GZAD5fCILp/UOQ4Ob6WJBXKpQRZJLKRX7bMlT6qYXFEJISLxKVQ4uXNnWuTPLKgGJkHaWODXxTL1BZMA==" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="/tool/shared.css">
+  <style>
+    main { max-width: 820px; margin: 0 auto; padding: 0 24px 80px; transform: translateY(-32px); }
+    .drop-zone {
+      border: 2px dashed var(--border); border-radius: var(--radius);
+      padding: 48px 24px; text-align: center; cursor: pointer;
+      transition: border-color .2s, background .2s; background: var(--surface);
+    }
+    .drop-zone:hover, .drop-zone.over { border-color: var(--primary); background: var(--primary-light); }
+    .drop-zone svg { margin: 0 auto 12px; display: block; opacity: .4; }
+    .drop-zone p { color: var(--text-muted); margin: 0; }
+    .drop-zone strong { color: var(--primary); }
+    #file-input { display: none; }
+    .file-info {
+      display: flex; align-items: center; gap: 12px; margin-top: 16px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px;
+    }
+    .file-info .file-name { flex: 1; font-weight: 600; font-size: .9rem; }
+    .file-info .page-count { font-size: .85rem; color: var(--text-muted); }
+    .remove-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 1.1rem; padding: 0 4px; }
+    .remove-btn:hover { color: #ef4444; }
+    label { display: block; font-weight: 600; font-size: .9rem; margin-bottom: 8px; }
+    input[type="text"] {
+      width: 100%; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: 10px;
+      font-size: 1rem; font-family: inherit; color: var(--text); background: var(--surface);
+      outline: none; transition: border-color .15s;
+    }
+    input[type="text"]:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(28,77,141,.12); }
+    input[type="text"][readonly] { background: var(--bg); color: var(--text-muted); cursor: default; }
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 4px; }
+    @media (max-width: 520px) { .meta-grid { grid-template-columns: 1fr; } }
+    .meta-field { display: flex; flex-direction: column; gap: 8px; }
+    .read-only-badge {
+      font-size: .7rem; font-weight: 700; letter-spacing: .5px; text-transform: uppercase;
+      color: var(--text-muted); background: var(--bg); border: 1px solid var(--border);
+      border-radius: 4px; padding: 2px 6px; display: inline-block; margin-left: 6px; vertical-align: middle;
+    }
+    .section-divider { border: none; border-top: 1px solid var(--border); margin: 24px 0; }
+    .btn-primary {
+      display: block; width: 100%; padding: 14px; margin-top: 20px;
+      background: #1C4D8D; color: #fff; border: none; border-radius: 10px;
+      font-size: 1rem; font-weight: 700; cursor: pointer; font-family: inherit;
+      transition: background .15s, transform .15s;
+    }
+    .btn-primary:hover { background: #093C5D; transform: translateY(-1px); }
+    .btn-primary:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+    .status { margin-top: 16px; text-align: center; font-size: .95rem; color: var(--text-muted); }
+    .download-btn {
+      display: block; width: 100%; padding: 14px; margin-top: 12px;
+      background: #16a34a; color: #fff; border: none; border-radius: 10px;
+      font-size: 1rem; font-weight: 700; cursor: pointer; font-family: inherit;
+      text-align: center; text-decoration: none;
+    }
+    .download-btn:hover { background: #15803d; }
+  </style>
+</head>
+<body>
+<div id="tool-header"></div>
+<div class="hero">
+  <div class="tool-badge">📄 PDF Tools</div>
+  <h1>PDF Metadata</h1>
+  <p>Inspect and edit your PDF's title, author, subject, keywords, and more.</p>
+</div>
+<main>
+  <div class="card">
+    <p class="card-title">Upload PDF</p>
+    <div class="drop-zone" id="drop-zone">
+      <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M12 16V4m0 0L8 8m4-4 4 4"/><path d="M20 16v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2"/></svg>
+      <p><strong>Drop PDF here</strong> or click to browse</p>
+    </div>
+    <input type="file" id="file-input" accept=".pdf,application/pdf">
+    <div id="file-info-area"></div>
+  </div>
+
+  <div class="card" id="metadata-card" style="display:none;">
+    <p class="card-title">Editable Metadata</p>
+    <div class="meta-grid">
+      <div class="meta-field"><label for="meta-title">Title</label><input type="text" id="meta-title" placeholder="Document title"></div>
+      <div class="meta-field"><label for="meta-author">Author</label><input type="text" id="meta-author" placeholder="Author name"></div>
+      <div class="meta-field"><label for="meta-subject">Subject</label><input type="text" id="meta-subject" placeholder="Subject"></div>
+      <div class="meta-field"><label for="meta-keywords">Keywords</label><input type="text" id="meta-keywords" placeholder="keyword1, keyword2"></div>
+    </div>
+
+    <hr class="section-divider">
+    <p class="card-title">Read-only Info</p>
+    <div class="meta-grid">
+      <div class="meta-field"><label>Creator <span class="read-only-badge">read only</span></label><input type="text" id="meta-creator" readonly></div>
+      <div class="meta-field"><label>Producer <span class="read-only-badge">read only</span></label><input type="text" id="meta-producer" readonly></div>
+      <div class="meta-field"><label>Creation Date <span class="read-only-badge">read only</span></label><input type="text" id="meta-created" readonly></div>
+      <div class="meta-field"><label>Modification Date <span class="read-only-badge">read only</span></label><input type="text" id="meta-modified" readonly></div>
+    </div>
+
+    <button class="btn-primary" id="save-btn" onclick="saveMetadata()">Save Changes</button>
+    <div class="status" id="status"></div>
+    <a class="download-btn" id="download-btn" style="display:none;" download="updated.pdf">⬇ Download Updated PDF</a>
+  </div>
+</main>
+<div id="tool-footer"></div>
+<script>
+  let pdfFile = null;
+
+  const dropZone = document.getElementById('drop-zone');
+  const fileInput = document.getElementById('file-input');
+
+  dropZone.addEventListener('click', () => fileInput.click());
+  dropZone.addEventListener('dragover', e => { e.preventDefault(); dropZone.classList.add('over'); });
+  dropZone.addEventListener('dragleave', () => dropZone.classList.remove('over'));
+  dropZone.addEventListener('drop', e => { e.preventDefault(); dropZone.classList.remove('over'); if (e.dataTransfer.files[0]) loadFile(e.dataTransfer.files[0]); });
+  fileInput.addEventListener('change', () => { if (fileInput.files[0]) loadFile(fileInput.files[0]); fileInput.value = ''; });
+
+  function formatDate(d) {
+    if (!d) return '';
+    try { return new Date(d).toLocaleString(); } catch { return String(d); }
+  }
+
+  async function loadFile(file) {
+    if (!file.name.endsWith('.pdf') && file.type !== 'application/pdf') return;
+    pdfFile = file;
+    const buf = await file.arrayBuffer();
+    const doc = await PDFLib.PDFDocument.load(buf);
+    const pc = doc.getPageCount();
+    document.getElementById('file-info-area').innerHTML = `<div class="file-info"><span class="file-name">${file.name}</span><span class="page-count">${pc} pages &middot; ${(file.size/1024).toFixed(0)} KB</span><button class="remove-btn" onclick="clearFile()">×</button></div>`;
+
+    document.getElementById('meta-title').value = doc.getTitle() || '';
+    document.getElementById('meta-author').value = doc.getAuthor() || '';
+    document.getElementById('meta-subject').value = doc.getSubject() || '';
+    document.getElementById('meta-keywords').value = doc.getKeywords() || '';
+    document.getElementById('meta-creator').value = doc.getCreator() || '';
+    document.getElementById('meta-producer').value = doc.getProducer() || '';
+    document.getElementById('meta-created').value = formatDate(doc.getCreationDate());
+    document.getElementById('meta-modified').value = formatDate(doc.getModificationDate());
+
+    document.getElementById('metadata-card').style.display = 'block';
+    document.getElementById('download-btn').style.display = 'none';
+    document.getElementById('status').textContent = '';
+  }
+
+  function clearFile() {
+    pdfFile = null;
+    document.getElementById('file-info-area').innerHTML = '';
+    document.getElementById('metadata-card').style.display = 'none';
+    document.getElementById('download-btn').style.display = 'none';
+    document.getElementById('status').textContent = '';
+  }
+
+  async function saveMetadata() {
+    if (!pdfFile) return;
+    const btn = document.getElementById('save-btn');
+    const status = document.getElementById('status');
+    btn.disabled = true;
+    status.textContent = 'Saving…';
+    document.getElementById('download-btn').style.display = 'none';
+
+    try {
+      const { PDFDocument } = PDFLib;
+      const buf = await pdfFile.arrayBuffer();
+      const doc = await PDFDocument.load(buf);
+
+      doc.setTitle(document.getElementById('meta-title').value);
+      doc.setAuthor(document.getElementById('meta-author').value);
+      doc.setSubject(document.getElementById('meta-subject').value);
+      doc.setKeywords([document.getElementById('meta-keywords').value]);
+      doc.setModificationDate(new Date());
+
+      const bytes = await doc.save();
+      const blob = new Blob([bytes], { type: 'application/pdf' });
+      const dlBtn = document.getElementById('download-btn');
+      dlBtn.href = URL.createObjectURL(blob);
+      dlBtn.style.display = 'block';
+      status.textContent = 'Metadata saved successfully.';
+    } catch (err) {
+      status.textContent = 'Error: ' + err.message;
+    }
+    btn.disabled = false;
+  }
+</script>
+<script>
+  fetch('/tool/header.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-header');
+    if (el) { el.outerHTML = html; }
+    const t = document.getElementById('navTitle');
+    if (t) t.textContent = document.title.split(' - ')[0].replace('Free ','');
+    const btn = document.getElementById('themeToggle');
+    if (btn) {
+      btn.textContent = document.documentElement.getAttribute('data-theme')==='dark' ? '☀️' : '🌙';
+      btn.addEventListener('click', function() {
+        const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+        document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        btn.textContent = isDark ? '🌙' : '☀️';
+      });
+    }
+  });
+  fetch('/tool/footer.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-footer');
+    if (el) el.outerHTML = html;
+  });
+</script>
+</body>
+</html>

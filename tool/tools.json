@@ -8,5 +8,13 @@
   {"slug":"hash-generator","name":"Hash Generator","category":"Security","icon":"🔐","iconClass":"icon-hash","desc":"Generate SHA-1, SHA-256, SHA-384, and SHA-512 hashes from text or files using native browser crypto."},
   {"slug":"markdown-to-html","name":"Markdown to HTML","category":"Writing","icon":"📄","iconClass":"icon-md","desc":"Convert Markdown to HTML with a live side-by-side preview. Supports tables, code blocks, and more."},
   {"slug":"regex-tester","name":"Regex Tester","category":"Developer","icon":"⚡","iconClass":"icon-rx","desc":"Test regular expressions in real-time. Match highlighting, capture group details, and all JS flags supported."},
-  {"slug":"muslim-names","name":"Muslim Baby Names","category":"Islamic","icon":"☪️","iconClass":"icon-islamic","desc":"Browse 1000+ Islamic names for boys and girls with meanings and origins. Parent name matching included."}
+  {"slug":"muslim-names","name":"Muslim Baby Names","category":"Islamic","icon":"☪️","iconClass":"icon-islamic","desc":"Browse 1000+ Islamic names for boys and girls with meanings and origins. Parent name matching included."},
+  {"slug":"pdf-merge","name":"PDF Merge","category":"PDF Tools","icon":"📄","iconClass":"icon-pdf","desc":"Combine multiple PDF files into one document. Drag to reorder, then merge — free and browser-only."},
+  {"slug":"pdf-split","name":"PDF Split","category":"PDF Tools","icon":"📄","iconClass":"icon-pdf","desc":"Extract all pages or a custom page range from any PDF. Download as individual files or a ZIP."},
+  {"slug":"pdf-to-jpg","name":"PDF to JPG","category":"PDF Tools","icon":"📄","iconClass":"icon-pdf","desc":"Convert every page of a PDF to a downloadable JPEG image. Quality slider, thumbnail preview, ZIP download."},
+  {"slug":"jpg-to-pdf","name":"JPG to PDF","category":"PDF Tools","icon":"📄","iconClass":"icon-pdf","desc":"Combine JPG, PNG, or WebP images into a single PDF. Drag to reorder, choose A4, Letter, or fit to image."},
+  {"slug":"pdf-rotate","name":"PDF Rotate","category":"PDF Tools","icon":"📄","iconClass":"icon-pdf","desc":"Rotate individual or all pages in a PDF by 90°, 180°, or 270°. Free and browser-only."},
+  {"slug":"pdf-watermark","name":"PDF Watermark","category":"PDF Tools","icon":"📄","iconClass":"icon-pdf","desc":"Add a custom text watermark to every page of a PDF. Control size, opacity, color, and position."},
+  {"slug":"pdf-compress","name":"PDF Compress","category":"PDF Tools","icon":"📄","iconClass":"icon-pdf","desc":"Reduce PDF file size by re-encoding embedded images at a lower quality. Shows size savings before download."},
+  {"slug":"pdf-metadata","name":"PDF Metadata Editor","category":"PDF Tools","icon":"📄","iconClass":"icon-pdf","desc":"View and edit PDF metadata: title, author, subject, keywords, creator, producer, and dates."}
 ]
