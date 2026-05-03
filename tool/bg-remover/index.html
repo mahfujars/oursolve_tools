@@ -27,7 +27,8 @@
 
     /* drop zone */
     .drop-zone{border:2px dashed var(--border);border-radius:14px;padding:48px 24px;text-align:center;cursor:pointer;transition:all .2s;color:var(--text-muted)}
-    .drop-zone:hover,.drop-zone.drag-over{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+    .drop-zone:hover:not(.disabled),.drop-zone.drag-over{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+    .drop-zone.disabled{opacity:.45;cursor:not-allowed;pointer-events:none}
     .drop-zone input{display:none}
     .drop-icon{font-size:2.5rem;margin-bottom:12px}
     .drop-zone h3{font-size:1.1rem;font-weight:700;margin:0 0 6px;color:var(--text)}
@@ -116,7 +117,7 @@
   <!-- Upload -->
   <div class="card" id="upload-card">
     <p class="card-title">Upload Image</p>
-    <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()" ondragover="onDragOver(event)" ondragleave="onDragLeave()" ondrop="onDrop(event)">
+    <div class="drop-zone disabled" id="drop-zone" onclick="document.getElementById('file-input').click()" ondragover="onDragOver(event)" ondragleave="onDragLeave()" ondrop="onDrop(event)">
       <input type="file" id="file-input" accept="image/*" onchange="handleFile(this.files[0])">
       <div class="drop-icon">🖼</div>
       <h3>Drop image here</h3>
@@ -211,10 +212,15 @@
     fill.style.width = pct + '%';
   }
 
+  function setDropZoneDisabled(disabled) {
+    document.getElementById('drop-zone').classList.toggle('disabled', disabled);
+  }
+
   async function loadModel() {
     if (segmenter) return segmenter;
     showStatus('Loading AI…');
     setProgress(0, true);
+    setDropZoneDisabled(true);
 
     segmenter = await pipeline('image-segmentation', 'briaai/RMBG-1.4', {
       device: 'wasm',
@@ -230,6 +236,7 @@
     });
 
     hideStatus();
+    setDropZoneDisabled(false);
     return segmenter;
   }
 
