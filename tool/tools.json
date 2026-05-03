@@ -17,5 +17,5 @@
   {"slug":"pdf-watermark","name":"PDF Watermark","category":"PDF Tools","icon":"stamp","desc":"Add a custom text watermark to every page of a PDF. Control size, opacity, color, and position."},
   {"slug":"pdf-compress","name":"PDF Compress","category":"PDF Tools","icon":"file-minus","desc":"Reduce PDF file size by re-encoding embedded images at a lower quality. Shows size savings before download."},
   {"slug":"pdf-metadata","name":"PDF Metadata Editor","category":"PDF Tools","icon":"file-pen","desc":"View and edit PDF metadata: title, author, subject, keywords, creator, producer, and dates."},
-  {"slug":"bg-remover","name":"Background Remover","category":"Image Tools","icon":"eraser","desc":"Remove image backgrounds instantly using AI. 100% free, runs in your browser. No upload, no account, no limit."}
+  {"slug":"bg-remover","name":"Background Remover","category":"Image Tools","icon":"image","desc":"Remove image backgrounds instantly using AI. 100% free, runs in your browser. No upload, no account, no limit."}
 ]
