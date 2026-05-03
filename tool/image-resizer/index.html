@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Image Resizer - Oursolve.com</title>
+  <meta name="description" content="Resize images online for free. Set exact pixel dimensions or scale by percentage. Download as PNG or JPG. 100% in your browser — nothing is uploaded.">
+  <meta name="keywords" content="image resizer, resize image online, resize photo, scale image, compress image, change image size">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://oursolve.com/tool/image-resizer/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oursolve.com/tool/image-resizer/">
+  <meta property="og:title" content="Free Image Resizer - Oursolve.com">
+  <meta property="og:description" content="Resize images by pixels or percentage. Free, instant, 100% private — nothing leaves your browser.">
+  <meta property="og:site_name" content="Oursolve">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Image Resizer","url":"https://oursolve.com/tool/image-resizer/","description":"Resize images online by pixels or percentage. Download as PNG or JPG. 100% free, runs in your browser.","applicationCategory":"MultimediaApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <link rel="stylesheet" href="/tool/shared.css">
+  <style>
+    .hero{background:var(--hero-gradient);color:#fff;padding:48px 24px 56px;text-align:center}
+    .tool-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:.8rem;font-weight:600;margin-bottom:16px}
+    .hero h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-.5px;margin-bottom:12px}
+    .hero p{color:rgba(255,255,255,.75);font-size:1.05rem;max-width:520px;margin:0 auto}
+    main{max-width:860px;margin:0 auto;padding:0 24px 80px;transform:translateY(-32px)}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
+    .card-title{font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px}
+
+    /* drop zone */
+    .drop-zone{border:2px dashed var(--border);border-radius:14px;padding:48px 24px;text-align:center;cursor:pointer;transition:all .2s;color:var(--text-muted)}
+    .drop-zone:hover,.drop-zone.drag-over{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+    .drop-zone input{display:none}
+    .drop-icon{font-size:2.5rem;margin-bottom:12px}
+    .drop-zone h3{font-size:1.1rem;font-weight:700;margin:0 0 6px;color:var(--text)}
+    .drop-zone p{margin:0;font-size:.9rem}
+    .drop-zone .browse-link{color:var(--primary);font-weight:600;text-decoration:underline}
+
+    /* resize controls */
+    #resize-controls{display:none}
+    .mode-tabs{display:flex;gap:4px;background:var(--bg);padding:4px;border-radius:10px;margin-bottom:20px}
+    .mode-tab{flex:1;padding:9px;border:none;border-radius:7px;font-size:.9rem;font-weight:600;font-family:inherit;cursor:pointer;background:transparent;color:var(--text-muted);transition:all .15s}
+    .mode-tab.active{background:var(--surface);color:var(--primary);box-shadow:var(--shadow)}
+
+    /* pixel mode */
+    #panel-pixels{display:block}
+    #panel-percent{display:none}
+    .px-row{display:flex;gap:12px;align-items:flex-end;flex-wrap:wrap}
+    .px-field{display:flex;flex-direction:column;gap:6px;flex:1;min-width:100px}
+    .px-field label{font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin:0}
+    .px-field input{padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:1rem;font-family:inherit;background:var(--bg);color:var(--text);outline:none;transition:border-color .15s;width:100%}
+    .px-field input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(28,77,141,.12)}
+    .lock-btn{padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;background:var(--bg);color:var(--text-muted);font-size:1rem;cursor:pointer;transition:all .15s;white-space:nowrap;align-self:flex-end;font-family:inherit}
+    .lock-btn.locked{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
+    .lock-btn:hover{border-color:var(--primary);color:var(--primary)}
+
+    /* percent mode */
+    .pct-quick{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+    .pct-btn{padding:8px 18px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:.9rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .15s}
+    .pct-btn:hover,.pct-btn.active{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
+    .pct-custom-row{display:flex;gap:10px;align-items:center}
+    .pct-custom-row input{max-width:120px;padding:10px 14px;border:1.5px solid var(--border);border-radius:10px;font-size:1rem;font-family:inherit;background:var(--bg);color:var(--text);outline:none;transition:border-color .15s}
+    .pct-custom-row input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(28,77,141,.12)}
+    .pct-custom-row span{font-size:.95rem;color:var(--text-muted);font-weight:600}
+
+    /* size info */
+    .size-info{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0 0}
+    .size-chip{padding:6px 14px;border:1px solid var(--border);border-radius:8px;background:var(--bg);font-size:.85rem;color:var(--text-muted)}
+    .size-chip strong{color:var(--text);font-weight:700}
+    .size-chip.highlight{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+    .size-chip.highlight strong{color:var(--primary)}
+
+    /* btn row */
+    .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 22px;border:none;border-radius:8px;font-size:.9rem;font-weight:700;font-family:inherit;cursor:pointer;transition:all .15s}
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px)}
+    .btn-secondary{background:var(--bg);color:var(--text);border:1px solid var(--border)}
+    .btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
+    .btn:disabled{opacity:.45;cursor:not-allowed;transform:none}
+
+    /* image preview tabs */
+    #result-area{display:none}
+    .img-tabs{display:flex;gap:4px;background:var(--bg);padding:4px;border-radius:10px;margin-bottom:16px}
+    .img-tab{flex:1;padding:9px;border:none;border-radius:7px;font-size:.9rem;font-weight:600;font-family:inherit;cursor:pointer;background:transparent;color:var(--text-muted);transition:all .15s}
+    .img-tab.active{background:var(--surface);color:var(--primary);box-shadow:var(--shadow)}
+    .img-panel{display:none;text-align:center}
+    .img-panel.active{display:block}
+    .img-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:repeating-conic-gradient(#e2e8f0 0% 25%, transparent 0% 50%) 0 0/20px 20px;display:inline-block;max-width:100%;line-height:0}
+    .img-wrap img,.img-wrap canvas{display:block;width:auto;height:auto;max-width:100%;max-height:500px}
+    [data-theme="dark"] .img-wrap{background:repeating-conic-gradient(#334155 0% 25%, transparent 0% 50%) 0 0/20px 20px}
+
+    /* download options */
+    .dl-options{display:flex;gap:14px;align-items:center;flex-wrap:wrap;margin-top:18px;padding-top:18px;border-top:1px solid var(--border)}
+    .dl-options label{font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin:0}
+    .format-btns{display:flex;gap:6px}
+    .fmt-btn{padding:7px 16px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:.875rem;font-weight:600;font-family:inherit;cursor:pointer;transition:all .15s}
+    .fmt-btn.active{border-color:var(--primary);color:var(--primary);background:var(--primary-light)}
+    .quality-wrap{display:flex;align-items:center;gap:10px;flex:1;min-width:180px}
+    .quality-wrap label{white-space:nowrap}
+    input[type="range"]{flex:1;accent-color:var(--primary);cursor:pointer}
+    .quality-val{font-size:.85rem;font-weight:700;color:var(--primary);min-width:36px}
+  </style>
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (prefersDark ? 'dark' : 'light');
+      if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+</head>
+<body>
+
+<div id="tool-header"></div>
+<div class="hero">
+  <div class="tool-badge">🖼 Image Tools</div>
+  <h1>Image Resizer</h1>
+  <p>Resize images by pixels or percentage. Download as PNG or JPG. Free forever — nothing leaves your browser.</p>
+</div>
+
+<main>
+
+  <!-- Upload card -->
+  <div class="card" id="upload-card">
+    <p class="card-title">Upload Image</p>
+    <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()" ondragover="onDragOver(event)" ondragleave="onDragLeave()" ondrop="onDrop(event)">
+      <input type="file" id="file-input" accept="image/*" onchange="loadImage(this.files[0])">
+      <div class="drop-icon">🖼</div>
+      <h3>Drop an image here</h3>
+      <p><span class="browse-link">Browse</span> or drag &amp; drop — JPG, PNG, WebP, GIF, AVIF</p>
+    </div>
+  </div>
+
+  <!-- Resize controls card -->
+  <div class="card" id="resize-controls">
+    <p class="card-title">Resize Options</p>
+
+    <!-- Mode: Pixels / Percentage -->
+    <div class="mode-tabs">
+      <button class="mode-tab active" id="mode-tab-px" onclick="switchMode('pixels')">By Pixels</button>
+      <button class="mode-tab" id="mode-tab-pct" onclick="switchMode('percent')">By Percentage</button>
+    </div>
+
+    <!-- Pixel panel -->
+    <div id="panel-pixels">
+      <div class="px-row">
+        <div class="px-field">
+          <label for="inp-w">Width (px)</label>
+          <input type="number" id="inp-w" min="1" max="16000" placeholder="Width" oninput="onWidthChange()">
+        </div>
+        <button class="lock-btn locked" id="lock-btn" onclick="toggleLock(this)" title="Lock aspect ratio">🔒 Aspect ratio</button>
+        <div class="px-field">
+          <label for="inp-h">Height (px)</label>
+          <input type="number" id="inp-h" min="1" max="16000" placeholder="Height" oninput="onHeightChange()">
+        </div>
+      </div>
+    </div>
+
+    <!-- Percentage panel -->
+    <div id="panel-percent">
+      <div class="pct-quick">
+        <button class="pct-btn" onclick="applyPct(25, this)">25%</button>
+        <button class="pct-btn" onclick="applyPct(50, this)">50%</button>
+        <button class="pct-btn" onclick="applyPct(75, this)">75%</button>
+        <button class="pct-btn" onclick="applyPct(100, this)">100%</button>
+        <button class="pct-btn" onclick="applyPct(150, this)">150%</button>
+        <button class="pct-btn" onclick="applyPct(200, this)">200%</button>
+      </div>
+      <div class="pct-custom-row">
+        <input type="number" id="inp-pct" min="1" max="10000" placeholder="Custom %" oninput="onPctInput()">
+        <span>%</span>
+      </div>
+    </div>
+
+    <!-- Size info -->
+    <div class="size-info">
+      <div class="size-chip" id="chip-orig">Original: <strong id="orig-label">—</strong></div>
+      <div class="size-chip highlight" id="chip-new">New size: <strong id="new-label">—</strong></div>
+    </div>
+
+    <!-- Action buttons -->
+    <div class="btn-row">
+      <button class="btn btn-primary" id="btn-resize" onclick="doResize()" disabled>Resize Image</button>
+      <button class="btn btn-secondary" onclick="resetTool()">🗑 Reset</button>
+    </div>
+  </div>
+
+  <!-- Result card -->
+  <div class="card" id="result-area">
+    <p class="card-title">Result</p>
+    <div class="img-tabs">
+      <button class="img-tab active" id="img-tab-orig" onclick="switchImgTab('original')">Original</button>
+      <button class="img-tab" id="img-tab-resized" onclick="switchImgTab('resized')">Resized</button>
+    </div>
+    <div class="img-panel active" id="img-panel-original">
+      <div class="img-wrap"><img id="preview-orig" src="" alt="Original image"></div>
+    </div>
+    <div class="img-panel" id="img-panel-resized">
+      <div class="img-wrap"><canvas id="canvas-out"></canvas></div>
+    </div>
+
+    <!-- Download options -->
+    <div class="dl-options">
+      <label>Format</label>
+      <div class="format-btns">
+        <button class="fmt-btn active" id="fmt-png" onclick="setFormat('png', this)">PNG</button>
+        <button class="fmt-btn" id="fmt-jpg" onclick="setFormat('jpg', this)">JPG</button>
+      </div>
+      <div class="quality-wrap" id="quality-wrap" style="display:none">
+        <label>Quality</label>
+        <input type="range" id="quality-slider" min="10" max="100" value="92" oninput="document.getElementById('quality-val').textContent=this.value+'%'">
+        <span class="quality-val" id="quality-val">92%</span>
+      </div>
+      <button class="btn btn-primary" id="btn-dl" onclick="downloadResult()">⬇ Download</button>
+    </div>
+  </div>
+
+</main>
+
+<div id="tool-footer"></div>
+<script>
+  /* ── State ── */
+  let origImage = null;   // HTMLImageElement
+  let origW = 0, origH = 0;
+  let newW = 0, newH = 0;
+  let locked = true;
+  let mode = 'pixels';
+  let dlFormat = 'png';
+
+  /* ── Upload / drop ── */
+  function onDragOver(e) {
+    e.preventDefault();
+    document.getElementById('drop-zone').classList.add('drag-over');
+  }
+  function onDragLeave() {
+    document.getElementById('drop-zone').classList.remove('drag-over');
+  }
+  function onDrop(e) {
+    e.preventDefault();
+    onDragLeave();
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) loadImage(file);
+  }
+
+  function loadImage(file) {
+    if (!file) return;
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = function() {
+      origImage = img;
+      origW = img.naturalWidth;
+      origH = img.naturalHeight;
+      newW = origW;
+      newH = origH;
+
+      document.getElementById('preview-orig').src = url;
+      document.getElementById('orig-label').textContent = origW + ' × ' + origH + ' px';
+      updateNewLabel();
+
+      document.getElementById('inp-w').value = origW;
+      document.getElementById('inp-h').value = origH;
+      document.getElementById('inp-pct').value = 100;
+
+      document.getElementById('resize-controls').style.display = '';
+      document.getElementById('btn-resize').disabled = false;
+      document.getElementById('result-area').style.display = 'none';
+      switchImgTab('original');
+    };
+    img.src = url;
+  }
+
+  /* ── Mode switch ── */
+  function switchMode(m) {
+    mode = m;
+    document.getElementById('panel-pixels').style.display = m === 'pixels' ? '' : 'none';
+    document.getElementById('panel-percent').style.display = m === 'percent' ? '' : 'none';
+    document.getElementById('mode-tab-px').classList.toggle('active', m === 'pixels');
+    document.getElementById('mode-tab-pct').classList.toggle('active', m === 'percent');
+    if (m === 'pixels') {
+      document.getElementById('inp-w').value = newW;
+      document.getElementById('inp-h').value = newH;
+    } else {
+      const pct = origW ? Math.round((newW / origW) * 100) : 100;
+      document.getElementById('inp-pct').value = pct;
+      highlightPctBtn(pct);
+    }
+    updateNewLabel();
+  }
+
+  /* ── Pixel inputs ── */
+  function toggleLock(btn) {
+    locked = !locked;
+    btn.classList.toggle('locked', locked);
+    btn.textContent = locked ? '🔒 Aspect ratio' : '🔓 Aspect ratio';
+  }
+
+  function onWidthChange() {
+    const w = parseInt(document.getElementById('inp-w').value) || 0;
+    newW = w;
+    if (locked && w > 0 && origW > 0) {
+      newH = Math.max(1, Math.round(w * origH / origW));
+      document.getElementById('inp-h').value = newH;
+    } else {
+      newH = parseInt(document.getElementById('inp-h').value) || 0;
+    }
+    updateNewLabel();
+  }
+
+  function onHeightChange() {
+    const h = parseInt(document.getElementById('inp-h').value) || 0;
+    newH = h;
+    if (locked && h > 0 && origH > 0) {
+      newW = Math.max(1, Math.round(h * origW / origH));
+      document.getElementById('inp-w').value = newW;
+    } else {
+      newW = parseInt(document.getElementById('inp-w').value) || 0;
+    }
+    updateNewLabel();
+  }
+
+  /* ── Percentage inputs ── */
+  function applyPct(pct, btn) {
+    document.getElementById('inp-pct').value = pct;
+    highlightPctBtn(pct);
+    calcFromPct(pct);
+  }
+
+  function onPctInput() {
+    const pct = parseFloat(document.getElementById('inp-pct').value) || 0;
+    highlightPctBtn(pct);
+    calcFromPct(pct);
+  }
+
+  function calcFromPct(pct) {
+    if (!origW || pct <= 0) return;
+    newW = Math.max(1, Math.round(origW * pct / 100));
+    newH = Math.max(1, Math.round(origH * pct / 100));
+    updateNewLabel();
+  }
+
+  function highlightPctBtn(pct) {
+    document.querySelectorAll('.pct-btn').forEach(b => {
+      const val = parseFloat(b.textContent);
+      b.classList.toggle('active', val === pct);
+    });
+  }
+
+  /* ── Size label ── */
+  function updateNewLabel() {
+    if (!newW || !newH) { document.getElementById('new-label').textContent = '—'; return; }
+    const estKB = estimateKB(newW, newH);
+    document.getElementById('new-label').textContent = newW + ' × ' + newH + ' px (~' + estKB + ' KB)';
+  }
+
+  function estimateKB(w, h) {
+    // rough PNG estimate: ~3 bytes/px uncompressed, ~50% compression
+    return Math.round(w * h * 3 * 0.5 / 1024);
+  }
+
+  /* ── Resize (canvas) ── */
+  function doResize() {
+    if (!origImage) return;
+
+    let targetW, targetH;
+    if (mode === 'pixels') {
+      targetW = parseInt(document.getElementById('inp-w').value) || origW;
+      targetH = parseInt(document.getElementById('inp-h').value) || origH;
+    } else {
+      const pct = parseFloat(document.getElementById('inp-pct').value) || 100;
+      targetW = Math.max(1, Math.round(origW * pct / 100));
+      targetH = Math.max(1, Math.round(origH * pct / 100));
+    }
+
+    newW = targetW;
+    newH = targetH;
+
+    const canvas = document.getElementById('canvas-out');
+    canvas.width = targetW;
+    canvas.height = targetH;
+    const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, targetW, targetH);
+    ctx.drawImage(origImage, 0, 0, targetW, targetH);
+
+    updateNewLabel();
+    document.getElementById('result-area').style.display = '';
+    switchImgTab('resized');
+  }
+
+  /* ── Image tabs ── */
+  function switchImgTab(tab) {
+    document.getElementById('img-panel-original').classList.toggle('active', tab === 'original');
+    document.getElementById('img-panel-resized').classList.toggle('active', tab === 'resized');
+    document.getElementById('img-tab-orig').classList.toggle('active', tab === 'original');
+    document.getElementById('img-tab-resized').classList.toggle('active', tab === 'resized');
+  }
+
+  /* ── Download format ── */
+  function setFormat(fmt, btn) {
+    dlFormat = fmt;
+    document.getElementById('fmt-png').classList.toggle('active', fmt === 'png');
+    document.getElementById('fmt-jpg').classList.toggle('active', fmt === 'jpg');
+    document.getElementById('quality-wrap').style.display = fmt === 'jpg' ? 'flex' : 'none';
+  }
+
+  function downloadResult() {
+    const canvas = document.getElementById('canvas-out');
+    if (!canvas.width) return;
+
+    let mimeType, ext, quality;
+    if (dlFormat === 'jpg') {
+      mimeType = 'image/jpeg';
+      ext = 'jpg';
+      quality = parseInt(document.getElementById('quality-slider').value) / 100;
+    } else {
+      mimeType = 'image/png';
+      ext = 'png';
+      quality = 1;
+    }
+
+    canvas.toBlob(function(blob) {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'resized-' + newW + 'x' + newH + '.' + ext;
+      a.click();
+      URL.revokeObjectURL(url);
+    }, mimeType, quality);
+  }
+
+  /* ── Reset ── */
+  function resetTool() {
+    origImage = null;
+    origW = origH = newW = newH = 0;
+    document.getElementById('file-input').value = '';
+    document.getElementById('inp-w').value = '';
+    document.getElementById('inp-h').value = '';
+    document.getElementById('inp-pct').value = '';
+    document.getElementById('orig-label').textContent = '—';
+    document.getElementById('new-label').textContent = '—';
+    document.getElementById('resize-controls').style.display = 'none';
+    document.getElementById('result-area').style.display = 'none';
+    document.getElementById('btn-resize').disabled = true;
+    document.getElementById('preview-orig').src = '';
+    const canvas = document.getElementById('canvas-out');
+    canvas.width = 0; canvas.height = 0;
+    document.querySelectorAll('.pct-btn').forEach(b => b.classList.remove('active'));
+    setFormat('png', null);
+  }
+</script>
+<script>
+  fetch('/tool/header.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-header');
+    if (el) { el.outerHTML = html; }
+    const t = document.getElementById('navTitle');
+    if (t) t.textContent = 'Image Resizer';
+    const btn = document.getElementById('themeToggle');
+    if (btn) {
+      btn.textContent = document.documentElement.getAttribute('data-theme')==='dark' ? '☀️' : '🌙';
+      btn.addEventListener('click', function() {
+        const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+        document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        btn.textContent = isDark ? '🌙' : '☀️';
+      });
+    }
+  });
+  fetch('/tool/footer.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-footer');
+    if (el) el.outerHTML = html;
+  });
+</script>
+</body>
+</html>

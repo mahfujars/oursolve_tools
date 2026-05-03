@@ -17,5 +17,9 @@
   {"slug":"pdf-watermark","name":"PDF Watermark","category":"PDF Tools","icon":"stamp","desc":"Add a custom text watermark to every page of a PDF. Control size, opacity, color, and position."},
   {"slug":"pdf-compress","name":"PDF Compress","category":"PDF Tools","icon":"file-minus","desc":"Reduce PDF file size by re-encoding embedded images at a lower quality. Shows size savings before download."},
   {"slug":"pdf-metadata","name":"PDF Metadata Editor","category":"PDF Tools","icon":"file-pen","desc":"View and edit PDF metadata: title, author, subject, keywords, creator, producer, and dates."},
-  {"slug":"bg-remover","name":"Background Remover","category":"Image Tools","icon":"image","desc":"Remove image backgrounds instantly using AI. 100% free, runs in your browser. No upload, no account, no limit."}
+  {"slug":"bg-remover","name":"Background Remover","category":"Image Tools","icon":"image","desc":"Remove image backgrounds instantly using AI. 100% free, runs in your browser. No upload, no account, no limit."},
+  {"slug":"image-resizer","name":"Image Resizer","category":"Image Tools","icon":"scaling","desc":"Resize images by pixels or percentage. Lock aspect ratio, preview result, download as PNG or JPG."},
+  {"slug":"image-cropper","name":"Image Cropper","category":"Image Tools","icon":"crop","desc":"Crop images with a draggable selection. Free crop or fixed aspect ratios. Download as PNG instantly."},
+  {"slug":"image-converter","name":"Image Converter","category":"Image Tools","icon":"refresh-cw","desc":"Convert images between JPG, PNG, and WebP. Batch support, quality slider, instant browser-side conversion."},
+  {"slug":"image-compressor","name":"Image Compressor","category":"Image Tools","icon":"file-down","desc":"Compress images with a quality slider. Shows size savings per file. Download individually or as ZIP."}
 ]

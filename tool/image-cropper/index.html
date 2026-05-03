@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Image Cropper - Oursolve.com</title>
+  <meta name="description" content="Free online image cropper. Upload any image, drag to crop, choose aspect ratio presets, and download the result as PNG. 100% in your browser — nothing is sent to any server.">
+  <meta name="keywords" content="image cropper, crop image online, free image crop, crop photo online, aspect ratio crop">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://oursolve.com/tool/image-cropper/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oursolve.com/tool/image-cropper/">
+  <meta property="og:title" content="Free Image Cropper - Oursolve.com">
+  <meta property="og:description" content="Crop any image online with aspect ratio presets. 100% private — works entirely in your browser.">
+  <meta property="og:site_name" content="Oursolve">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Image Cropper","url":"https://oursolve.com/tool/image-cropper/","description":"Crop images online with aspect ratio presets. 100% client-side.","applicationCategory":"MultimediaApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <link rel="stylesheet" href="/tool/shared.css">
+  <style>
+    main{max-width:900px;margin:0 auto;padding:0 24px 80px;transform:translateY(-32px)}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
+    .card-title{font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px}
+
+    /* Upload zone */
+    .drop-zone{border:2px dashed var(--border);border-radius:12px;padding:48px 24px;text-align:center;cursor:pointer;transition:all .15s;color:var(--text-muted)}
+    .drop-zone:hover,.drop-zone.drag-over{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+    .drop-zone input{display:none}
+    .drop-zone-icon{font-size:2.5rem;margin-bottom:12px}
+    .drop-zone-label{font-size:1rem;font-weight:600;margin-bottom:6px}
+    .drop-zone-sub{font-size:.85rem;color:var(--text-muted)}
+
+    /* Toolbar */
+    .toolbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:16px}
+    .toolbar-label{font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted)}
+    .ratio-btns{display:flex;gap:6px;flex-wrap:wrap}
+    .ratio-btn{padding:7px 14px;border:1.5px solid var(--border);border-radius:8px;background:var(--bg);color:var(--text);font-size:.85rem;font-weight:600;cursor:pointer;transition:all .15s}
+    .ratio-btn:hover{border-color:var(--primary);color:var(--primary)}
+    .ratio-btn.active{background:var(--primary);border-color:var(--primary);color:#fff}
+    .dim-badge{margin-left:auto;font-size:.85rem;color:var(--text-muted);background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:6px 14px;font-weight:600;white-space:nowrap}
+
+    /* Canvas wrapper */
+    .canvas-area{position:relative;display:flex;justify-content:center;align-items:flex-start;overflow:auto;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:16px;min-height:200px}
+    .canvas-wrap{position:relative;display:inline-block;line-height:0;user-select:none}
+    #img-canvas{display:block;max-width:100%;cursor:crosshair}
+    #crop-overlay{position:absolute;top:0;left:0;pointer-events:none}
+
+    /* Preview */
+    .preview-area{display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap}
+    .preview-box{flex:1;min-width:180px;background:var(--bg);border:1px solid var(--border);border-radius:10px;overflow:hidden;display:flex;align-items:center;justify-content:center;min-height:120px}
+    #preview-canvas{max-width:100%;max-height:240px;display:block}
+    .preview-info{flex:1;min-width:160px}
+    .info-row{display:flex;justify-content:space-between;font-size:.875rem;padding:6px 0;border-bottom:1px solid var(--border)}
+    .info-row:last-child{border-bottom:none}
+    .info-key{color:var(--text-muted);font-weight:500}
+    .info-val{font-weight:700;color:var(--text)}
+
+    /* Buttons */
+    .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 22px;border:none;border-radius:8px;font-size:.9rem;font-weight:700;font-family:inherit;cursor:pointer;transition:all .15s}
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px)}
+    .btn-secondary{background:var(--bg);color:var(--text);border:1px solid var(--border)}
+    .btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
+    .btn:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
+
+    .hidden{display:none!important}
+    .empty-hint{color:var(--text-muted);font-size:.9rem;text-align:center;padding:24px;width:100%}
+
+    /* Responsive */
+    @media(max-width:600px){
+      .toolbar{flex-direction:column;align-items:flex-start}
+      .dim-badge{margin-left:0}
+    }
+  </style>
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (prefersDark ? 'dark' : 'light');
+      if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+</head>
+<body>
+
+<div id="tool-header"></div>
+<div class="hero">
+  <div class="tool-badge">🖼 Image Tools</div>
+  <h1>Image Cropper</h1>
+  <p>Upload an image, drag to select a crop area, choose an aspect ratio, then download as PNG. Nothing leaves your browser.</p>
+</div>
+
+<main>
+  <!-- Upload card -->
+  <div class="card" id="upload-card">
+    <p class="card-title">Upload Image</p>
+    <div class="drop-zone" id="drop-zone"
+         onclick="document.getElementById('file-input').click()"
+         ondragover="onDragOver(event)"
+         ondragleave="onDragLeave()"
+         ondrop="onDrop(event)">
+      <input type="file" id="file-input" accept="image/*" onchange="loadFile(this)">
+      <div class="drop-zone-icon">📂</div>
+      <div class="drop-zone-label">Click or drag & drop an image here</div>
+      <div class="drop-zone-sub">PNG, JPG, GIF, WebP, SVG — processed entirely in your browser</div>
+    </div>
+  </div>
+
+  <!-- Cropper card (hidden until image loaded) -->
+  <div class="card hidden" id="cropper-card">
+    <p class="card-title">Crop</p>
+    <div class="toolbar">
+      <span class="toolbar-label">Aspect Ratio</span>
+      <div class="ratio-btns">
+        <button class="ratio-btn active" data-ratio="free" onclick="setRatio('free',this)">Free</button>
+        <button class="ratio-btn" data-ratio="1:1" onclick="setRatio('1:1',this)">1 : 1</button>
+        <button class="ratio-btn" data-ratio="4:3" onclick="setRatio('4:3',this)">4 : 3</button>
+        <button class="ratio-btn" data-ratio="16:9" onclick="setRatio('16:9',this)">16 : 9</button>
+        <button class="ratio-btn" data-ratio="3:4" onclick="setRatio('3:4',this)">3 : 4</button>
+      </div>
+      <div class="dim-badge" id="dim-badge">— × —</div>
+    </div>
+    <div class="canvas-area" id="canvas-area">
+      <div class="canvas-wrap" id="canvas-wrap">
+        <canvas id="img-canvas"></canvas>
+        <canvas id="crop-overlay"></canvas>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-secondary" onclick="resetCrop()">↺ Reset Crop</button>
+      <button class="btn btn-secondary" onclick="loadNew()">📂 Load New Image</button>
+    </div>
+  </div>
+
+  <!-- Preview & download card -->
+  <div class="card hidden" id="preview-card">
+    <p class="card-title">Preview & Download</p>
+    <div class="preview-area">
+      <div class="preview-box" id="preview-box">
+        <canvas id="preview-canvas"></canvas>
+      </div>
+      <div class="preview-info" id="preview-info">
+        <div class="info-row"><span class="info-key">Width</span><span class="info-val" id="info-w">—</span></div>
+        <div class="info-row"><span class="info-key">Height</span><span class="info-val" id="info-h">—</span></div>
+        <div class="info-row"><span class="info-key">Aspect Ratio</span><span class="info-val" id="info-ratio">—</span></div>
+        <div class="info-row"><span class="info-key">Original</span><span class="info-val" id="info-orig">—</span></div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" id="download-btn" onclick="downloadCrop()" disabled>⬇ Download PNG</button>
+    </div>
+  </div>
+</main>
+
+<div id="tool-footer"></div>
+
+<script>
+// ── State ──────────────────────────────────────────────────────────────────
+let imgObj = null;          // HTMLImageElement
+let imgW = 0, imgH = 0;    // natural image dimensions
+let dispW = 0, dispH = 0;  // canvas display dimensions (may be scaled down)
+let scale = 1;             // dispW / imgW
+
+let crop = { x:0, y:0, w:0, h:0 }; // in display coords
+let currentRatio = 'free'; // 'free' | '1:1' | '4:3' | '16:9' | '3:4'
+
+// Drag state
+let dragging = false;
+let dragMode = null; // 'new' | 'move' | 'resize'
+let dragHandle = null; // 'nw'|'ne'|'sw'|'se'|'n'|'s'|'e'|'w'
+let dragStart = { x:0, y:0 };
+let cropStart = { x:0, y:0, w:0, h:0 };
+
+const HANDLE_SIZE = 9; // half-size of handle hit zones
+
+// ── Elements ───────────────────────────────────────────────────────────────
+const imgCanvas  = document.getElementById('img-canvas');
+const overlayCanvas = document.getElementById('crop-overlay');
+const imgCtx     = imgCanvas.getContext('2d');
+const ovCtx      = overlayCanvas.getContext('2d');
+const dimBadge   = document.getElementById('dim-badge');
+const previewCanvas = document.getElementById('preview-canvas');
+const prevCtx    = previewCanvas.getContext('2d');
+
+// ── File loading ───────────────────────────────────────────────────────────
+function loadFile(input) {
+  const file = input.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => loadImageSrc(e.target.result, file.name);
+  reader.readAsDataURL(file);
+}
+
+function loadImageSrc(src, name) {
+  const img = new Image();
+  img.onload = () => {
+    imgObj = img;
+    imgW = img.naturalWidth;
+    imgH = img.naturalHeight;
+
+    // Scale to fit display (max 800×600)
+    const maxW = Math.min(800, window.innerWidth - 96);
+    const maxH = 600;
+    scale = Math.min(1, maxW / imgW, maxH / imgH);
+    dispW = Math.round(imgW * scale);
+    dispH = Math.round(imgH * scale);
+
+    // Resize canvases
+    imgCanvas.width = dispW;
+    imgCanvas.height = dispH;
+    overlayCanvas.width = dispW;
+    overlayCanvas.height = dispH;
+    overlayCanvas.style.position = 'absolute';
+    overlayCanvas.style.top = '0';
+    overlayCanvas.style.left = '0';
+    overlayCanvas.style.width = dispW + 'px';
+    overlayCanvas.style.height = dispH + 'px';
+
+    imgCtx.drawImage(img, 0, 0, dispW, dispH);
+
+    // Default crop = full image
+    crop = { x:0, y:0, w:dispW, h:dispH };
+    document.getElementById('info-orig').textContent = imgW + ' × ' + imgH + ' px';
+
+    document.getElementById('upload-card').classList.add('hidden');
+    document.getElementById('cropper-card').classList.remove('hidden');
+    document.getElementById('preview-card').classList.remove('hidden');
+
+    drawOverlay();
+    updatePreview();
+  };
+  img.src = src;
+}
+
+function loadNew() {
+  imgObj = null;
+  document.getElementById('file-input').value = '';
+  document.getElementById('upload-card').classList.remove('hidden');
+  document.getElementById('cropper-card').classList.add('hidden');
+  document.getElementById('preview-card').classList.add('hidden');
+}
+
+// ── Drag & Drop upload ─────────────────────────────────────────────────────
+function onDragOver(e) { e.preventDefault(); document.getElementById('drop-zone').classList.add('drag-over'); }
+function onDragLeave() { document.getElementById('drop-zone').classList.remove('drag-over'); }
+function onDrop(e) {
+  e.preventDefault(); onDragLeave();
+  const file = e.dataTransfer.files[0];
+  if (!file || !file.type.startsWith('image/')) return;
+  const reader = new FileReader();
+  reader.onload = ev => loadImageSrc(ev.target.result, file.name);
+  reader.readAsDataURL(file);
+}
+
+// ── Ratio ──────────────────────────────────────────────────────────────────
+function setRatio(r, btn) {
+  currentRatio = r;
+  document.querySelectorAll('.ratio-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  applyRatioToCrop();
+  drawOverlay();
+  updatePreview();
+}
+
+function getRatioNum(r) {
+  if (r === 'free') return null;
+  const parts = r.split(':').map(Number);
+  return parts[0] / parts[1];
+}
+
+function applyRatioToCrop() {
+  const ratio = getRatioNum(currentRatio);
+  if (!ratio) return;
+  // Keep current crop center, adjust width/height to match ratio
+  const cx = crop.x + crop.w / 2;
+  const cy = crop.y + crop.h / 2;
+  let w = crop.w, h = crop.h;
+  if (w / h > ratio) {
+    w = h * ratio;
+  } else {
+    h = w / ratio;
+  }
+  w = Math.min(w, dispW);
+  h = Math.min(h, dispH);
+  crop.x = Math.max(0, Math.min(dispW - w, cx - w / 2));
+  crop.y = Math.max(0, Math.min(dispH - h, cy - h / 2));
+  crop.w = w;
+  crop.h = h;
+  clampCrop();
+}
+
+// ── Overlay drawing ────────────────────────────────────────────────────────
+function drawOverlay() {
+  ovCtx.clearRect(0, 0, dispW, dispH);
+  const { x, y, w, h } = crop;
+
+  // Dim outside
+  ovCtx.fillStyle = 'rgba(0,0,0,0.45)';
+  ovCtx.fillRect(0, 0, dispW, dispH);
+  ovCtx.clearRect(x, y, w, h);
+
+  // Border
+  ovCtx.strokeStyle = '#fff';
+  ovCtx.lineWidth = 1.5;
+  ovCtx.strokeRect(x, y, w, h);
+
+  // Rule of thirds grid
+  ovCtx.strokeStyle = 'rgba(255,255,255,0.35)';
+  ovCtx.lineWidth = 0.8;
+  for (let i = 1; i < 3; i++) {
+    ovCtx.beginPath(); ovCtx.moveTo(x + w*i/3, y); ovCtx.lineTo(x + w*i/3, y+h); ovCtx.stroke();
+    ovCtx.beginPath(); ovCtx.moveTo(x, y + h*i/3); ovCtx.lineTo(x+w, y + h*i/3); ovCtx.stroke();
+  }
+
+  // Corner handles
+  const hs = HANDLE_SIZE;
+  const handles = getHandlePositions();
+  handles.forEach(hp => {
+    ovCtx.fillStyle = '#fff';
+    ovCtx.fillRect(hp.x - hs, hp.y - hs, hs*2, hs*2);
+    ovCtx.strokeStyle = 'var(--primary, #1C4D8D)';
+    ovCtx.lineWidth = 1.5;
+    ovCtx.strokeRect(hp.x - hs, hp.y - hs, hs*2, hs*2);
+  });
+
+  // Dimension label
+  const realW = Math.round(crop.w / scale);
+  const realH = Math.round(crop.h / scale);
+  dimBadge.textContent = realW + ' × ' + realH + ' px';
+}
+
+function getHandlePositions() {
+  const { x, y, w, h } = crop;
+  return [
+    { id:'nw', x:x,     y:y },
+    { id:'ne', x:x+w,   y:y },
+    { id:'sw', x:x,     y:y+h },
+    { id:'se', x:x+w,   y:y+h },
+    { id:'n',  x:x+w/2, y:y },
+    { id:'s',  x:x+w/2, y:y+h },
+    { id:'w',  x:x,     y:y+h/2 },
+    { id:'e',  x:x+w,   y:y+h/2 },
+  ];
+}
+
+// ── Mouse / Touch interaction ──────────────────────────────────────────────
+overlayCanvas.addEventListener('mousedown', startDrag);
+overlayCanvas.addEventListener('mousemove', onMouseMove);
+overlayCanvas.addEventListener('mouseup', endDrag);
+overlayCanvas.addEventListener('mouseleave', endDrag);
+overlayCanvas.addEventListener('touchstart', e => { e.preventDefault(); startDrag(touchToMouse(e)); }, { passive:false });
+overlayCanvas.addEventListener('touchmove',  e => { e.preventDefault(); onMouseMove(touchToMouse(e)); }, { passive:false });
+overlayCanvas.addEventListener('touchend',   e => { endDrag(); }, { passive:false });
+
+function touchToMouse(e) {
+  const t = e.touches[0] || e.changedTouches[0];
+  return { clientX: t.clientX, clientY: t.clientY };
+}
+
+function canvasXY(e) {
+  const rect = overlayCanvas.getBoundingClientRect();
+  const scaleX = overlayCanvas.width  / rect.width;
+  const scaleY = overlayCanvas.height / rect.height;
+  return { x: (e.clientX - rect.left) * scaleX, y: (e.clientY - rect.top) * scaleY };
+}
+
+function hitHandle(px, py) {
+  const hs = HANDLE_SIZE + 3;
+  return getHandlePositions().find(hp => Math.abs(px - hp.x) <= hs && Math.abs(py - hp.y) <= hs);
+}
+
+function insideCrop(px, py) {
+  return px >= crop.x && px <= crop.x + crop.w && py >= crop.y && py <= crop.y + crop.h;
+}
+
+function startDrag(e) {
+  const { x, y } = canvasXY(e);
+  dragStart = { x, y };
+  cropStart = { ...crop };
+  const handle = hitHandle(x, y);
+  if (handle) {
+    dragMode = 'resize';
+    dragHandle = handle.id;
+  } else if (insideCrop(x, y)) {
+    dragMode = 'move';
+    overlayCanvas.style.cursor = 'move';
+  } else {
+    dragMode = 'new';
+    crop = { x, y, w:0, h:0 };
+    cropStart = { ...crop };
+  }
+  dragging = true;
+}
+
+function onMouseMove(e) {
+  const { x, y } = canvasXY(e);
+
+  if (!dragging) {
+    // Update cursor
+    const handle = hitHandle(x, y);
+    if (handle) {
+      const cursors = { nw:'nw-resize', ne:'ne-resize', sw:'sw-resize', se:'se-resize', n:'n-resize', s:'s-resize', w:'w-resize', e:'e-resize' };
+      overlayCanvas.style.cursor = cursors[handle.id] || 'crosshair';
+    } else if (insideCrop(x, y)) {
+      overlayCanvas.style.cursor = 'move';
+    } else {
+      overlayCanvas.style.cursor = 'crosshair';
+    }
+    return;
+  }
+
+  const dx = x - dragStart.x;
+  const dy = y - dragStart.y;
+
+  if (dragMode === 'new') {
+    crop.x = Math.min(x, dragStart.x);
+    crop.y = Math.min(y, dragStart.y);
+    crop.w = Math.abs(dx);
+    crop.h = Math.abs(dy);
+    if (currentRatio !== 'free') {
+      const ratio = getRatioNum(currentRatio);
+      crop.h = crop.w / ratio;
+    }
+    clampCrop();
+  } else if (dragMode === 'move') {
+    crop.x = cropStart.x + dx;
+    crop.y = cropStart.y + dy;
+    crop.w = cropStart.w;
+    crop.h = cropStart.h;
+    clampCrop();
+  } else if (dragMode === 'resize') {
+    resizeCrop(dx, dy);
+  }
+
+  drawOverlay();
+}
+
+function resizeCrop(dx, dy) {
+  let { x, y, w, h } = cropStart;
+  const ratio = getRatioNum(currentRatio);
+
+  switch (dragHandle) {
+    case 'se': w += dx; h = ratio ? w/ratio : h + dy; break;
+    case 'sw': x += dx; w -= dx; h = ratio ? w/ratio : h + dy; break;
+    case 'ne': w += dx; h = ratio ? w/ratio : h - dy; if (!ratio) y += dy; break;
+    case 'nw': x += dx; w -= dx; h = ratio ? w/ratio : h - dy; if (!ratio) y += dy; if (ratio) y = cropStart.y + cropStart.h - h; break;
+    case 'e':  w += dx; if (ratio) h = w/ratio; break;
+    case 'w':  x += dx; w -= dx; if (ratio) h = w/ratio; break;
+    case 's':  h += dy; if (ratio) w = h*ratio; break;
+    case 'n':  y += dy; h -= dy; if (ratio) w = h*ratio; break;
+  }
+  // Prevent negative size
+  if (w < 8) w = 8;
+  if (h < 8) h = 8;
+  crop = { x, y, w, h };
+  clampCrop();
+}
+
+function clampCrop() {
+  crop.w = Math.max(8, Math.min(crop.w, dispW));
+  crop.h = Math.max(8, Math.min(crop.h, dispH));
+  crop.x = Math.max(0, Math.min(crop.x, dispW - crop.w));
+  crop.y = Math.max(0, Math.min(crop.y, dispH - crop.h));
+}
+
+function endDrag() {
+  if (!dragging) return;
+  dragging = false;
+  overlayCanvas.style.cursor = 'crosshair';
+  drawOverlay();
+  updatePreview();
+}
+
+// ── Preview ────────────────────────────────────────────────────────────────
+function updatePreview() {
+  if (!imgObj) return;
+  // Convert display crop coords back to image coords
+  const sx = crop.x / scale;
+  const sy = crop.y / scale;
+  const sw = crop.w / scale;
+  const sh = crop.h / scale;
+
+  const pw = Math.min(Math.round(sw), 480);
+  const ph = Math.round(sh * (pw / sw));
+
+  previewCanvas.width  = pw;
+  previewCanvas.height = ph;
+  prevCtx.drawImage(imgObj, sx, sy, sw, sh, 0, 0, pw, ph);
+
+  const realW = Math.round(sw);
+  const realH = Math.round(sh);
+  document.getElementById('info-w').textContent = realW + ' px';
+  document.getElementById('info-h').textContent = realH + ' px';
+
+  const g = gcd(realW, realH);
+  document.getElementById('info-ratio').textContent = (realW/g) + ' : ' + (realH/g);
+
+  document.getElementById('download-btn').disabled = false;
+}
+
+function gcd(a, b) { return b ? gcd(b, a % b) : a; }
+
+// ── Download ───────────────────────────────────────────────────────────────
+function downloadCrop() {
+  if (!imgObj) return;
+  const sx = crop.x / scale;
+  const sy = crop.y / scale;
+  const sw = crop.w / scale;
+  const sh = crop.h / scale;
+
+  const out = document.createElement('canvas');
+  out.width  = Math.round(sw);
+  out.height = Math.round(sh);
+  out.getContext('2d').drawImage(imgObj, sx, sy, sw, sh, 0, 0, out.width, out.height);
+
+  const link = document.createElement('a');
+  link.download = 'cropped-image.png';
+  link.href = out.toDataURL('image/png');
+  link.click();
+}
+
+// ── Reset ──────────────────────────────────────────────────────────────────
+function resetCrop() {
+  crop = { x:0, y:0, w:dispW, h:dispH };
+  drawOverlay();
+  updatePreview();
+}
+</script>
+
+<script>
+  fetch('/tool/header.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-header');
+    if (el) { el.outerHTML = html; }
+    const t = document.getElementById('navTitle');
+    if (t) t.textContent = 'Image Cropper';
+    const btn = document.getElementById('themeToggle');
+    if (btn) {
+      btn.textContent = document.documentElement.getAttribute('data-theme')==='dark' ? '☀️' : '🌙';
+      btn.addEventListener('click', function() {
+        const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+        document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        btn.textContent = isDark ? '🌙' : '☀️';
+      });
+    }
+  });
+  fetch('/tool/footer.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-footer');
+    if (el) el.outerHTML = html;
+  });
+</script>
+</body>
+</html>
