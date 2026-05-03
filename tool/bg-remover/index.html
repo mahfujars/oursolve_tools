@@ -66,7 +66,7 @@
     /* bg color swatches */
     .bg-options{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
     .bg-options label{font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-right:4px}
-    .swatch{width:28px;height:28px;border-radius:6px;cursor:pointer;border:2px solid transparent;transition:border-color .15s;flex-shrink:0}
+    .swatch{width:28px;height:28px;border-radius:6px;cursor:pointer;border:2px solid var(--border);transition:border-color .15s;flex-shrink:0;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
     .swatch.active{border-color:var(--primary)}
     .swatch-transparent{background:repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0 0/14px 14px;border:1px solid var(--border)}
     [data-theme="dark"] .swatch-transparent{background:repeating-conic-gradient(#475569 0% 25%, #1e293b 0% 50%) 0 0/14px 14px}
