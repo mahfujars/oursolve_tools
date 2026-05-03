@@ -47,13 +47,20 @@
 
     /* results */
     #result-area{display:none}
-    .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
-    @media(max-width:600px){.result-grid{grid-template-columns:1fr}}
-    .result-pane{}
-    .result-pane label{display:block;font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px}
-    .img-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:repeating-conic-gradient(#e2e8f0 0% 25%, transparent 0% 50%) 0 0/20px 20px;display:flex;align-items:center;justify-content:center;min-height:120px}
-    .img-wrap img,.img-wrap canvas{display:block;width:100%;height:auto;max-height:400px;object-fit:contain}
+    .img-tabs{display:flex;gap:4px;background:var(--bg);padding:4px;border-radius:10px;margin-bottom:16px}
+    .img-tab{flex:1;padding:9px;border:none;border-radius:7px;font-size:.9rem;font-weight:600;font-family:inherit;cursor:pointer;background:transparent;color:var(--text-muted);transition:all .15s;position:relative}
+    .img-tab.active{background:var(--surface);color:var(--primary);box-shadow:var(--shadow)}
+    .img-tab .processing-dot{display:none;width:7px;height:7px;background:#f59e0b;border-radius:50%;position:absolute;top:7px;right:10px;animation:pulse 1s infinite}
+    .img-tab.processing .processing-dot{display:inline-block}
+    @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+    .img-panel{display:none}
+    .img-panel.active{display:block}
+    .img-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:repeating-conic-gradient(#e2e8f0 0% 25%, transparent 0% 50%) 0 0/20px 20px;display:flex;align-items:center;justify-content:center;min-height:160px;position:relative}
+    .img-wrap img,.img-wrap canvas{display:block;width:100%;height:auto;max-height:460px;object-fit:contain}
     [data-theme="dark"] .img-wrap{background:repeating-conic-gradient(#334155 0% 25%, transparent 0% 50%) 0 0/20px 20px}
+    .processing-overlay{display:none;position:absolute;inset:0;background:rgba(255,255,255,.6);align-items:center;justify-content:center;border-radius:10px;flex-direction:column;gap:10px;font-size:.85rem;font-weight:600;color:var(--primary)}
+    [data-theme="dark"] .processing-overlay{background:rgba(15,23,42,.6)}
+    .processing-overlay .big-spin{width:32px;height:32px;border:4px solid rgba(28,77,141,.2);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
 
     /* bg color swatches */
     .bg-options{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
@@ -107,6 +114,7 @@
     <div class="status-top">
       <div class="spinner" id="status-spinner"></div>
       <span id="status-text">Loading AI…</span>
+      <span id="first-use-badge" style="display:none;font-size:.75rem;font-weight:600;background:rgba(28,77,141,.12);border:1px solid var(--primary);border-radius:20px;padding:2px 10px;white-space:nowrap">First use only</span>
     </div>
     <div class="progress-wrap" id="progress-wrap">
       <div class="progress-fill" id="progress-fill"></div>
@@ -128,28 +136,34 @@
   <!-- Result -->
   <div id="result-area">
     <div class="card">
-      <div class="bg-options">
-        <label>Background:</label>
-        <div class="swatch swatch-transparent active" id="swatch-transparent" title="Transparent" onclick="setBg('transparent',this)"></div>
-        <div class="swatch" id="swatch-white" style="background:#fff" title="White" onclick="setBg('#ffffff',this)"></div>
-        <div class="swatch" id="swatch-black" style="background:#000" title="Black" onclick="setBg('#000000',this)"></div>
-        <div class="swatch" id="swatch-blue" style="background:#1C4D8D" title="Blue" onclick="setBg('#1C4D8D',this)"></div>
-        <div class="swatch" id="swatch-green" style="background:#16a34a" title="Green" onclick="setBg('#16a34a',this)"></div>
-        <div class="swatch" id="swatch-red" style="background:#dc2626" title="Red" onclick="setBg('#dc2626',this)"></div>
-        <input type="color" id="bg-color-pick" title="Custom color" onchange="setBg(this.value,null)">
+      <div class="img-tabs">
+        <button class="img-tab active" id="tab-original" onclick="switchImgTab('original')">Original<span class="processing-dot"></span></button>
+        <button class="img-tab" id="tab-result" onclick="switchImgTab('result')">Background Removed<span class="processing-dot"></span></button>
       </div>
-      <div class="result-grid">
-        <div class="result-pane">
-          <label>Original</label>
-          <div class="img-wrap"><img id="orig-img" src="" alt="Original"></div>
+      <div class="img-panel active" id="panel-original">
+        <div class="img-wrap">
+          <img id="orig-img" src="" alt="Original">
+          <div class="processing-overlay" id="processing-overlay">
+            <div class="big-spin"></div>
+            <span>Removing background…</span>
+          </div>
         </div>
-        <div class="result-pane">
-          <label>Background Removed</label>
-          <div class="img-wrap" id="result-wrap"><canvas id="result-canvas"></canvas></div>
+      </div>
+      <div class="img-panel" id="panel-result">
+        <div class="bg-options">
+          <label>Background:</label>
+          <div class="swatch swatch-transparent active" id="swatch-transparent" title="Transparent" onclick="setBg('transparent',this)"></div>
+          <div class="swatch" id="swatch-white" style="background:#fff" title="White" onclick="setBg('#ffffff',this)"></div>
+          <div class="swatch" id="swatch-black" style="background:#000" title="Black" onclick="setBg('#000000',this)"></div>
+          <div class="swatch" id="swatch-blue" style="background:#1C4D8D" title="Blue" onclick="setBg('#1C4D8D',this)"></div>
+          <div class="swatch" id="swatch-green" style="background:#16a34a" title="Green" onclick="setBg('#16a34a',this)"></div>
+          <div class="swatch" id="swatch-red" style="background:#dc2626" title="Red" onclick="setBg('#dc2626',this)"></div>
+          <input type="color" id="bg-color-pick" title="Custom color" onchange="setBg(this.value,null)">
         </div>
+        <div class="img-wrap"><canvas id="result-canvas"></canvas></div>
       </div>
       <div class="btn-row">
-        <button class="btn btn-primary" onclick="downloadResult()">⬇ Download PNG</button>
+        <button class="btn btn-primary" id="download-btn" onclick="downloadResult()" style="display:none">⬇ Download PNG</button>
         <button class="btn btn-secondary" onclick="resetTool()">↩ Remove Another</button>
       </div>
     </div>
@@ -222,11 +236,18 @@
     setProgress(0, true);
     setDropZoneDisabled(true);
 
+    // Show "first use only" badge only when actually downloading (not cached)
+    let downloading = false;
+
     segmenter = await pipeline('image-segmentation', 'briaai/RMBG-1.4', {
       device: 'wasm',
       dtype: 'fp32',
       progress_callback: (p) => {
         if (p.status === 'downloading' || p.status === 'progress') {
+          if (!downloading) {
+            downloading = true;
+            document.getElementById('first-use-badge').style.display = 'inline-flex';
+          }
           const pct = p.progress != null ? Math.round(p.progress) : 0;
           setProgress(pct, true);
         } else if (p.status === 'done' || p.status === 'ready') {
@@ -236,9 +257,17 @@
     });
 
     hideStatus();
+    document.getElementById('first-use-badge').style.display = 'none';
     setDropZoneDisabled(false);
     return segmenter;
   }
+
+  window.switchImgTab = function(tab) {
+    document.getElementById('tab-original').classList.toggle('active', tab === 'original');
+    document.getElementById('tab-result').classList.toggle('active', tab === 'result');
+    document.getElementById('panel-original').classList.toggle('active', tab === 'original');
+    document.getElementById('panel-result').classList.toggle('active', tab === 'result');
+  };
 
   window.handleFile = async function(file) {
     if (!file) return;
@@ -250,41 +279,50 @@
     img.src = url;
     origImageEl = img;
 
-    document.getElementById('result-area').style.display = 'none';
+    // Show result area on original tab immediately
     document.getElementById('upload-card').style.display = 'none';
+    document.getElementById('result-area').style.display = 'block';
+    document.getElementById('download-btn').style.display = 'none';
+    switchImgTab('original');
+
+    // Show processing overlay + pulsing dot on original tab
+    document.getElementById('processing-overlay').style.display = 'flex';
+    document.getElementById('tab-original').classList.add('processing');
 
     try {
       const model = await loadModel();
-      showStatus('Removing background…');
+
+      // Wait for img element dimensions
+      if (!img.complete || img.naturalWidth === 0) {
+        await new Promise(r => { img.onload = r; });
+      }
 
       const rawImg = await RawImage.fromURL(url);
       const [result] = await model(rawImg);
 
-      // In transformers.js v3, image-segmentation returns result.mask as a RawImage (grayscale, 0-255)
       const maskRaw = result.mask;
       const mask = (typeof maskRaw.resize === 'function')
         ? await maskRaw.resize(rawImg.width, rawImg.height)
         : maskRaw;
 
-      maskPixels = mask.data; // Uint8Array grayscale, one byte per pixel
+      maskPixels = mask.data;
       maskW = mask.width;
       maskH = mask.height;
-
-      maskPixels = mask.data; // Uint8Array, one value per pixel (0-255)
-      maskW = mask.width;
-      maskH = mask.height;
-
-      // Wait for img element to have dimensions
-      if (!img.complete || img.naturalWidth === 0) {
-        await new Promise(r => { img.onload = r; });
-      }
 
       await renderResult(img, currentBg);
+
+      // Done — hide overlay, show result tab
+      document.getElementById('processing-overlay').style.display = 'none';
+      document.getElementById('tab-original').classList.remove('processing');
+      document.getElementById('download-btn').style.display = '';
       hideStatus();
-      document.getElementById('result-area').style.display = 'block';
+      switchImgTab('result');
 
     } catch (err) {
+      document.getElementById('processing-overlay').style.display = 'none';
+      document.getElementById('tab-original').classList.remove('processing');
       showStatus('Error: ' + err.message, true);
+      document.getElementById('result-area').style.display = 'none';
       document.getElementById('upload-card').style.display = 'block';
     }
   };
@@ -350,6 +388,10 @@
     document.getElementById('result-area').style.display = 'none';
     document.getElementById('upload-card').style.display = 'block';
     document.getElementById('file-input').value = '';
+    document.getElementById('download-btn').style.display = 'none';
+    document.getElementById('processing-overlay').style.display = 'none';
+    document.getElementById('tab-original').classList.remove('processing');
+    switchImgTab('original');
     document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
     document.getElementById('swatch-transparent').classList.add('active');
   };
