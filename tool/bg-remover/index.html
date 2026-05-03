@@ -173,24 +173,23 @@
 <div id="tool-footer"></div>
 
 <script type="module">
-  import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3/dist/transformers.min.js';
+  import { pipeline, RawImage, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3/dist/transformers.min.js';
 
-  // Use WASM backend, no WebGPU required
   env.backends.onnx.wasm.proxy = false;
 
   let segmenter = null;
-  let maskData = null;
+  let maskPixels = null; // Uint8Array [H*W]
+  let maskW = 0, maskH = 0;
   let origImageEl = null;
   let currentBg = 'transparent';
 
   function showStatus(msg, isError) {
     const bar = document.getElementById('status-bar');
     const spinner = document.getElementById('status-spinner');
-    const text = document.getElementById('status-text');
     bar.style.display = 'flex';
     bar.className = isError ? 'error' : '';
     spinner.style.display = isError ? 'none' : '';
-    text.textContent = msg;
+    document.getElementById('status-text').textContent = msg;
   }
 
   function hideStatus() {
@@ -210,16 +209,9 @@
 
   window.handleFile = async function(file) {
     if (!file) return;
-    if (file.size > 10 * 1024 * 1024) {
-      showStatus('File too large. Max 10 MB.', true);
-      return;
-    }
-    if (!file.type.startsWith('image/')) {
-      showStatus('Please upload an image file.', true);
-      return;
-    }
+    if (file.size > 10 * 1024 * 1024) { showStatus('File too large. Max 10 MB.', true); return; }
+    if (!file.type.startsWith('image/')) { showStatus('Please upload an image file.', true); return; }
 
-    // Show original immediately
     const url = URL.createObjectURL(file);
     const img = document.getElementById('orig-img');
     img.src = url;
@@ -232,16 +224,24 @@
       const model = await loadModel();
       showStatus('Removing background…');
 
-      const result = await model(url, { subtask: 'foreground-segmentation' });
+      const rawImg = await RawImage.fromURL(url);
+      const [result] = await model(rawImg);
 
-      // result is array; first item has mask
-      const mask = result[0]?.mask;
-      if (!mask) throw new Error('No mask returned from model.');
+      // result.mask is a tensor — convert to resized Uint8 RawImage
+      const mask = await RawImage.fromTensor(
+        result.mask.mul(255).to('uint8')
+      ).resize(rawImg.width, rawImg.height);
 
-      maskData = mask;
+      maskPixels = mask.data; // Uint8Array, one value per pixel (0-255)
+      maskW = mask.width;
+      maskH = mask.height;
 
-      await renderResult(img, mask, currentBg);
+      // Wait for img element to have dimensions
+      if (!img.complete || img.naturalWidth === 0) {
+        await new Promise(r => { img.onload = r; });
+      }
 
+      await renderResult(img, currentBg);
       hideStatus();
       document.getElementById('result-area').style.display = 'block';
 
@@ -251,12 +251,7 @@
     }
   };
 
-  async function renderResult(imgEl, mask, bgColor) {
-    // Wait for image to load if needed
-    if (!imgEl.complete || imgEl.naturalWidth === 0) {
-      await new Promise(r => { imgEl.onload = r; });
-    }
-
+  async function renderResult(imgEl, bgColor) {
     const w = imgEl.naturalWidth;
     const h = imgEl.naturalHeight;
 
@@ -264,75 +259,39 @@
     canvas.width = w;
     canvas.height = h;
     const ctx = canvas.getContext('2d');
+    ctx.clearRect(0, 0, w, h);
 
-    // Draw background
-    if (bgColor === 'transparent') {
-      ctx.clearRect(0, 0, w, h);
-    } else {
-      ctx.fillStyle = bgColor;
-      ctx.fillRect(0, 0, w, h);
-    }
-
-    // Draw original image
-    ctx.drawImage(imgEl, 0, 0, w, h);
-
-    // Apply mask as alpha channel
-    const imageData = ctx.getImageData(0, 0, w, h);
-    const pixels = imageData.data;
-
-    // mask.data is Float32Array of values 0-1 (foreground probability)
-    const maskArr = mask.data;
-    const mW = mask.width;
-    const mH = mask.height;
+    // Build masked image in offscreen canvas
+    const tmp = document.createElement('canvas');
+    tmp.width = w; tmp.height = h;
+    const tctx = tmp.getContext('2d');
+    tctx.drawImage(imgEl, 0, 0, w, h);
+    const td = tctx.getImageData(0, 0, w, h);
+    const tp = td.data;
 
     for (let y = 0; y < h; y++) {
       for (let x = 0; x < w; x++) {
         const i = (y * w + x) * 4;
-        // Nearest-neighbour sample from mask
-        const mx = Math.round(x * mW / w);
-        const my = Math.round(y * mH / h);
-        const mi = my * mW + mx;
-        const alpha = maskArr[mi]; // 0=background, 1=foreground
-        pixels[i + 3] = Math.round(alpha * 255);
+        const mx = Math.min(Math.round(x * maskW / w), maskW - 1);
+        const my = Math.min(Math.round(y * maskH / h), maskH - 1);
+        tp[i + 3] = maskPixels[my * maskW + mx];
       }
     }
+    tctx.putImageData(td, 0, 0);
 
-    ctx.putImageData(imageData, 0, 0);
-
-    // For non-transparent backgrounds, composite: fill bg then draw masked image
+    // Draw bg first (if any), then masked image on top
     if (bgColor !== 'transparent') {
-      // Re-do: bg rect first, then masked image on top
-      ctx.clearRect(0, 0, w, h);
       ctx.fillStyle = bgColor;
       ctx.fillRect(0, 0, w, h);
-
-      // Create temp canvas with alpha-masked original
-      const tmp = document.createElement('canvas');
-      tmp.width = w; tmp.height = h;
-      const tctx = tmp.getContext('2d');
-      tctx.drawImage(imgEl, 0, 0, w, h);
-      const td = tctx.getImageData(0, 0, w, h);
-      const tp = td.data;
-      for (let y = 0; y < h; y++) {
-        for (let x = 0; x < w; x++) {
-          const i = (y * w + x) * 4;
-          const mx = Math.round(x * mW / w);
-          const my = Math.round(y * mH / h);
-          tp[i + 3] = Math.round(maskArr[my * mW + mx] * 255);
-        }
-      }
-      tctx.putImageData(td, 0, 0);
-      ctx.drawImage(tmp, 0, 0);
     }
+    ctx.drawImage(tmp, 0, 0);
   }
 
   window.setBg = async function(color, swatchEl) {
     currentBg = color;
     document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
     if (swatchEl) swatchEl.classList.add('active');
-    if (maskData && origImageEl) {
-      await renderResult(origImageEl, maskData, color);
-    }
+    if (maskPixels && origImageEl) await renderResult(origImageEl, color);
   };
 
   window.downloadResult = function() {
@@ -344,7 +303,7 @@
   };
 
   window.resetTool = function() {
-    maskData = null;
+    maskPixels = null; maskW = 0; maskH = 0;
     origImageEl = null;
     currentBg = 'transparent';
     document.getElementById('orig-img').src = '';
@@ -358,17 +317,13 @@
   window.onDragOver = function(e) { e.preventDefault(); document.getElementById('drop-zone').classList.add('drag-over'); };
   window.onDragLeave = function() { document.getElementById('drop-zone').classList.remove('drag-over'); };
   window.onDrop = function(e) {
-    e.preventDefault();
-    window.onDragLeave();
+    e.preventDefault(); window.onDragLeave();
     const file = e.dataTransfer.files[0];
     if (file) window.handleFile(file);
   };
 
-  // Preload model in background after page load
   window.addEventListener('load', () => {
-    setTimeout(() => {
-      loadModel().catch(() => {});
-    }, 1500);
+    setTimeout(() => { loadModel().catch(() => {}); }, 1500);
   });
 </script>
 
