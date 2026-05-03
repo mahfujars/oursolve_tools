@@ -260,7 +260,7 @@
       document.getElementById('inp-h').value = origH;
       document.getElementById('inp-pct').value = 100;
 
-      document.getElementById('resize-controls').style.display = '';
+      document.getElementById('resize-controls').style.display = 'block';
       document.getElementById('btn-resize').disabled = false;
       document.getElementById('result-area').style.display = 'none';
       switchImgTab('original');
@@ -381,7 +381,7 @@
     ctx.drawImage(origImage, 0, 0, targetW, targetH);
 
     updateNewLabel();
-    document.getElementById('result-area').style.display = '';
+    document.getElementById('result-area').style.display = 'block';
     switchImgTab('resized');
   }
 
