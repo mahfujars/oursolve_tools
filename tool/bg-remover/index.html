@@ -329,8 +329,8 @@
       clearInterval(fakeTimer);
     }
 
+    startFakeProgress('Removing background…');
     try {
-      startFakeProgress('Removing background…');
       const model = await loadModel();
       const rawImg = await RawImage.fromURL(url);
       const [result] = await model(rawImg);
