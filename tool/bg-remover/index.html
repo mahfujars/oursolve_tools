@@ -58,10 +58,12 @@
     .img-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:repeating-conic-gradient(#e2e8f0 0% 25%, transparent 0% 50%) 0 0/20px 20px;position:relative;display:inline-block;max-width:100%;line-height:0;vertical-align:top}
     .img-wrap img,.img-wrap canvas{display:block;width:auto;height:auto;max-width:100%;max-height:500px}
     [data-theme="dark"] .img-wrap{background:repeating-conic-gradient(#334155 0% 25%, transparent 0% 50%) 0 0/20px 20px}
-    .processing-overlay{display:none;position:absolute;inset:0;background:rgba(255,255,255,.7);align-items:center;justify-content:center;border-radius:10px;flex-direction:column;gap:10px;font-size:.85rem;font-weight:600;color:var(--primary);line-height:1.4}
-    [data-theme="dark"] .processing-overlay{background:rgba(15,23,42,.7)}
+    .processing-overlay{display:none;position:absolute;inset:0;background:rgba(255,255,255,.82);align-items:center;justify-content:center;border-radius:10px;flex-direction:column;gap:12px;font-size:.88rem;font-weight:600;color:var(--primary);line-height:1.4;padding:24px}
+    [data-theme="dark"] .processing-overlay{background:rgba(15,23,42,.82)}
     .processing-overlay.show{display:flex}
     .processing-overlay .big-spin{width:36px;height:36px;border:4px solid rgba(28,77,141,.2);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
+    .overlay-progress-wrap{width:min(220px,70%);height:6px;background:rgba(28,77,141,.15);border-radius:99px;overflow:hidden}
+    .overlay-progress-fill{height:100%;width:0%;background:var(--primary);border-radius:99px;transition:width .4s ease}
 
     /* bg color swatches */
     .bg-options{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
@@ -146,7 +148,10 @@
           <img id="orig-img" src="" alt="Original">
           <div class="processing-overlay" id="processing-overlay">
             <div class="big-spin"></div>
-            <span>Removing background…</span>
+            <span id="overlay-label">Removing background…</span>
+            <div class="overlay-progress-wrap">
+              <div class="overlay-progress-fill" id="overlay-progress-fill"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -297,7 +302,33 @@
     document.getElementById('processing-overlay').classList.add('show');
     document.getElementById('tab-original').classList.add('processing');
 
+    // Animated fake progress: ramps to ~88% during inference, jumps to 100% on done
+    let fakeProgress = 0;
+    let fakeTimer = null;
+    function startFakeProgress(label) {
+      document.getElementById('overlay-label').textContent = label;
+      fakeProgress = 0;
+      setOverlayProgress(0);
+      fakeTimer = setInterval(() => {
+        // Ease out: fast at first, slows as it approaches 88%
+        const remaining = 88 - fakeProgress;
+        fakeProgress += remaining * 0.045;
+        setOverlayProgress(fakeProgress);
+      }, 200);
+    }
+    function setOverlayProgress(pct) {
+      document.getElementById('overlay-progress-fill').style.width = pct + '%';
+    }
+    function finishFakeProgress() {
+      clearInterval(fakeTimer);
+      setOverlayProgress(100);
+    }
+    function stopFakeProgress() {
+      clearInterval(fakeTimer);
+    }
+
     try {
+      startFakeProgress('Removing background…');
       const model = await loadModel();
       const rawImg = await RawImage.fromURL(url);
       const [result] = await model(rawImg);
@@ -311,9 +342,12 @@
       maskW = mask.width;
       maskH = mask.height;
 
+      finishFakeProgress();
       await renderResult(img, currentBg);
 
-      // Done
+      // Brief pause so user sees 100% before overlay hides
+      await new Promise(r => setTimeout(r, 300));
+
       document.getElementById('processing-overlay').classList.remove('show');
       document.getElementById('tab-original').classList.remove('processing');
       document.getElementById('download-btn').style.display = '';
@@ -321,6 +355,8 @@
       switchImgTab('result');
 
     } catch (err) {
+      stopFakeProgress();
+      setOverlayProgress(0);
       document.getElementById('processing-overlay').classList.remove('show');
       document.getElementById('tab-original').classList.remove('processing');
       showStatus('Error: ' + err.message, true);
