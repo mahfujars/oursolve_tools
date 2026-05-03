@@ -35,10 +35,14 @@
     .drop-zone .browse-link{color:var(--primary);font-weight:600;text-decoration:underline}
 
     /* status */
-    #status-bar{display:none;align-items:center;gap:12px;padding:14px 18px;background:var(--primary-light);border:1px solid var(--primary);border-radius:10px;margin-bottom:20px;font-size:.9rem;color:var(--primary);font-weight:600}
+    #status-bar{display:none;flex-direction:column;gap:10px;padding:16px 18px;background:var(--primary-light);border:1px solid var(--primary);border-radius:10px;margin-bottom:20px;font-size:.9rem;color:var(--primary);font-weight:600}
     #status-bar.error{background:#fef2f2;border-color:#ef4444;color:#dc2626}
-    .spinner{width:20px;height:20px;border:3px solid rgba(28,77,141,.2);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+    .status-top{display:flex;align-items:center;gap:10px}
+    .spinner{width:18px;height:18px;border:3px solid rgba(28,77,141,.2);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+    #status-bar.error .spinner{display:none}
     @keyframes spin{to{transform:rotate(360deg)}}
+    .progress-wrap{display:none;height:6px;background:rgba(28,77,141,.15);border-radius:99px;overflow:hidden}
+    .progress-fill{height:100%;width:0%;background:var(--primary);border-radius:99px;transition:width .25s ease}
 
     /* results */
     #result-area{display:none}
@@ -99,8 +103,13 @@
 
   <!-- Status bar -->
   <div id="status-bar">
-    <div class="spinner" id="status-spinner"></div>
-    <span id="status-text">Loading AI model… (first use ~40 MB download, cached after)</span>
+    <div class="status-top">
+      <div class="spinner" id="status-spinner"></div>
+      <span id="status-text">Loading AI…</span>
+    </div>
+    <div class="progress-wrap" id="progress-wrap">
+      <div class="progress-fill" id="progress-fill"></div>
+    </div>
   </div>
   <p id="model-note">Model cached — next removals will be instant.</p>
 
@@ -185,24 +194,41 @@
 
   function showStatus(msg, isError) {
     const bar = document.getElementById('status-bar');
-    const spinner = document.getElementById('status-spinner');
     bar.style.display = 'flex';
     bar.className = isError ? 'error' : '';
-    spinner.style.display = isError ? 'none' : '';
     document.getElementById('status-text').textContent = msg;
   }
 
   function hideStatus() {
     document.getElementById('status-bar').style.display = 'none';
+    setProgress(0, false);
+  }
+
+  function setProgress(pct, visible) {
+    const wrap = document.getElementById('progress-wrap');
+    const fill = document.getElementById('progress-fill');
+    wrap.style.display = visible ? 'block' : 'none';
+    fill.style.width = pct + '%';
   }
 
   async function loadModel() {
     if (segmenter) return segmenter;
-    showStatus('Loading AI model… first use ~40 MB, cached after.');
+    showStatus('Loading AI…');
+    setProgress(0, true);
+
     segmenter = await pipeline('image-segmentation', 'briaai/RMBG-1.4', {
       device: 'wasm',
       dtype: 'fp32',
+      progress_callback: (p) => {
+        if (p.status === 'downloading' || p.status === 'progress') {
+          const pct = p.progress != null ? Math.round(p.progress) : 0;
+          setProgress(pct, true);
+        } else if (p.status === 'done' || p.status === 'ready') {
+          setProgress(100, true);
+        }
+      },
     });
+
     hideStatus();
     return segmenter;
   }
