@@ -53,14 +53,16 @@
     .img-tab .processing-dot{display:none;width:7px;height:7px;background:#f59e0b;border-radius:50%;position:absolute;top:7px;right:10px;animation:pulse 1s infinite}
     .img-tab.processing .processing-dot{display:inline-block}
     @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-    .img-panel{display:none}
+    .img-panel{display:none;text-align:center}
     .img-panel.active{display:block}
-    .img-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:repeating-conic-gradient(#e2e8f0 0% 25%, transparent 0% 50%) 0 0/20px 20px;position:relative;text-align:center;line-height:0}
-    .img-wrap img,.img-wrap canvas{display:inline-block;width:auto;height:auto;max-width:100%;max-height:500px}
+    .img-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:repeating-conic-gradient(#e2e8f0 0% 25%, transparent 0% 50%) 0 0/20px 20px;position:relative;display:inline-block;max-width:100%;line-height:0;vertical-align:top}
+    .img-wrap.loading{min-width:240px;min-height:200px;display:flex;align-items:center;justify-content:center}
+    .img-wrap img,.img-wrap canvas{display:block;width:auto;height:auto;max-width:100%;max-height:500px}
     [data-theme="dark"] .img-wrap{background:repeating-conic-gradient(#334155 0% 25%, transparent 0% 50%) 0 0/20px 20px}
-    .processing-overlay{display:none;position:absolute;inset:0;background:rgba(255,255,255,.6);align-items:center;justify-content:center;border-radius:10px;flex-direction:column;gap:10px;font-size:.85rem;font-weight:600;color:var(--primary)}
-    [data-theme="dark"] .processing-overlay{background:rgba(15,23,42,.6)}
-    .processing-overlay .big-spin{width:32px;height:32px;border:4px solid rgba(28,77,141,.2);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
+    .processing-overlay{display:none;position:absolute;inset:0;background:rgba(255,255,255,.7);align-items:center;justify-content:center;border-radius:10px;flex-direction:column;gap:10px;font-size:.85rem;font-weight:600;color:var(--primary);line-height:1.4}
+    [data-theme="dark"] .processing-overlay{background:rgba(15,23,42,.7)}
+    .processing-overlay.show{display:flex}
+    .processing-overlay .big-spin{width:36px;height:36px;border:4px solid rgba(28,77,141,.2);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite}
 
     /* bg color swatches */
     .bg-options{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
@@ -276,27 +278,34 @@
 
     const url = URL.createObjectURL(file);
     const img = document.getElementById('orig-img');
-    img.src = url;
+    const origWrap = img.parentElement;
     origImageEl = img;
 
-    // Show result area on original tab immediately
+    // Show result area + original tab immediately
     document.getElementById('upload-card').style.display = 'none';
     document.getElementById('result-area').style.display = 'block';
     document.getElementById('download-btn').style.display = 'none';
     switchImgTab('original');
 
-    // Show processing overlay + pulsing dot on original tab
-    document.getElementById('processing-overlay').style.display = 'flex';
+    // While image loads, give the wrap a placeholder size with spinner
+    origWrap.classList.add('loading');
+    document.getElementById('processing-overlay').classList.add('show');
     document.getElementById('tab-original').classList.add('processing');
 
+    img.src = url;
+
     try {
+      // Wait for image to actually load so wrap sizes to image
+      await new Promise((res, rej) => {
+        if (img.complete && img.naturalWidth > 0) return res();
+        img.onload = res;
+        img.onerror = () => rej(new Error('Failed to load image'));
+      });
+
+      // Now wrap fits image — drop placeholder size
+      origWrap.classList.remove('loading');
+
       const model = await loadModel();
-
-      // Wait for img element dimensions
-      if (!img.complete || img.naturalWidth === 0) {
-        await new Promise(r => { img.onload = r; });
-      }
-
       const rawImg = await RawImage.fromURL(url);
       const [result] = await model(rawImg);
 
@@ -311,15 +320,16 @@
 
       await renderResult(img, currentBg);
 
-      // Done — hide overlay, show result tab
-      document.getElementById('processing-overlay').style.display = 'none';
+      // Done — hide overlay, switch to result tab
+      document.getElementById('processing-overlay').classList.remove('show');
       document.getElementById('tab-original').classList.remove('processing');
       document.getElementById('download-btn').style.display = '';
       hideStatus();
       switchImgTab('result');
 
     } catch (err) {
-      document.getElementById('processing-overlay').style.display = 'none';
+      origWrap.classList.remove('loading');
+      document.getElementById('processing-overlay').classList.remove('show');
       document.getElementById('tab-original').classList.remove('processing');
       showStatus('Error: ' + err.message, true);
       document.getElementById('result-area').style.display = 'none';
@@ -389,8 +399,9 @@
     document.getElementById('upload-card').style.display = 'block';
     document.getElementById('file-input').value = '';
     document.getElementById('download-btn').style.display = 'none';
-    document.getElementById('processing-overlay').style.display = 'none';
+    document.getElementById('processing-overlay').classList.remove('show');
     document.getElementById('tab-original').classList.remove('processing');
+    document.querySelectorAll('.img-wrap').forEach(w => w.classList.remove('loading'));
     switchImgTab('original');
     document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
     document.getElementById('swatch-transparent').classList.add('active');
