@@ -8,7 +8,7 @@
   {"slug":"hash-generator","name":"Hash Generator","category":"Security","icon":"shield-check","desc":"Generate SHA-1, SHA-256, SHA-384, and SHA-512 hashes from text or files using native browser crypto."},
   {"slug":"markdown-to-html","name":"Markdown to HTML","category":"Writing","icon":"pencil-line","desc":"Convert Markdown to HTML with a live side-by-side preview. Supports tables, code blocks, and more."},
   {"slug":"regex-tester","name":"Regex Tester","category":"Developer","icon":"regex","desc":"Test regular expressions in real-time. Match highlighting, capture group details, and all JS flags supported."},
-  {"slug":"muslim-names","name":"Muslim Baby Names","category":"Islamic","icon":"moon","desc":"Browse 1000+ Islamic names for boys and girls with meanings and origins. Parent name matching included."},
+  {"slug":"muslim-names","name":"Muslim Baby Names","category":"Islamic","icon":"moon-star","desc":"Browse 1000+ Islamic names for boys and girls with meanings and origins. Parent name matching included."},
   {"slug":"pdf-merge","name":"PDF Merge","category":"PDF Tools","icon":"file-stack","desc":"Combine multiple PDF files into one document. Drag to reorder, then merge — free and browser-only."},
   {"slug":"pdf-split","name":"PDF Split","category":"PDF Tools","icon":"scissors","desc":"Extract all pages or a custom page range from any PDF. Download as individual files or a ZIP."},
   {"slug":"pdf-to-jpg","name":"PDF to JPG","category":"PDF Tools","icon":"image","desc":"Convert every page of a PDF to a downloadable JPEG image. Quality slider, thumbnail preview, ZIP download."},
