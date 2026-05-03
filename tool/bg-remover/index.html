@@ -163,8 +163,9 @@
         </div>
         <div class="img-wrap"><canvas id="result-canvas"></canvas></div>
       </div>
-      <div class="btn-row">
-        <button class="btn btn-primary" id="download-btn" onclick="downloadResult()" style="display:none">⬇ Download PNG</button>
+      <div class="btn-row" id="download-btn" style="display:none">
+        <button class="btn btn-primary" id="dl-hd" onclick="downloadResult('hd')">⬇ HD PNG</button>
+        <button class="btn btn-secondary" id="dl-sd" onclick="downloadResult('sd')">⬇ SD PNG</button>
         <button class="btn btn-secondary" onclick="resetTool()">↩ Remove Another</button>
       </div>
     </div>
@@ -373,35 +374,40 @@
     if (maskPixels && origImageEl) await renderResult(origImageEl, color);
   };
 
-  window.downloadResult = async function() {
-    const btn = document.getElementById('download-btn');
+  window.downloadResult = async function(mode) {
+    const btn = document.getElementById(mode === 'hd' ? 'dl-hd' : 'dl-sd');
     const origText = btn.textContent;
-    btn.textContent = '⏳ Compressing…';
-    btn.disabled = true;
-
     const canvas = document.getElementById('result-canvas');
 
+    if (mode === 'hd') {
+      // Plain lossless PNG — instant
+      const a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = 'bg-removed-hd.png';
+      a.click();
+      return;
+    }
+
+    // SD — compressed via @jsquash/png
+    btn.textContent = '⏳ Compressing…';
+    btn.disabled = true;
     try {
-      // Get raw RGBA pixel data from canvas
       const ctx = canvas.getContext('2d');
       const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-
-      // Dynamically import @jsquash/png for optimised PNG encode
       const { encode } = await import('https://cdn.jsdelivr.net/npm/@jsquash/png@3/index.js');
       const pngBuffer = await encode(imageData);
-
       const blob = new Blob([pngBuffer], { type: 'image/png' });
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'bg-removed.png';
+      a.download = 'bg-removed-sd.png';
       a.click();
       setTimeout(() => URL.revokeObjectURL(url), 5000);
     } catch (e) {
-      // Fallback to plain canvas PNG if jsquash fails
+      // Fallback to plain PNG
       const a = document.createElement('a');
       a.href = canvas.toDataURL('image/png');
-      a.download = 'bg-removed.png';
+      a.download = 'bg-removed-sd.png';
       a.click();
     } finally {
       btn.textContent = origText;
