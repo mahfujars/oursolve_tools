@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Background Remover - Oursolve.com</title>
+  <meta name="description" content="Remove image backgrounds instantly, 100% free. AI-powered, runs entirely in your browser. No upload, no account, no limit.">
+  <meta name="keywords" content="background remover, remove background, background eraser, transparent background, free background remover">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://oursolve.com/tool/bg-remover/">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oursolve.com/tool/bg-remover/">
+  <meta property="og:title" content="Free Background Remover - Oursolve.com">
+  <meta property="og:description" content="Remove image backgrounds instantly. AI-powered, 100% in your browser. Free forever.">
+  <meta property="og:site_name" content="Oursolve">
+  <meta name="twitter:card" content="summary">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Background Remover","url":"https://oursolve.com/tool/bg-remover/","description":"Remove image backgrounds instantly using AI. 100% free, runs in your browser.","applicationCategory":"MultimediaApplication","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"}}</script>
+  <link rel="stylesheet" href="/tool/shared.css">
+  <style>
+    .hero{background:var(--hero-gradient);color:#fff;padding:48px 24px 56px;text-align:center}
+    .tool-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:4px 14px;font-size:.8rem;font-weight:600;margin-bottom:16px}
+    .hero h1{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;letter-spacing:-.5px;margin-bottom:12px}
+    .hero p{color:rgba(255,255,255,.75);font-size:1.05rem;max-width:520px;margin:0 auto}
+    main{max-width:860px;margin:0 auto;padding:0 24px 80px;transform:translateY(-32px)}
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow);margin-bottom:20px}
+    .card-title{font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:16px}
+
+    /* drop zone */
+    .drop-zone{border:2px dashed var(--border);border-radius:14px;padding:48px 24px;text-align:center;cursor:pointer;transition:all .2s;color:var(--text-muted)}
+    .drop-zone:hover,.drop-zone.drag-over{border-color:var(--primary);background:var(--primary-light);color:var(--primary)}
+    .drop-zone input{display:none}
+    .drop-icon{font-size:2.5rem;margin-bottom:12px}
+    .drop-zone h3{font-size:1.1rem;font-weight:700;margin:0 0 6px;color:var(--text)}
+    .drop-zone p{margin:0;font-size:.9rem}
+    .drop-zone .browse-link{color:var(--primary);font-weight:600;text-decoration:underline}
+
+    /* status */
+    #status-bar{display:none;align-items:center;gap:12px;padding:14px 18px;background:var(--primary-light);border:1px solid var(--primary);border-radius:10px;margin-bottom:20px;font-size:.9rem;color:var(--primary);font-weight:600}
+    #status-bar.error{background:#fef2f2;border-color:#ef4444;color:#dc2626}
+    .spinner{width:20px;height:20px;border:3px solid rgba(28,77,141,.2);border-top-color:var(--primary);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* results */
+    #result-area{display:none}
+    .result-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    @media(max-width:600px){.result-grid{grid-template-columns:1fr}}
+    .result-pane{}
+    .result-pane label{display:block;font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-bottom:10px}
+    .img-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:repeating-conic-gradient(#e2e8f0 0% 25%, transparent 0% 50%) 0 0/20px 20px}
+    .img-wrap img{display:block;width:100%;height:auto;max-height:340px;object-fit:contain}
+    [data-theme="dark"] .img-wrap{background:repeating-conic-gradient(#334155 0% 25%, transparent 0% 50%) 0 0/20px 20px}
+
+    /* bg color swatches */
+    .bg-options{display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap}
+    .bg-options label{font-size:.8rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--text-muted);margin-right:4px}
+    .swatch{width:28px;height:28px;border-radius:6px;cursor:pointer;border:2px solid transparent;transition:border-color .15s;flex-shrink:0}
+    .swatch.active{border-color:var(--primary)}
+    .swatch-transparent{background:repeating-conic-gradient(#ccc 0% 25%, #fff 0% 50%) 0 0/14px 14px;border:1px solid var(--border)}
+    [data-theme="dark"] .swatch-transparent{background:repeating-conic-gradient(#475569 0% 25%, #1e293b 0% 50%) 0 0/14px 14px}
+    #bg-color-pick{width:28px;height:28px;border-radius:6px;border:2px solid var(--border);cursor:pointer;padding:0;background:none}
+
+    /* btn row */
+    .btn-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 22px;border:none;border-radius:8px;font-size:.9rem;font-weight:700;font-family:inherit;cursor:pointer;transition:all .15s}
+    .btn-primary{background:var(--primary);color:#fff}
+    .btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px)}
+    .btn-secondary{background:var(--bg);color:var(--text);border:1px solid var(--border)}
+    .btn-secondary:hover{border-color:var(--primary);color:var(--primary)}
+
+    /* loading model note */
+    #model-note{font-size:.8rem;color:var(--text-muted);text-align:center;margin-top:10px;display:none}
+
+    /* info */
+    .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:4px}
+    .info-item{display:flex;gap:12px;align-items:flex-start}
+    .info-icon{font-size:1.4rem;flex-shrink:0}
+    .info-item h4{font-size:.9rem;font-weight:700;margin:0 0 2px;color:var(--text)}
+    .info-item p{font-size:.82rem;color:var(--text-muted);margin:0}
+  </style>
+  <script>
+    (function() {
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const theme = saved || (prefersDark ? 'dark' : 'light');
+      if (theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+    })();
+  </script>
+</head>
+<body>
+
+<div id="tool-header"></div>
+<div class="hero">
+  <div class="tool-badge">🖼 Image Tools</div>
+  <h1>Background Remover</h1>
+  <p>Remove any image background instantly using AI. Free forever — everything runs inside your browser. Nothing is uploaded.</p>
+</div>
+
+<main>
+
+  <!-- Status bar -->
+  <div id="status-bar">
+    <div class="spinner" id="status-spinner"></div>
+    <span id="status-text">Loading AI model… (first use ~40 MB download, cached after)</span>
+  </div>
+  <p id="model-note">Model cached — next removals will be instant.</p>
+
+  <!-- Upload -->
+  <div class="card" id="upload-card">
+    <p class="card-title">Upload Image</p>
+    <div class="drop-zone" id="drop-zone" onclick="document.getElementById('file-input').click()" ondragover="onDragOver(event)" ondragleave="onDragLeave()" ondrop="onDrop(event)">
+      <input type="file" id="file-input" accept="image/*" onchange="handleFile(this.files[0])">
+      <div class="drop-icon">🖼</div>
+      <h3>Drop image here</h3>
+      <p>or <span class="browse-link">browse to upload</span> · JPG, PNG, WebP · max 10 MB</p>
+    </div>
+  </div>
+
+  <!-- Result -->
+  <div id="result-area">
+    <div class="card">
+      <div class="bg-options">
+        <label>Background:</label>
+        <div class="swatch swatch-transparent active" id="swatch-transparent" title="Transparent" onclick="setBg('transparent',this)"></div>
+        <div class="swatch" id="swatch-white" style="background:#fff" title="White" onclick="setBg('#ffffff',this)"></div>
+        <div class="swatch" id="swatch-black" style="background:#000" title="Black" onclick="setBg('#000000',this)"></div>
+        <div class="swatch" id="swatch-blue" style="background:#1C4D8D" title="Blue" onclick="setBg('#1C4D8D',this)"></div>
+        <div class="swatch" id="swatch-green" style="background:#16a34a" title="Green" onclick="setBg('#16a34a',this)"></div>
+        <div class="swatch" id="swatch-red" style="background:#dc2626" title="Red" onclick="setBg('#dc2626',this)"></div>
+        <input type="color" id="bg-color-pick" title="Custom color" onchange="setBg(this.value,null)">
+      </div>
+      <div class="result-grid">
+        <div class="result-pane">
+          <label>Original</label>
+          <div class="img-wrap"><img id="orig-img" src="" alt="Original"></div>
+        </div>
+        <div class="result-pane">
+          <label>Background Removed</label>
+          <div class="img-wrap" id="result-wrap"><canvas id="result-canvas"></canvas></div>
+        </div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" onclick="downloadResult()">⬇ Download PNG</button>
+        <button class="btn btn-secondary" onclick="resetTool()">↩ Remove Another</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info -->
+  <div class="card">
+    <p class="card-title">How It Works</p>
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="info-icon">🤖</span>
+        <div><h4>AI-Powered</h4><p>Uses RMBG-1.4 model via Transformers.js, optimised for browser inference.</p></div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">🔒</span>
+        <div><h4>100% Private</h4><p>Image never leaves your device. Processing happens entirely in your browser.</p></div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">⚡</span>
+        <div><h4>Free Forever</h4><p>No account, no credits, no watermarks. Unlimited use at no cost.</p></div>
+      </div>
+      <div class="info-item">
+        <span class="info-icon">💾</span>
+        <div><h4>Model Caching</h4><p>~40 MB model downloads once and is cached by your browser for instant future use.</p></div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<div id="tool-footer"></div>
+
+<script type="module">
+  import { pipeline, env } from 'https://cdn.jsdelivr.net/npm/@huggingface/transformers@3/dist/transformers.min.js';
+
+  // Use WASM backend, no WebGPU required
+  env.backends.onnx.wasm.proxy = false;
+
+  let segmenter = null;
+  let maskData = null;
+  let origImageEl = null;
+  let currentBg = 'transparent';
+
+  function showStatus(msg, isError) {
+    const bar = document.getElementById('status-bar');
+    const spinner = document.getElementById('status-spinner');
+    const text = document.getElementById('status-text');
+    bar.style.display = 'flex';
+    bar.className = isError ? 'error' : '';
+    spinner.style.display = isError ? 'none' : '';
+    text.textContent = msg;
+  }
+
+  function hideStatus() {
+    document.getElementById('status-bar').style.display = 'none';
+  }
+
+  async function loadModel() {
+    if (segmenter) return segmenter;
+    showStatus('Loading AI model… first use ~40 MB, cached after.');
+    segmenter = await pipeline('image-segmentation', 'briaai/RMBG-1.4', {
+      device: 'wasm',
+      dtype: 'fp32',
+    });
+    hideStatus();
+    return segmenter;
+  }
+
+  window.handleFile = async function(file) {
+    if (!file) return;
+    if (file.size > 10 * 1024 * 1024) {
+      showStatus('File too large. Max 10 MB.', true);
+      return;
+    }
+    if (!file.type.startsWith('image/')) {
+      showStatus('Please upload an image file.', true);
+      return;
+    }
+
+    // Show original immediately
+    const url = URL.createObjectURL(file);
+    const img = document.getElementById('orig-img');
+    img.src = url;
+    origImageEl = img;
+
+    document.getElementById('result-area').style.display = 'none';
+    document.getElementById('upload-card').style.display = 'none';
+
+    try {
+      const model = await loadModel();
+      showStatus('Removing background…');
+
+      const result = await model(url, { subtask: 'foreground-segmentation' });
+
+      // result is array; first item has mask
+      const mask = result[0]?.mask;
+      if (!mask) throw new Error('No mask returned from model.');
+
+      maskData = mask;
+
+      await renderResult(img, mask, currentBg);
+
+      hideStatus();
+      document.getElementById('result-area').style.display = 'block';
+
+    } catch (err) {
+      showStatus('Error: ' + err.message, true);
+      document.getElementById('upload-card').style.display = 'block';
+    }
+  };
+
+  async function renderResult(imgEl, mask, bgColor) {
+    // Wait for image to load if needed
+    if (!imgEl.complete || imgEl.naturalWidth === 0) {
+      await new Promise(r => { imgEl.onload = r; });
+    }
+
+    const w = imgEl.naturalWidth;
+    const h = imgEl.naturalHeight;
+
+    const canvas = document.getElementById('result-canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+
+    // Draw background
+    if (bgColor === 'transparent') {
+      ctx.clearRect(0, 0, w, h);
+    } else {
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, w, h);
+    }
+
+    // Draw original image
+    ctx.drawImage(imgEl, 0, 0, w, h);
+
+    // Apply mask as alpha channel
+    const imageData = ctx.getImageData(0, 0, w, h);
+    const pixels = imageData.data;
+
+    // mask.data is Float32Array of values 0-1 (foreground probability)
+    const maskArr = mask.data;
+    const mW = mask.width;
+    const mH = mask.height;
+
+    for (let y = 0; y < h; y++) {
+      for (let x = 0; x < w; x++) {
+        const i = (y * w + x) * 4;
+        // Nearest-neighbour sample from mask
+        const mx = Math.round(x * mW / w);
+        const my = Math.round(y * mH / h);
+        const mi = my * mW + mx;
+        const alpha = maskArr[mi]; // 0=background, 1=foreground
+        pixels[i + 3] = Math.round(alpha * 255);
+      }
+    }
+
+    ctx.putImageData(imageData, 0, 0);
+
+    // For non-transparent backgrounds, composite: fill bg then draw masked image
+    if (bgColor !== 'transparent') {
+      // Re-do: bg rect first, then masked image on top
+      ctx.clearRect(0, 0, w, h);
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, w, h);
+
+      // Create temp canvas with alpha-masked original
+      const tmp = document.createElement('canvas');
+      tmp.width = w; tmp.height = h;
+      const tctx = tmp.getContext('2d');
+      tctx.drawImage(imgEl, 0, 0, w, h);
+      const td = tctx.getImageData(0, 0, w, h);
+      const tp = td.data;
+      for (let y = 0; y < h; y++) {
+        for (let x = 0; x < w; x++) {
+          const i = (y * w + x) * 4;
+          const mx = Math.round(x * mW / w);
+          const my = Math.round(y * mH / h);
+          tp[i + 3] = Math.round(maskArr[my * mW + mx] * 255);
+        }
+      }
+      tctx.putImageData(td, 0, 0);
+      ctx.drawImage(tmp, 0, 0);
+    }
+  }
+
+  window.setBg = async function(color, swatchEl) {
+    currentBg = color;
+    document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+    if (swatchEl) swatchEl.classList.add('active');
+    if (maskData && origImageEl) {
+      await renderResult(origImageEl, maskData, color);
+    }
+  };
+
+  window.downloadResult = function() {
+    const canvas = document.getElementById('result-canvas');
+    const a = document.createElement('a');
+    a.href = canvas.toDataURL('image/png');
+    a.download = 'bg-removed.png';
+    a.click();
+  };
+
+  window.resetTool = function() {
+    maskData = null;
+    origImageEl = null;
+    currentBg = 'transparent';
+    document.getElementById('orig-img').src = '';
+    document.getElementById('result-area').style.display = 'none';
+    document.getElementById('upload-card').style.display = 'block';
+    document.getElementById('file-input').value = '';
+    document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
+    document.getElementById('swatch-transparent').classList.add('active');
+  };
+
+  window.onDragOver = function(e) { e.preventDefault(); document.getElementById('drop-zone').classList.add('drag-over'); };
+  window.onDragLeave = function() { document.getElementById('drop-zone').classList.remove('drag-over'); };
+  window.onDrop = function(e) {
+    e.preventDefault();
+    window.onDragLeave();
+    const file = e.dataTransfer.files[0];
+    if (file) window.handleFile(file);
+  };
+
+  // Preload model in background after page load
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      loadModel().catch(() => {});
+    }, 1500);
+  });
+</script>
+
+<script>
+  fetch('/tool/header.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-header');
+    if (el) { el.outerHTML = html; }
+    const t = document.getElementById('navTitle');
+    if (t) t.textContent = 'Background Remover';
+    const btn = document.getElementById('themeToggle');
+    if (btn) {
+      btn.textContent = document.documentElement.getAttribute('data-theme')==='dark' ? '☀️' : '🌙';
+      btn.addEventListener('click', function() {
+        const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+        document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        localStorage.setItem('theme', isDark ? 'light' : 'dark');
+        btn.textContent = isDark ? '🌙' : '☀️';
+      });
+    }
+  });
+  fetch('/tool/footer.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-footer');
+    if (el) el.outerHTML = html;
+  });
+</script>
+</body>
+</html>
