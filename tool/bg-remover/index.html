@@ -56,7 +56,6 @@
     .img-panel{display:none;text-align:center}
     .img-panel.active{display:block}
     .img-wrap{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:repeating-conic-gradient(#e2e8f0 0% 25%, transparent 0% 50%) 0 0/20px 20px;position:relative;display:inline-block;max-width:100%;line-height:0;vertical-align:top}
-    .img-wrap.loading{min-width:240px;min-height:200px;display:flex;align-items:center;justify-content:center}
     .img-wrap img,.img-wrap canvas{display:block;width:auto;height:auto;max-width:100%;max-height:500px}
     [data-theme="dark"] .img-wrap{background:repeating-conic-gradient(#334155 0% 25%, transparent 0% 50%) 0 0/20px 20px}
     .processing-overlay{display:none;position:absolute;inset:0;background:rgba(255,255,255,.7);align-items:center;justify-content:center;border-radius:10px;flex-direction:column;gap:10px;font-size:.85rem;font-weight:600;color:var(--primary);line-height:1.4}
@@ -278,33 +277,30 @@
 
     const url = URL.createObjectURL(file);
     const img = document.getElementById('orig-img');
-    const origWrap = img.parentElement;
     origImageEl = img;
 
-    // Show result area + original tab immediately
-    document.getElementById('upload-card').style.display = 'none';
-    document.getElementById('result-area').style.display = 'block';
-    document.getElementById('download-btn').style.display = 'none';
-    switchImgTab('original');
-
-    // While image loads, give the wrap a placeholder size with spinner
-    origWrap.classList.add('loading');
-    document.getElementById('processing-overlay').classList.add('show');
-    document.getElementById('tab-original').classList.add('processing');
-
+    // Step 1: load image first so wrap sizes to it before any UI swap
     img.src = url;
-
     try {
-      // Wait for image to actually load so wrap sizes to image
       await new Promise((res, rej) => {
         if (img.complete && img.naturalWidth > 0) return res();
         img.onload = res;
         img.onerror = () => rej(new Error('Failed to load image'));
       });
+    } catch (err) {
+      showStatus('Error: ' + err.message, true);
+      return;
+    }
 
-      // Now wrap fits image — drop placeholder size
-      origWrap.classList.remove('loading');
+    // Step 2: image ready — swap to tabbed view, show overlay over correctly-sized wrap
+    document.getElementById('upload-card').style.display = 'none';
+    document.getElementById('result-area').style.display = 'block';
+    document.getElementById('download-btn').style.display = 'none';
+    switchImgTab('original');
+    document.getElementById('processing-overlay').classList.add('show');
+    document.getElementById('tab-original').classList.add('processing');
 
+    try {
       const model = await loadModel();
       const rawImg = await RawImage.fromURL(url);
       const [result] = await model(rawImg);
@@ -320,7 +316,7 @@
 
       await renderResult(img, currentBg);
 
-      // Done — hide overlay, switch to result tab
+      // Done
       document.getElementById('processing-overlay').classList.remove('show');
       document.getElementById('tab-original').classList.remove('processing');
       document.getElementById('download-btn').style.display = '';
@@ -328,7 +324,6 @@
       switchImgTab('result');
 
     } catch (err) {
-      origWrap.classList.remove('loading');
       document.getElementById('processing-overlay').classList.remove('show');
       document.getElementById('tab-original').classList.remove('processing');
       showStatus('Error: ' + err.message, true);
@@ -401,7 +396,6 @@
     document.getElementById('download-btn').style.display = 'none';
     document.getElementById('processing-overlay').classList.remove('show');
     document.getElementById('tab-original').classList.remove('processing');
-    document.querySelectorAll('.img-wrap').forEach(w => w.classList.remove('loading'));
     switchImgTab('original');
     document.querySelectorAll('.swatch').forEach(s => s.classList.remove('active'));
     document.getElementById('swatch-transparent').classList.add('active');
