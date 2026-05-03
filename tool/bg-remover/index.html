@@ -373,12 +373,40 @@
     if (maskPixels && origImageEl) await renderResult(origImageEl, color);
   };
 
-  window.downloadResult = function() {
+  window.downloadResult = async function() {
+    const btn = document.getElementById('download-btn');
+    const origText = btn.textContent;
+    btn.textContent = '⏳ Compressing…';
+    btn.disabled = true;
+
     const canvas = document.getElementById('result-canvas');
-    const a = document.createElement('a');
-    a.href = canvas.toDataURL('image/png');
-    a.download = 'bg-removed.png';
-    a.click();
+
+    try {
+      // Get raw RGBA pixel data from canvas
+      const ctx = canvas.getContext('2d');
+      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+
+      // Dynamically import @jsquash/png for optimised PNG encode
+      const { encode } = await import('https://cdn.jsdelivr.net/npm/@jsquash/png@3/index.js');
+      const pngBuffer = await encode(imageData);
+
+      const blob = new Blob([pngBuffer], { type: 'image/png' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'bg-removed.png';
+      a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 5000);
+    } catch (e) {
+      // Fallback to plain canvas PNG if jsquash fails
+      const a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = 'bg-removed.png';
+      a.click();
+    } finally {
+      btn.textContent = origText;
+      btn.disabled = false;
+    }
   };
 
   window.resetTool = function() {
