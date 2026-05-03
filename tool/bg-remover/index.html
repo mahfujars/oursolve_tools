@@ -227,10 +227,15 @@
       const rawImg = await RawImage.fromURL(url);
       const [result] = await model(rawImg);
 
-      // result.mask is a tensor — convert to resized Uint8 RawImage
-      const mask = await RawImage.fromTensor(
-        result.mask.mul(255).to('uint8')
-      ).resize(rawImg.width, rawImg.height);
+      // In transformers.js v3, image-segmentation returns result.mask as a RawImage (grayscale, 0-255)
+      const maskRaw = result.mask;
+      const mask = (typeof maskRaw.resize === 'function')
+        ? await maskRaw.resize(rawImg.width, rawImg.height)
+        : maskRaw;
+
+      maskPixels = mask.data; // Uint8Array grayscale, one byte per pixel
+      maskW = mask.width;
+      maskH = mask.height;
 
       maskPixels = mask.data; // Uint8Array, one value per pixel (0-255)
       maskW = mask.width;
@@ -269,12 +274,14 @@
     const td = tctx.getImageData(0, 0, w, h);
     const tp = td.data;
 
+    const maskChannels = maskPixels.length / (maskW * maskH); // 1=grayscale, 4=RGBA
     for (let y = 0; y < h; y++) {
       for (let x = 0; x < w; x++) {
         const i = (y * w + x) * 4;
         const mx = Math.min(Math.round(x * maskW / w), maskW - 1);
         const my = Math.min(Math.round(y * maskH / h), maskH - 1);
-        tp[i + 3] = maskPixels[my * maskW + mx];
+        const mi = (my * maskW + mx) * maskChannels;
+        tp[i + 3] = maskPixels[mi]; // grayscale=first byte, RGBA=red byte
       }
     }
     tctx.putImageData(td, 0, 0);
