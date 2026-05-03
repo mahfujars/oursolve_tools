@@ -271,8 +271,8 @@
   /* ── Mode switch ── */
   function switchMode(m) {
     mode = m;
-    document.getElementById('panel-pixels').style.display = m === 'pixels' ? '' : 'none';
-    document.getElementById('panel-percent').style.display = m === 'percent' ? '' : 'none';
+    document.getElementById('panel-pixels').style.display = m === 'pixels' ? 'block' : 'none';
+    document.getElementById('panel-percent').style.display = m === 'percent' ? 'block' : 'none';
     document.getElementById('mode-tab-px').classList.toggle('active', m === 'pixels');
     document.getElementById('mode-tab-pct').classList.toggle('active', m === 'percent');
     if (m === 'pixels') {
