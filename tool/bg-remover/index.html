@@ -310,18 +310,20 @@
       fakeProgress = 0;
       setOverlayProgress(0);
       fakeTimer = setInterval(() => {
-        // Ease out: fast at first, slows as it approaches 88%
-        const remaining = 88 - fakeProgress;
-        fakeProgress += remaining * 0.045;
+        // Ease out: fast at first, slows near 80%
+        const remaining = 80 - fakeProgress;
+        fakeProgress += remaining * 0.03;
         setOverlayProgress(fakeProgress);
-      }, 200);
+      }, 300);
     }
     function setOverlayProgress(pct) {
       document.getElementById('overlay-progress-fill').style.width = pct + '%';
     }
     function finishFakeProgress() {
       clearInterval(fakeTimer);
-      setOverlayProgress(100);
+      // Smooth jump: first to 95 briefly then 100
+      setOverlayProgress(95);
+      setTimeout(() => setOverlayProgress(100), 200);
     }
     function stopFakeProgress() {
       clearInterval(fakeTimer);
