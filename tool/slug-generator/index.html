@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Free URL Slug Generator Online - Oursolve.com</title>
+  <meta name="description" content="Free URL slug generator. Convert any title or text into a clean, URL-friendly slug. Supports custom separator, length limits, and stop-word removal.">
+  <meta name="keywords" content="slug generator, url slug, seo slug, permalink generator, slugify">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://oursolve.com/tool/slug-generator/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oursolve.com/tool/slug-generator/">
+  <meta property="og:title" content="Free URL Slug Generator Online - Oursolve.com">
+  <meta property="og:description" content="Convert titles into clean, URL-friendly slugs. Free, instant, browser-only.">
+  <meta property="og:site_name" content="Oursolve">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Free URL Slug Generator Online - Oursolve.com">
+  <meta name="twitter:description" content="Convert titles into clean, URL-friendly slugs. Free, instant, browser-only.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Free URL Slug Generator",
+    "url": "https://oursolve.com/tool/slug-generator/",
+    "description": "Convert any title or text into a clean, URL-friendly slug. Custom separator, length limit, stop-word removal.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {"@type":"Offer","price":"0","priceCurrency":"USD"},
+    "browserRequirements": "Requires a modern web browser with JavaScript enabled.",
+    "provider": {"@type":"Organization","name":"Oursolve","url":"https://oursolve.com"}
+  }
+  </script>
+  <link rel="stylesheet" href="/tool/shared.css">
+  <style>
+    .hero { background: var(--hero-gradient); color:#fff; padding: 48px 24px 56px; text-align:center; }
+    .tool-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); border-radius:20px; padding:4px 14px; font-size:.8rem; font-weight:600; margin-bottom:16px; }
+    .hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight:800; letter-spacing:-.5px; margin-bottom:12px; }
+    .hero p { color: rgba(255,255,255,.75); font-size:1.05rem; max-width:480px; margin:0 auto; }
+    main { max-width: 900px; margin:0 auto; padding: 0 24px 80px; transform: translateY(-32px); }
+    .card { background: var(--surface); border:1px solid var(--border); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); margin-bottom:20px; }
+    .card-title { font-size:.8rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color: var(--text-muted); margin-bottom:14px; }
+    textarea, input[type=text], input[type=number], select { width:100%; padding:12px 14px; border:1.5px solid var(--border); border-radius:8px; font-size:.95rem; font-family:inherit; color: var(--text); background: var(--surface); outline:none; transition: border-color .15s; }
+    textarea { min-height: 110px; resize: vertical; line-height:1.6; }
+    textarea:focus, input:focus, select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(28,77,141,.15); }
+    .opts { display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top:16px; }
+    @media(max-width:640px){ .opts { grid-template-columns: 1fr 1fr; } }
+    @media(max-width:420px){ .opts { grid-template-columns: 1fr; } }
+    label { display:block; font-size:.78rem; font-weight:600; color: var(--text-muted); margin-bottom:6px; text-transform:uppercase; letter-spacing:.5px; }
+    .checks { display:flex; flex-wrap:wrap; gap:14px; margin-top:14px; }
+    .opt-check { display:flex; align-items:center; gap:8px; font-size:.9rem; color: var(--text); cursor:pointer; }
+    .out-wrap { position:relative; margin-top:18px; }
+    .out-input { font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 1.05rem; padding-right: 80px; background: var(--bg); }
+    .copy-btn { position:absolute; top:6px; right:6px; padding:7px 14px; background: var(--primary); color:#fff; border:none; border-radius:6px; font-size:.8rem; font-weight:600; cursor:pointer; font-family:inherit; transition: background .15s; }
+    .copy-btn:hover { background: var(--primary-dark); }
+    .meta-row { display:flex; gap:14px; margin-top:10px; font-size:.8rem; color: var(--text-muted); }
+    .actions { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+    .btn-ghost { padding:9px 16px; background:transparent; color: var(--text-muted); border:1px solid var(--border); border-radius:8px; font-size:.875rem; font-weight:600; cursor:pointer; font-family:inherit; transition: all .15s; }
+    .btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
+  </style>
+  <script>
+    (function(){var s=localStorage.getItem('theme');var p=window.matchMedia('(prefers-color-scheme: dark)').matches;var t=s||(p?'dark':'light');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');})();
+  </script>
+</head>
+<body>
+
+<div id="tool-header"></div>
+<div class="hero">
+  <div class="tool-badge">📝 Writing</div>
+  <h1>URL Slug Generator</h1>
+  <p>Turn any title or sentence into a clean, SEO-friendly URL slug.</p>
+</div>
+
+<main>
+
+  <div class="card">
+    <p class="card-title">Input</p>
+    <textarea id="input" placeholder="Type or paste a title… e.g. 'How to Bake the Perfect Sourdough'" autofocus></textarea>
+
+    <div class="opts">
+      <div>
+        <label for="sep">Separator</label>
+        <select id="sep">
+          <option value="-">Hyphen ( - )</option>
+          <option value="_">Underscore ( _ )</option>
+          <option value=".">Dot ( . )</option>
+          <option value="">None</option>
+        </select>
+      </div>
+      <div>
+        <label for="case">Case</label>
+        <select id="case">
+          <option value="lower">lowercase</option>
+          <option value="upper">UPPERCASE</option>
+          <option value="keep">Keep original</option>
+        </select>
+      </div>
+      <div>
+        <label for="maxLen">Max length</label>
+        <input type="number" id="maxLen" min="0" max="500" value="0" placeholder="0 = no limit">
+      </div>
+    </div>
+
+    <div class="checks">
+      <label class="opt-check"><input type="checkbox" id="stripStop"> Remove stop words</label>
+      <label class="opt-check"><input type="checkbox" id="stripNum"> Remove numbers</label>
+    </div>
+
+    <div class="actions">
+      <button class="btn-ghost" onclick="pasteIn()">📋 Paste</button>
+      <button class="btn-ghost" onclick="clearAll()">🗑 Clear</button>
+    </div>
+
+    <div class="out-wrap">
+      <input type="text" id="output" class="out-input" readonly placeholder="your-slug-appears-here">
+      <button class="copy-btn" onclick="copyOut(this)">Copy</button>
+    </div>
+    <div class="meta-row">
+      <span id="metaLen">0 chars</span>
+      <span id="metaWords">0 words</span>
+    </div>
+  </div>
+
+</main>
+
+<div id="tool-footer"></div>
+
+<script>
+  const STOP = new Set(['a','an','the','and','or','but','in','on','at','to','for','of','with','is','are','was','were','be','been','being','it','as','by','from','that','this','these','those']);
+
+  const inp = document.getElementById('input');
+  const out = document.getElementById('output');
+
+  // Diacritic strip
+  function deburr(s){ return s.normalize('NFD').replace(/[̀-ͯ]/g,''); }
+
+  function build(){
+    let t = deburr(inp.value);
+    if (document.getElementById('stripNum').checked) t = t.replace(/\d+/g, ' ');
+    // Replace non-alphanumerics with space
+    t = t.replace(/[^a-zA-Z0-9]+/g, ' ').trim();
+    let words = t.split(/\s+/).filter(Boolean);
+    if (document.getElementById('stripStop').checked) words = words.filter(w => !STOP.has(w.toLowerCase()));
+
+    const c = document.getElementById('case').value;
+    if (c === 'lower') words = words.map(w => w.toLowerCase());
+    else if (c === 'upper') words = words.map(w => w.toUpperCase());
+
+    const sep = document.getElementById('sep').value;
+    let slug = words.join(sep);
+
+    const maxLen = parseInt(document.getElementById('maxLen').value, 10) || 0;
+    if (maxLen > 0 && slug.length > maxLen){
+      slug = slug.slice(0, maxLen);
+      // trim trailing partial separator
+      if (sep) slug = slug.replace(new RegExp(escape(sep)+'+$'), '');
+    }
+
+    out.value = slug;
+    document.getElementById('metaLen').textContent = slug.length + ' chars';
+    document.getElementById('metaWords').textContent = words.length + ' words';
+  }
+
+  function escape(s){ return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
+
+  inp.addEventListener('input', build);
+  document.querySelectorAll('select, input[type=number], input[type=checkbox]').forEach(el => el.addEventListener('change', build));
+
+  async function pasteIn(){
+    try { inp.value = await navigator.clipboard.readText(); build(); inp.focus(); }
+    catch { alert('Clipboard blocked. Paste manually.'); }
+  }
+
+  function clearAll(){ inp.value=''; build(); inp.focus(); }
+
+  async function copyOut(btn){
+    const v = out.value; if(!v) return;
+    try { await navigator.clipboard.writeText(v); }
+    catch { out.select(); document.execCommand('copy'); }
+    const o = btn.textContent; btn.textContent = '✅'; setTimeout(()=>btn.textContent=o, 1200);
+  }
+
+  build();
+</script>
+
+<script>
+  fetch('/tool/header.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-header'); if(el) el.outerHTML = html;
+    const t = document.getElementById('navTitle'); if(t) t.textContent = document.title.split(' - ')[0].replace('Free ','');
+    const btn = document.getElementById('themeToggle');
+    if(btn){
+      btn.textContent = document.documentElement.getAttribute('data-theme')==='dark' ? '☀️' : '🌙';
+      btn.addEventListener('click', function(){
+        const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+        document.documentElement.setAttribute('data-theme', isDark ? 'light':'dark');
+        localStorage.setItem('theme', isDark ? 'light':'dark');
+        btn.textContent = isDark ? '🌙' : '☀️';
+      });
+    }
+  });
+  fetch('/tool/footer.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-footer'); if(el) el.outerHTML = html;
+  });
+</script>
+
+</body>
+</html>

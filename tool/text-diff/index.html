@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Free Text Diff Checker Online - Oursolve.com</title>
+  <meta name="description" content="Free online text diff checker. Compare two texts side-by-side and see added, removed, and unchanged lines highlighted. Works in your browser.">
+  <meta name="keywords" content="text diff, text compare, diff checker, compare two texts, text comparison tool">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://oursolve.com/tool/text-diff/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oursolve.com/tool/text-diff/">
+  <meta property="og:title" content="Free Text Diff Checker Online - Oursolve.com">
+  <meta property="og:description" content="Compare two texts and highlight differences line-by-line. Free, browser-only.">
+  <meta property="og:site_name" content="Oursolve">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Free Text Diff Checker Online - Oursolve.com">
+  <meta name="twitter:description" content="Compare two texts and highlight differences line-by-line. Free, browser-only.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Free Text Diff Checker",
+    "url": "https://oursolve.com/tool/text-diff/",
+    "description": "Compare two texts and highlight added, removed, and unchanged lines.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {"@type":"Offer","price":"0","priceCurrency":"USD"},
+    "browserRequirements": "Requires a modern web browser with JavaScript enabled.",
+    "provider": {"@type":"Organization","name":"Oursolve","url":"https://oursolve.com"}
+  }
+  </script>
+  <link rel="stylesheet" href="/tool/shared.css">
+  <style>
+    .hero { background: var(--hero-gradient); color:#fff; padding: 48px 24px 56px; text-align:center; }
+    .tool-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); border-radius:20px; padding:4px 14px; font-size:.8rem; font-weight:600; margin-bottom:16px; }
+    .hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight:800; letter-spacing:-.5px; margin-bottom:12px; }
+    .hero p { color: rgba(255,255,255,.75); font-size:1.05rem; max-width:480px; margin:0 auto; }
+    main { max-width: 1100px; margin:0 auto; padding: 0 24px 80px; transform: translateY(-32px); }
+    .card { background: var(--surface); border:1px solid var(--border); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); margin-bottom:20px; }
+    .card-title { font-size:.8rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color: var(--text-muted); margin-bottom:14px; }
+    .pair { display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    @media(max-width:760px){ .pair { grid-template-columns: 1fr; } }
+    .pair-label { font-size:.8rem; font-weight:700; color: var(--text-muted); margin-bottom:6px; text-transform:uppercase; letter-spacing:.5px; }
+    textarea { width:100%; min-height:240px; padding:12px; border:1.5px solid var(--border); border-radius:8px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size:.875rem; color: var(--text); background: var(--surface); resize:vertical; line-height:1.5; outline:none; }
+    textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(28,77,141,.15); }
+    .btn-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:16px; align-items:center; }
+    .btn-primary { padding:10px 20px; background: var(--primary); color:#fff; border:none; border-radius:8px; font-size:.9rem; font-weight:600; cursor:pointer; font-family:inherit; transition: background .15s; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    .btn-ghost { padding:10px 16px; background:transparent; color: var(--text-muted); border:1px solid var(--border); border-radius:8px; font-size:.9rem; font-weight:600; cursor:pointer; font-family:inherit; transition: all .15s; }
+    .btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
+    .opt-check { display:flex; align-items:center; gap:6px; font-size:.875rem; color: var(--text); cursor:pointer; margin-left:auto; }
+    .stats { display:flex; gap:14px; flex-wrap:wrap; margin-bottom:14px; font-size:.875rem; }
+    .stat-pill { padding: 4px 12px; border-radius: 16px; font-weight:600; font-size:.8rem; }
+    .pill-add { background: #dcfce7; color: #166534; }
+    .pill-del { background: #fee2e2; color: #991b1b; }
+    .pill-eq  { background: var(--primary-light); color: var(--primary-dark); }
+    [data-theme="dark"] .pill-add { background: #14532d; color: #bbf7d0; }
+    [data-theme="dark"] .pill-del { background: #7f1d1d; color: #fecaca; }
+    .diff-box { font-family: ui-monospace, Menlo, Consolas, monospace; font-size:.85rem; line-height:1.55; border:1px solid var(--border); border-radius:8px; overflow:hidden; }
+    .diff-row { display:grid; grid-template-columns: 50px 50px 1fr; }
+    .diff-row > div { padding: 2px 10px; }
+    .diff-num { color: var(--text-muted); text-align:right; user-select:none; background: var(--bg); border-right:1px solid var(--border); }
+    .diff-line { white-space:pre-wrap; word-break: break-word; }
+    .diff-add { background: #dcfce7; }
+    .diff-add .diff-line { color: #166534; }
+    .diff-del { background: #fee2e2; }
+    .diff-del .diff-line { color: #991b1b; text-decoration: line-through; }
+    [data-theme="dark"] .diff-add { background: rgba(20,83,45,.45); }
+    [data-theme="dark"] .diff-add .diff-line { color: #bbf7d0; }
+    [data-theme="dark"] .diff-del { background: rgba(127,29,29,.45); }
+    [data-theme="dark"] .diff-del .diff-line { color: #fecaca; }
+    .empty-diff { padding:30px; text-align:center; color: var(--text-muted); font-size:.9rem; }
+  </style>
+  <script>
+    (function(){var s=localStorage.getItem('theme');var p=window.matchMedia('(prefers-color-scheme: dark)').matches;var t=s||(p?'dark':'light');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');})();
+  </script>
+</head>
+<body>
+
+<div id="tool-header"></div>
+<div class="hero">
+  <div class="tool-badge">📝 Writing</div>
+  <h1>Text Diff Checker</h1>
+  <p>Compare two texts line-by-line. Added, removed, and unchanged lines highlighted instantly.</p>
+</div>
+
+<main>
+
+  <div class="card">
+    <p class="card-title">Inputs</p>
+    <div class="pair">
+      <div>
+        <p class="pair-label">Original</p>
+        <textarea id="textA" placeholder="Paste original text here…"></textarea>
+      </div>
+      <div>
+        <p class="pair-label">Changed</p>
+        <textarea id="textB" placeholder="Paste changed text here…"></textarea>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn-primary" onclick="runDiff()">⚡ Compare</button>
+      <button class="btn-ghost" onclick="swapAB()">⇄ Swap</button>
+      <button class="btn-ghost" onclick="clearAll()">🗑 Clear</button>
+      <label class="opt-check"><input type="checkbox" id="ignoreCase"> Ignore case</label>
+      <label class="opt-check"><input type="checkbox" id="ignoreWS"> Ignore whitespace</label>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-title">Diff</p>
+    <div class="stats" id="stats" style="display:none">
+      <span class="stat-pill pill-add" id="pillAdd">+0</span>
+      <span class="stat-pill pill-del" id="pillDel">−0</span>
+      <span class="stat-pill pill-eq"  id="pillEq">= 0</span>
+    </div>
+    <div id="diffOut"><div class="empty-diff">Paste both texts and click Compare.</div></div>
+  </div>
+
+</main>
+
+<div id="tool-footer"></div>
+
+<script>
+  const A = document.getElementById('textA');
+  const B = document.getElementById('textB');
+  const outEl = document.getElementById('diffOut');
+  const stats = document.getElementById('stats');
+
+  function norm(s){
+    if (document.getElementById('ignoreCase').checked) s = s.toLowerCase();
+    if (document.getElementById('ignoreWS').checked) s = s.replace(/\s+/g,' ').trim();
+    return s;
+  }
+
+  // LCS-based line diff
+  function diffLines(a, b){
+    const m = a.length, n = b.length;
+    const dp = Array.from({length:m+1}, () => new Uint32Array(n+1));
+    const an = a.map(norm), bn = b.map(norm);
+    for (let i=m-1;i>=0;i--){
+      for (let j=n-1;j>=0;j--){
+        if (an[i] === bn[j]) dp[i][j] = dp[i+1][j+1]+1;
+        else dp[i][j] = Math.max(dp[i+1][j], dp[i][j+1]);
+      }
+    }
+    const out = [];
+    let i=0, j=0;
+    while (i<m && j<n){
+      if (an[i] === bn[j]) { out.push({type:'eq', a:a[i], b:b[j]}); i++; j++; }
+      else if (dp[i+1][j] >= dp[i][j+1]) { out.push({type:'del', a:a[i]}); i++; }
+      else { out.push({type:'add', b:b[j]}); j++; }
+    }
+    while (i<m){ out.push({type:'del', a:a[i++]}); }
+    while (j<n){ out.push({type:'add', b:b[j++]}); }
+    return out;
+  }
+
+  function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  function runDiff(){
+    const a = A.value === '' ? [] : A.value.split('\n');
+    const b = B.value === '' ? [] : B.value.split('\n');
+    if (!a.length && !b.length){
+      outEl.innerHTML = '<div class="empty-diff">Both inputs empty.</div>';
+      stats.style.display = 'none';
+      return;
+    }
+    const rows = diffLines(a, b);
+    let adds=0, dels=0, eqs=0;
+    const html = rows.map(r => {
+      if (r.type === 'eq'){ eqs++; return `<div class="diff-row"><div class="diff-num"></div><div class="diff-num"></div><div class="diff-line">${esc(r.a)}</div></div>`; }
+      if (r.type === 'add'){ adds++; return `<div class="diff-row diff-add"><div class="diff-num"></div><div class="diff-num">+</div><div class="diff-line">${esc(r.b)}</div></div>`; }
+      dels++; return `<div class="diff-row diff-del"><div class="diff-num">−</div><div class="diff-num"></div><div class="diff-line">${esc(r.a)}</div></div>`;
+    }).join('');
+    outEl.innerHTML = `<div class="diff-box">${html}</div>`;
+    stats.style.display = 'flex';
+    document.getElementById('pillAdd').textContent = `+${adds}`;
+    document.getElementById('pillDel').textContent = `−${dels}`;
+    document.getElementById('pillEq').textContent  = `= ${eqs}`;
+  }
+
+  function swapAB(){ const t = A.value; A.value = B.value; B.value = t; runDiff(); }
+  function clearAll(){ A.value=''; B.value=''; outEl.innerHTML='<div class="empty-diff">Paste both texts and click Compare.</div>'; stats.style.display='none'; }
+</script>
+
+<script>
+  fetch('/tool/header.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-header'); if(el) el.outerHTML = html;
+    const t = document.getElementById('navTitle'); if(t) t.textContent = document.title.split(' - ')[0].replace('Free ','');
+    const btn = document.getElementById('themeToggle');
+    if(btn){
+      btn.textContent = document.documentElement.getAttribute('data-theme')==='dark' ? '☀️' : '🌙';
+      btn.addEventListener('click', function(){
+        const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+        document.documentElement.setAttribute('data-theme', isDark ? 'light':'dark');
+        localStorage.setItem('theme', isDark ? 'light':'dark');
+        btn.textContent = isDark ? '🌙' : '☀️';
+      });
+    }
+  });
+  fetch('/tool/footer.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-footer'); if(el) el.outerHTML = html;
+  });
+</script>
+
+</body>
+</html>

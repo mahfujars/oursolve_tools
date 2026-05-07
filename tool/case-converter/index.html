@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Free Case Converter Online - Oursolve.com</title>
+  <meta name="description" content="Free online case converter. Convert text between UPPERCASE, lowercase, Title Case, Sentence case, camelCase, PascalCase, snake_case, kebab-case, and more. Instant, browser-only.">
+  <meta name="keywords" content="case converter, uppercase, lowercase, title case, camelcase, snake case, kebab case, text case tool">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://oursolve.com/tool/case-converter/">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://oursolve.com/tool/case-converter/">
+  <meta property="og:title" content="Free Case Converter Online - Oursolve.com">
+  <meta property="og:description" content="Convert text between many cases instantly. Free, browser-only.">
+  <meta property="og:site_name" content="Oursolve">
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Free Case Converter Online - Oursolve.com">
+  <meta name="twitter:description" content="Convert text between many cases instantly. Free, browser-only.">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "Free Case Converter",
+    "url": "https://oursolve.com/tool/case-converter/",
+    "description": "Convert text between UPPERCASE, lowercase, Title Case, Sentence case, camelCase, PascalCase, snake_case, kebab-case and more.",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Any",
+    "offers": {"@type":"Offer","price":"0","priceCurrency":"USD"},
+    "browserRequirements": "Requires a modern web browser with JavaScript enabled.",
+    "provider": {"@type":"Organization","name":"Oursolve","url":"https://oursolve.com"}
+  }
+  </script>
+  <link rel="stylesheet" href="/tool/shared.css">
+  <style>
+    .hero { background: var(--hero-gradient); color:#fff; padding: 48px 24px 56px; text-align:center; }
+    .tool-badge { display:inline-flex; align-items:center; gap:6px; background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.2); border-radius:20px; padding:4px 14px; font-size:.8rem; font-weight:600; margin-bottom:16px; }
+    .hero h1 { font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight:800; letter-spacing:-.5px; margin-bottom:12px; }
+    .hero p { color: rgba(255,255,255,.75); font-size:1.05rem; max-width:480px; margin:0 auto; }
+    main { max-width: 900px; margin:0 auto; padding: 0 24px 80px; transform: translateY(-32px); }
+    .card { background: var(--surface); border:1px solid var(--border); border-radius: var(--radius); padding: 28px; box-shadow: var(--shadow); margin-bottom:20px; }
+    .card-title { font-size:.8rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; color: var(--text-muted); margin-bottom:14px; }
+    textarea { width:100%; min-height:160px; padding:14px; border:1.5px solid var(--border); border-radius:10px; font-size:1rem; font-family:inherit; color: var(--text); background: var(--surface); resize:vertical; line-height:1.6; outline:none; transition: border-color .15s, box-shadow .15s; }
+    textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(28,77,141,.15); }
+    .case-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap:10px; margin-top:14px; }
+    .case-btn { padding: 10px 12px; background: var(--bg); border:1px solid var(--border); border-radius:8px; font-size:.85rem; font-weight:600; color: var(--text); cursor:pointer; transition: all .15s; font-family:inherit; }
+    .case-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
+    .out-wrap { position:relative; }
+    .copy-btn { position:absolute; top:10px; right:10px; padding:6px 12px; background: var(--surface); border:1px solid var(--border); border-radius:6px; font-size:.8rem; font-weight:600; cursor:pointer; color: var(--text-muted); transition: all .15s; font-family:inherit; }
+    .copy-btn:hover { border-color: var(--primary); color: var(--primary); }
+    .actions { display:flex; gap:8px; justify-content:flex-end; margin-top:10px; }
+    .btn-ghost { padding:8px 16px; background:transparent; color: var(--text-muted); border:1px solid var(--border); border-radius:8px; font-size:.875rem; font-weight:600; cursor:pointer; font-family:inherit; transition: all .15s; }
+    .btn-ghost:hover { border-color: var(--primary); color: var(--primary); }
+  </style>
+  <script>
+    (function(){var s=localStorage.getItem('theme');var p=window.matchMedia('(prefers-color-scheme: dark)').matches;var t=s||(p?'dark':'light');if(t==='dark')document.documentElement.setAttribute('data-theme','dark');})();
+  </script>
+</head>
+<body>
+
+<div id="tool-header"></div>
+<div class="hero">
+  <div class="tool-badge">📝 Writing</div>
+  <h1>Case Converter</h1>
+  <p>Convert text between 12 different cases instantly. Click any case to transform.</p>
+</div>
+
+<main>
+
+  <div class="card">
+    <p class="card-title">Input</p>
+    <textarea id="input" placeholder="Type or paste any text here…" autofocus></textarea>
+    <div class="actions">
+      <button class="btn-ghost" onclick="pasteIn()">📋 Paste</button>
+      <button class="btn-ghost" onclick="clearAll()">🗑 Clear</button>
+    </div>
+    <div class="case-grid">
+      <button class="case-btn" onclick="apply('upper')">UPPERCASE</button>
+      <button class="case-btn" onclick="apply('lower')">lowercase</button>
+      <button class="case-btn" onclick="apply('title')">Title Case</button>
+      <button class="case-btn" onclick="apply('sentence')">Sentence case</button>
+      <button class="case-btn" onclick="apply('camel')">camelCase</button>
+      <button class="case-btn" onclick="apply('pascal')">PascalCase</button>
+      <button class="case-btn" onclick="apply('snake')">snake_case</button>
+      <button class="case-btn" onclick="apply('kebab')">kebab-case</button>
+      <button class="case-btn" onclick="apply('constant')">CONSTANT_CASE</button>
+      <button class="case-btn" onclick="apply('dot')">dot.case</button>
+      <button class="case-btn" onclick="apply('alt')">aLtErNaTiNg</button>
+      <button class="case-btn" onclick="apply('inverse')">iNVERSE cASE</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <p class="card-title">Output</p>
+    <div class="out-wrap">
+      <textarea id="output" readonly placeholder="Pick a case above to see the result…"></textarea>
+      <button class="copy-btn" onclick="copyOut(this)">Copy</button>
+    </div>
+  </div>
+
+</main>
+
+<div id="tool-footer"></div>
+
+<script>
+  const inp = document.getElementById('input');
+  const out = document.getElementById('output');
+
+  const SMALL = new Set(['a','an','and','as','at','but','by','for','if','in','nor','of','on','or','so','the','to','up','yet','via']);
+
+  function words(t){ return t.replace(/[_\-.]+/g,' ').replace(/([a-z])([A-Z])/g,'$1 $2').split(/\s+/).filter(Boolean); }
+
+  function apply(mode){
+    const t = inp.value; if(!t.trim()){ out.value=''; return; }
+    let r='';
+    switch(mode){
+      case 'upper': r = t.toUpperCase(); break;
+      case 'lower': r = t.toLowerCase(); break;
+      case 'title':
+        r = t.replace(/\w\S*/g, (w,i,s) => {
+          const lw = w.toLowerCase();
+          if (i!==0 && SMALL.has(lw) && i+w.length < s.length) return lw;
+          return lw[0].toUpperCase()+lw.slice(1);
+        });
+        break;
+      case 'sentence':
+        r = t.toLowerCase().replace(/(^\s*\w|[.!?]\s+\w)/g, c => c.toUpperCase());
+        break;
+      case 'camel': {
+        const w = words(t.toLowerCase());
+        r = w.map((x,i) => i===0 ? x : x[0].toUpperCase()+x.slice(1)).join('');
+        break;
+      }
+      case 'pascal': {
+        const w = words(t.toLowerCase());
+        r = w.map(x => x[0].toUpperCase()+x.slice(1)).join('');
+        break;
+      }
+      case 'snake': r = words(t).map(x=>x.toLowerCase()).join('_'); break;
+      case 'kebab': r = words(t).map(x=>x.toLowerCase()).join('-'); break;
+      case 'constant': r = words(t).map(x=>x.toUpperCase()).join('_'); break;
+      case 'dot': r = words(t).map(x=>x.toLowerCase()).join('.'); break;
+      case 'alt': r = [...t].map((c,i)=> i%2 ? c.toUpperCase() : c.toLowerCase()).join(''); break;
+      case 'inverse': r = [...t].map(c => c===c.toUpperCase() ? c.toLowerCase() : c.toUpperCase()).join(''); break;
+    }
+    out.value = r;
+  }
+
+  async function pasteIn(){
+    try { inp.value = await navigator.clipboard.readText(); inp.focus(); }
+    catch { alert('Clipboard blocked. Paste manually.'); }
+  }
+
+  function clearAll(){ inp.value=''; out.value=''; inp.focus(); }
+
+  async function copyOut(btn){
+    const v = out.value; if(!v) return;
+    try { await navigator.clipboard.writeText(v); }
+    catch { out.select(); document.execCommand('copy'); }
+    const o = btn.textContent; btn.textContent='✅ Copied'; setTimeout(()=>btn.textContent=o, 1500);
+  }
+</script>
+
+<script>
+  fetch('/tool/header.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-header'); if(el) el.outerHTML = html;
+    const t = document.getElementById('navTitle'); if(t) t.textContent = document.title.split(' - ')[0].replace('Free ','');
+    const btn = document.getElementById('themeToggle');
+    if(btn){
+      btn.textContent = document.documentElement.getAttribute('data-theme')==='dark' ? '☀️' : '🌙';
+      btn.addEventListener('click', function(){
+        const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+        document.documentElement.setAttribute('data-theme', isDark ? 'light':'dark');
+        localStorage.setItem('theme', isDark ? 'light':'dark');
+        btn.textContent = isDark ? '🌙' : '☀️';
+      });
+    }
+  });
+  fetch('/tool/footer.html').then(r=>r.text()).then(html=>{
+    const el = document.getElementById('tool-footer'); if(el) el.outerHTML = html;
+  });
+</script>
+
+</body>
+</html>

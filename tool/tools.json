@@ -21,5 +21,9 @@
   {"slug":"image-resizer","name":"Image Resizer","category":"Image Tools","icon":"scaling","desc":"Resize images by pixels or percentage. Lock aspect ratio, preview result, download as PNG or JPG."},
   {"slug":"image-cropper","name":"Image Cropper","category":"Image Tools","icon":"crop","desc":"Crop images with a draggable selection. Free crop or fixed aspect ratios. Download as PNG instantly."},
   {"slug":"image-converter","name":"Image Converter","category":"Image Tools","icon":"refresh-cw","desc":"Convert images between JPG, PNG, and WebP. Batch support, quality slider, instant browser-side conversion."},
-  {"slug":"image-compressor","name":"Image Compressor","category":"Image Tools","icon":"file-down","desc":"Compress images with a quality slider. Shows size savings per file. Download individually or as ZIP."}
+  {"slug":"image-compressor","name":"Image Compressor","category":"Image Tools","icon":"file-down","desc":"Compress images with a quality slider. Shows size savings per file. Download individually or as ZIP."},
+  {"slug":"case-converter","name":"Case Converter","category":"Writing","icon":"case-sensitive","desc":"Convert text between UPPERCASE, lowercase, Title Case, camelCase, snake_case, kebab-case, and 6 more cases."},
+  {"slug":"lorem-ipsum","name":"Lorem Ipsum Generator","category":"Writing","icon":"type","desc":"Generate placeholder text by paragraphs, sentences, words, or characters. Plain text or HTML output."},
+  {"slug":"text-diff","name":"Text Diff Checker","category":"Writing","icon":"git-compare","desc":"Compare two texts side-by-side. Added, removed, and unchanged lines highlighted via LCS diff."},
+  {"slug":"slug-generator","name":"URL Slug Generator","category":"Writing","icon":"link-2","desc":"Convert any title into a clean SEO-friendly slug. Custom separator, max length, stop-word removal."}
 ]
